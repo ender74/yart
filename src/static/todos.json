@@ -1,0 +1,17 @@
+{
+    "todos": [
+        {
+            "id": "todo1",
+            "text": "TODO #1"
+        },
+        {
+            "id": "todo2",
+            "text": "TODO #2"
+        },
+        {
+            "id": "todo3",
+            "text": "TODO #3"
+        }
+    ] 
+    
+}
