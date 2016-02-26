@@ -21,15 +21,17 @@ var path = {
     STATIC_INDEX: 'index.html'
 }
 
-function baseBuild() {
-    return browserify({
-        entries: [path.ENTRY_POINT]
-    }).
-        transform(babelify.configure({
-            presets: ["es2015", "react"]
-        }))
-        .bundle()
-        .pipe(source(path.MINIFIED_OUT));
+function bundler() {
+    const transformer = babelify.configure({
+        presets: ["es2015", "react"]
+    })
+    var props = {
+        cache: {}, packageCache: {}, fullPaths: true,
+        entries: [path.ENTRY_POINT],
+        transform: [transformer],
+        debug: true
+    }
+    return browserify(props)
 }
 
 gulp.task('copy', function () {
@@ -37,20 +39,35 @@ gulp.task('copy', function () {
         .pipe(gulp.dest(path.DEST));
 })
 
+gulp.task('build-watch', function () {
+    gulp.watch(path.STATIC, ['copy'])
+    const myBundler = watchify(bundler())
+    const bundle = function () {
+        myBundler.bundle()
+            .pipe(source(path.MINIFIED_OUT))
+            .pipe(gulp.dest(path.DEST_BUILD))
+        console.log("updated")
+    }
+    myBundler.on('update', bundle)
+    bundle();
+})
+
 gulp.task('build-dev', function () {
-    baseBuild()
+    bundler().bundle()
+        .pipe(source(path.MINIFIED_OUT))
         .pipe(gulp.dest(path.DEST_BUILD));
 })
 
 gulp.task('build', function () {
-    baseBuild()
+    bundler().bundle()
+        .pipe(source(path.MINIFIED_OUT))
         .pipe(streamify(uglify()))
         .pipe(gulp.dest(path.DEST_BUILD));
 })
 
 gulp.task('renderStatic', function () {
     var staticReact = require('./src/renderToString')(
-        './views/app/resume/resume', 
+        './views/app/resume/resume',
         require('./src/static/resume.json'))
 
     return gulp.src(path.TEMPLATE_INDEX).
@@ -58,8 +75,10 @@ gulp.task('renderStatic', function () {
         pipe(gulp.dest(path.DEST_BUILD))
 })
 
-gulp.task('release', ['copy', 'build']);
+gulp.task('release', ['copy', 'build'])
 
-gulp.task('dev', ['copy', 'build-dev']);
+gulp.task('watch', ['copy', 'build-watch']);
 
-gulp.task('default', ['dev'])
+gulp.task('dev', ['copy', 'build-dev'])
+
+gulp.task('default', ['watch'])
