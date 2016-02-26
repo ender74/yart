@@ -6,10 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp dev",
-    "build-min": "gulp release"
+    "build-min": "gulp release",
+    "add-dist": "git add dist/"
   },
   "pre-commit": [
-    "build-min"
+    "build-min",
+    "add-dist"
   ],
   "keywords": [
     "react",
