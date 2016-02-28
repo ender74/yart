@@ -6,7 +6,7 @@ class TodoTextInput extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: this.props.value || ''
+            value: props.defaultValue || ''
         }
         this._save=this._save.bind(this)
         this._onChange=this._onChange.bind(this)

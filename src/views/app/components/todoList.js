@@ -4,6 +4,8 @@ import TodoEntry from './todoEntry'
 class TodoList extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+        }
     }
     render() {
         if (Object.keys(this.props.todos).length < 1) {
@@ -13,7 +15,8 @@ class TodoList extends Component {
         var entries = []
 
         for (var key in allTodos) {
-            entries.push(<TodoEntry key={key} todo={allTodos[key]} />)
+            const todo = allTodos[key]
+            entries.push(<TodoEntry key={key} todo={todo} active={this.props.active==todo}/>)
         }
         
         return(

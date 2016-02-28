@@ -7,7 +7,8 @@ import TodoActions from '../../todoActions'
 
 function getTodoState() {
     return {
-        allTodos: TodoStore.getAll()
+        allTodos: TodoStore.getAll(),
+        active: TodoStore.getActive()
     }
 }
 
@@ -17,7 +18,9 @@ class Todos extends Component {
         this.state = getTodoState()
         this._onChange = this._onChange.bind(this)
         this._onAddNew = this._onAddNew.bind(this)
+        this._onSaveEntryClick = this._onSaveEntryClick.bind(this)
     }
+    
     componentDidMount() { 
         TodoStore.addChangeListener(this._onChange) 
     }
@@ -27,11 +30,19 @@ class Todos extends Component {
     }
     
     render() {
-        return <section id='main'>
-                <TodoTextInput id="new-todo" 
-                    placeholder="What needs to be done?" 
-                    onSave={this._onAddNew} />
-                <TodoList todos={ this.state.allTodos } />
+        return <section className='todosArea'>
+                <article className='todoList'>
+                    <TodoTextInput id="new-todo" 
+                        placeholder="What needs to be done?" 
+                        onSave={this._onAddNew} />
+                    <TodoList active={ this.state.active } todos={ this.state.allTodos } />
+                </article>
+                <aside className={this.state.active?'editTodoArea':'hidden'}>
+                    <TodoTextInput id="edit-todo" 
+                        defaultValue={ this.state.active ? this.state.active.text : ''} 
+                        onSave={ this._onSaveEntryClick } />
+                    <button className='editButton' onClick={ this._onSaveEntryClick }>u</button>
+                </aside>
             </section>
     }
     
@@ -41,6 +52,12 @@ class Todos extends Component {
     
     _onAddNew(text) {
         TodoActions.create(text)
+    }
+
+    _onSaveEntryClick(text) {
+        if (this.state.active)
+            TodoActions.updateText(this.state.active.id, text)
+        TodoActions.deactivate()
     }
 }
 

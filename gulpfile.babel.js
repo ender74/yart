@@ -1,6 +1,7 @@
 'use strict'
 
 import gulp from 'gulp'
+import gutil from 'gutil'
 import template from 'gulp-template'
 import uglify from 'gulp-uglify';
 import source from 'vinyl-source-stream'
@@ -44,6 +45,9 @@ gulp.task('build-watch', function () {
     const myBundler = watchify(bundler())
     const bundle = function () {
         myBundler.bundle()
+            .on('error',function(e){
+                gutil.log(e);
+            })
             .pipe(source(path.MINIFIED_OUT))
             .pipe(gulp.dest(path.DEST_BUILD))
         console.log("updated")

@@ -37,6 +37,22 @@ var TodoActions = {
   },
 
   /**
+   * @param  {string} id The ID of the ToDo item
+   */
+  activate: function(id) {
+    AppDispatcher.dispatch({
+      actionType: TodoConstants.TODO_ACTIVATE,
+      id: id
+    })
+  },
+  
+  deactivate: function() {
+    AppDispatcher.dispatch({
+      actionType: TodoConstants.TODO_DEACTIVATE
+    })
+  },
+
+  /**
    * Toggle whether a single ToDo is complete
    * @param  {object} todo
    */
