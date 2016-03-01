@@ -26,7 +26,9 @@
     "jquery": "~2.2.1",
     "object-assign": "~4.0.1",
     "es6-promise": "~3.1.2",
-    "keymirror": "~0.1.1"
+    "keymirror": "~0.1.1",
+    "radium": "~0.16.6",
+    "color": "~0.11.1"
   },
   "devDependencies": {
     "babelify": "~7.2.0",
