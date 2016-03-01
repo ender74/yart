@@ -8,11 +8,16 @@ import AppDispatcher from '../../appDispatcher'
 class AppView extends Component {
     render() {
         return <div>
-                <header style={ styles.header }>Log84.de < hr /></header>
+                <header style={ styles.header }>
+                    <a href='http://www.log84.de'>Log84.de</a>< hr />
+                </header>
                 <div style={ styles.main }>
                     <Todos />
                 </div>
-                <footer style={ styles.footer }><hr/><a href='http://www.log84.de'>http://www.log84.de</a> < /footer>
+                <footer style={ styles.footer }>
+                    <hr/>
+                    <a href="http://www.flaticon.com/authors/freepik">Icon design by Freepik</a> 
+                < /footer>
             </div>
     }
 }
