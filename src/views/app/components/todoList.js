@@ -20,15 +20,22 @@ class TodoList extends Component {
         }
         
         return(
-            <ul id='todo-list'>
+            <div style={ styles.base }>
             { entries }
-            </ul>
+            </div>
         )
     }
 }
 
 TodoList.propTypes={ 
     todos: React.PropTypes.object.isRequired 
+}
+
+var styles = {
+    base: {
+        padding: '0.5em 0.5em 0.5em 0.5em',
+        width: '95%'
+    }
 }
 
 export default TodoList
