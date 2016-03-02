@@ -2,7 +2,11 @@
     "todos": [
         {
             "id": "todo1",
-            "text": "TODO #1"
+            "text": "TODO #1",
+            "due": "2020-04-21",
+            "url": "http://www.ender74.de",
+            "description": "a longer description what to do",
+            "location": "Melchior-Bauer-Straße 5, 99092 Erfurt"
         },
         {
             "id": "todo2",
@@ -12,6 +16,6 @@
             "id": "todo3",
             "text": "TODO #3"
         }
-    ] 
-    
+    ]
+
 }
