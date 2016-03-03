@@ -41,7 +41,7 @@ var styles = {
             'padding': '0.5em 0.5em 0.5em 0.5em',
             'margin': '1.5em 0em 1.5em 0em',
             'width': '100%',
-            'border-style': 'none',
+            'border': 'none',
             'border-radius': '1px',
             'color': '#000000'
         },
