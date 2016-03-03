@@ -39,19 +39,17 @@ var styles = {
        base: {
             'display': 'table',
             'padding': '0.5em 0.5em 0.5em 0.5em',
-            'margin': '1.5em 0em 1.5em 0em',
+            'margin': '0.5em 0em 0em 0em',
             'width': '100%',
-            'border-radius': '1px',
+            'border-radius': '10px',
             'color': '#000000'
         },
         default: {
             'background': 'rgba(255, 255, 255, 0.7)',
-            'box-shadow': '0px 0px 0px 0.5em rgba(255, 255, 255, 0.7)',
             'font-weight': 'normal'
         },
         active: {
             'background': 'rgba(255, 255, 255, 0.7)',
-            'box-shadow': '0px 0px 0px 0.5em rgba(255, 255, 255, 0.7)',
             'font-weight': 'bold'
         }, 
         buttonBar: {
