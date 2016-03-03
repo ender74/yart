@@ -46,12 +46,12 @@ var styles = {
             'color': '#000000'
         },
         default: {
-            'background': 'rgba(255, 255, 255, 0.7)',
+            'background-color': 'rgba(255, 255, 255, 0.7)',
             'box-shadow': '0px 0px 0px 0.5em rgba(255, 255, 255, 0.7)',
             'font-weight': 'normal'
         },
         active: {
-            'background': 'rgba(255, 255, 255, 0.7)',
+            'background-color': 'rgba(255, 255, 255, 0.7)',
             'box-shadow': '0px 0px 0px 0.5em rgba(255, 255, 255, 0.7)',
             'font-weight': 'bold'
         },
