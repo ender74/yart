@@ -9,33 +9,38 @@ class TodoTextInput extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: this.props.defaultValue
         }
         this._save=this._save.bind(this)
         this._onChange=this._onChange.bind(this)
         this._onKeyDown=this._onKeyDown.bind(this)
+        this._onBlur=this._onBlur.bind(this)
     }
     
     render() {
+        const value = this.state.valueSet ? this.state.value : this.props.defaultValue
         return <Input 
             className={ this.props.className }
             style={ this.props.style }
             id = { this.props.id }
             placeholder = { this.props.placeholder }
-            onBlur = { this._save }
+            onBlur = { this._onBlur }
             onChange = { this._onChange }
             onKeyDown = { this._onKeyDown }
-            value = { this.state.value }
+            value = { value }
             autoFocus = { true} />
     }
     
     _save() {
-        this.props.onSave(this.state.value);
-        this.setState({ value: '' });
+        this.props.onSave( this.state.value );
+        this.setState({ valueSet: false });
     } 
    
+    _onBlur() {
+        this.setState({ valueSet: false });
+    } 
+
     _onChange(event) {
-        this.setState({ value: event.target.value });
+        this.setState({ value: event.target.value, valueSet: true });
     } 
 
     _onKeyDown(event) {

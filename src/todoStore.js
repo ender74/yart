@@ -17,7 +17,7 @@ var assign = require('object-assign')
 var CHANGE_EVENT = 'change'
 
 var _todos = {}
-var activeTodo
+var activeTodo = {}
 
 /**
  * Create a TODO item.
@@ -80,7 +80,7 @@ function destroyCompleted() {
  * @param  {string} id
  */
 function activate(id) {
-    activeTodo = _todos[id]
+    activeTodo.id = _todos[id].id
 }
 
 /**
@@ -88,7 +88,7 @@ function activate(id) {
  * @param  {string} id
  */
 function deactivate() {
-    activeTodo = undefined
+    activeTodo = {}
 }
 
 var TodoStore = assign({}, EventEmitter.prototype, {
@@ -106,7 +106,8 @@ var TodoStore = assign({}, EventEmitter.prototype, {
     },
     
     getActive: function(id) {
-        return activeTodo
+        if (activeTodo.id)
+            return this.get(activeTodo.id)
     },
 
     get: function (id) {
@@ -157,6 +158,8 @@ var TodoStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function (action) {
     var text
     
+    console.log( action.actionType )
+    
     switch (action.actionType) {
         case TodoConstants.TODO_CREATE:
             text = action.text.trim()
@@ -185,12 +188,9 @@ AppDispatcher.register(function (action) {
             TodoStore.emitChange()
             break
 
-        case TodoConstants.TODO_UPDATE_TEXT:
-            text = action.text.trim()
-            if (text !== '') {
-                update(action.id, { text: text })
-                TodoStore.emitChange()
-            }
+        case TodoConstants.TODO_UPDATE:
+            update(action.id, action.newTodo)
+            TodoStore.emitChange()
             break
 
         case TodoConstants.TODO_DESTROY:
