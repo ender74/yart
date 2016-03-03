@@ -93,12 +93,11 @@ var styles = {
     },
 
     newTodoText: {
-        'background': 'rgba(128,128,33,0.7)',
+        'background': 'rgba(160,160,66,0.7)',
         'border': 'none',
-        'border-radius': '1px',
-        'box-shadow': '0px 0px 0px 8px rgba(128,128,33,0.7)', 
-        'padding': '0.5em 0.5em 0.5em 0.5em',
-        'margin': '0.5em 0.5em 0em 0.5em',
+        'border-radius': '10px',
+        'padding': '1.0em 0.5em 1.0em 0.5em',
+        'margin': '0em 0em 0em 0.5em',
         'width': '95%'
     },
 
@@ -124,8 +123,7 @@ var styles = {
     editText: {
         'background': 'rgba(128,128,128,0.5)',
         'border': 'none',
-        'border-radius': '1px',
-        'box-shadow': '0px 0px 0px 8px rgba(128,128,128,0.5)', 
+        'border-radius': '10px',
         'padding': '0.5em 0.5em 0.5em 0.5em',
         'margin': '10px 10px 10px 10px'
     },
