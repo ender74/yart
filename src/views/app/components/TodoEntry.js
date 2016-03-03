@@ -15,8 +15,8 @@ class TodoEntry extends Component {
     render() {
         const todo = this.props.todo
         const styleName = this.props.active ? 'active' : 'default'
-        return <Label style={ [styles.base, styles[styleName]] } key={ todo.id } text={ todo.text } onClick={ this._onToggleActiveClick }>
-               <ButtonBar style= { styles.buttonBar }>
+        return <Label style={ [styles.base, styles[styleName]] } key={ todo.id } text={ todo.text }>
+               <ButtonBar style= { styles.buttonBar }> 
                     <Button onClick={ this._onToggleActiveClick } tooltip='Eintrag bearbeiten' image="icons/black-wrench.svg" />
                     <Button onClick={ this._onDestroyClick } tooltip='Eintrag löschen' image="icons/delete-button.svg" />
                </ButtonBar>

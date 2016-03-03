@@ -28,11 +28,11 @@ var TodoActions = {
    * @param  {string} id The ID of the ToDo item
    * @param  {string} text
    */
-  updateText: function(id, text) {
+  update: function(id, newTodo) {
     AppDispatcher.dispatch({
-      actionType: TodoConstants.TODO_UPDATE_TEXT,
+      actionType: TodoConstants.TODO_UPDATE,
       id: id,
-      text: text
+      newTodo: newTodo
     })
   },
 

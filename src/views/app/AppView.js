@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Todos from './todos'
+import Todos from './components/Todos'
 import TodoConstants from '../../todoConstants'
 import TodoStore from '../../todoStore'
 import AppDispatcher from '../../appDispatcher'
