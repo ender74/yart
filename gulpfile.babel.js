@@ -9,6 +9,7 @@ import browserify from 'browserify'
 import watchify from 'watchify'
 import babelify from 'babelify'
 import streamify from 'gulp-streamify'
+import globify from 'require-globify'
 
 var path = {
     STATIC: ['src/static/**/*.*'],

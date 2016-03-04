@@ -3,6 +3,7 @@ import Radium from 'radium'
 import color from 'color'
 
 import TodoTextInput from './TodoTextInput'
+import DateTimeInput from './DateTimeInput'
 import ButtonBar from './ButtonBar'
 import Button from './Button'
 
@@ -13,6 +14,9 @@ class TodoDetails extends Component {
     constructor(props) {
         super(props)
         this._onUpdateText = this._onUpdateText.bind(this)
+        this._onUpdateDue = this._onUpdateDue.bind(this)
+        this._onUpdateURL = this._onUpdateURL.bind(this)
+        this._onUpdateLocation = this._onUpdateLocation.bind(this)
         this._onClose = this._onClose.bind(this)
     }
         
@@ -23,6 +27,18 @@ class TodoDetails extends Component {
                         style={ styles.editText }
                         defaultValue={ this.props.text } 
                         onSave={ this._onUpdateText } />
+                    <TodoTextInput
+                        style={ styles.editText }
+                        defaultValue={ this.props.url } 
+                        onSave={ this._onUpdateURL } />
+                    <DateTimeInput
+                        style={ styles.editText }
+                        defaultValue={ this.props.due } 
+                        onSave={ this._onUpdateDue } />
+                    <TodoTextInput
+                        style={ styles.editText }
+                        defaultValue={ this.props.location } 
+                        onSave={ this._onUpdateLocation } />
                     <ButtonBar style= { styles.buttonBar }>
                         <Button className='editButton' onClick={ this._onClose } text='X' />
                     </ButtonBar>
@@ -31,6 +47,18 @@ class TodoDetails extends Component {
     
     _onUpdateText(text) {
         TodoActions.update(this.props.id, { text: text } )
+    }
+
+    _onUpdateDue(text) {
+        TodoActions.update(this.props.id, { due: text } )
+    }
+
+    _onUpdateURL(text) {
+        TodoActions.update(this.props.id, { url: text } )
+    }
+
+    _onUpdateLocation(text) {
+        TodoActions.update(this.props.id, { location: text } )
     }
 
     _onClose() {
@@ -55,7 +83,7 @@ var styles = {
         'background': 'rgba(128,128,128,0.5)',
         'border': 'none',
         'border-radius': '10px',
-        'padding': '0.5em 0.5em 0.5em 0.5em',
+        'padding': '10px 10px 10px 10px',
         'margin': '10px 10px 10px 10px'
     },
 

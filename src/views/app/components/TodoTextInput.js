@@ -31,21 +31,21 @@ class TodoTextInput extends Component {
     }
     
     _save() {
-        this.props.onSave( this.state.value );
-        this.setState({ valueSet: false });
+        this.props.onSave( this.state.value )
+        this.setState({ valueSet: false })
     } 
    
     _onBlur() {
-        this.setState({ valueSet: false });
+        this.setState({ valueSet: false })
     } 
 
     _onChange(event) {
-        this.setState({ value: event.target.value, valueSet: true });
+        this.setState({ value: event.target.value, valueSet: true })
     } 
 
     _onKeyDown(event) {
         if (event.keyCode === ENTER_KEY_CODE) {
-            this._save();
+            this._save()
         }
     }
 }
