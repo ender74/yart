@@ -11,12 +11,14 @@ class TodoEntry extends Component {
         super(props)
         this._onDestroyClick=this._onDestroyClick.bind(this)
         this._onToggleActiveClick=this._onToggleActiveClick.bind(this)
+        this._onOpenURL=this._onOpenURL.bind(this)
     }
     render() {
         const todo = this.props.todo
         const styleName = this.props.active ? 'active' : 'default'
         return <Label style={ [styles.base, styles[styleName]] } key={ todo.id } text={ todo.text }>
                <ButtonBar style= { styles.buttonBar }> 
+                    <Button hidden = { !todo.url } onClick={ this._onOpenURL } tooltip='Link öffnen' image="icons/link-button.svg" />
                     <Button onClick={ this._onToggleActiveClick } tooltip='Eintrag bearbeiten' image="icons/black-wrench.svg" />
                     <Button onClick={ this._onDestroyClick } tooltip='Eintrag löschen' image="icons/delete-button.svg" />
                </ButtonBar>
@@ -32,6 +34,10 @@ class TodoEntry extends Component {
 
     _onDestroyClick() {
         TodoActions.destroy(this.props.todo.id)
+    }
+
+    _onOpenURL() {
+        window.open(this.props.todo.url)
     }
 }
 
