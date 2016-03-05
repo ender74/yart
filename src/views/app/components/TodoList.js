@@ -5,7 +5,9 @@ class TodoList extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            'showAll': false
         }
+        this._toggleShowAll=this._toggleShowAll.bind(this)
     }
     render() {
         if (Object.keys(this.props.todos).length < 1) {
@@ -16,14 +18,26 @@ class TodoList extends Component {
 
         for (var key in allTodos) {
             const todo = allTodos[key]
-            entries.push(<TodoEntry key={key} todo={todo} active={this.props.active==todo}/>)
+            if (this.filterTodo(todo))
+                entries.push(<TodoEntry key={key} todo={todo} active={this.props.active==todo}/>)
         }
         
         return(
             <div style={ styles.base }>
             { entries }
+            <input style={ styles.chk } type="checkbox" onClick={this._toggleShowAll}>Alle zeigen</input>
             </div>
         )
+    }
+    
+    _toggleShowAll() {
+        this.setState({
+            'showAll': !this.state.showAll
+        })
+    }
+    
+    filterTodo(todo) {
+        return this.state.showAll || !todo.complete
     }
 }
 
@@ -34,6 +48,9 @@ TodoList.propTypes={
 var styles = {
     base: {
         width: '95%'
+    },
+    chk: {
+        'margin-top': '10px'
     }
 }
 

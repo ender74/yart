@@ -9,14 +9,15 @@ import TodoActions from '../../../todoActions'
 class TodoEntry extends Component {
     constructor(props) {
         super(props)
-        this._onDestroyClick=this._onDestroyClick.bind(this)
-        this._onToggleActiveClick=this._onToggleActiveClick.bind(this)
-        this._onOpenURL=this._onOpenURL.bind(this)
+        this._onDestroyClick = this._onDestroyClick.bind(this)
+        this._onToggleActiveClick = this._onToggleActiveClick.bind(this)
+        this._onToggleCompleteClick = this._onToggleCompleteClick.bind(this)
+        this._onOpenURL = this._onOpenURL.bind(this)
     }
     render() {
         const todo = this.props.todo
         const styleName = this.props.active ? 'active' : 'default'
-        return <Label style={ [styles.base, styles[styleName]] } key={ todo.id } text={ todo.text }>
+        return <Label style={ [styles.base, styles[styleName]] } onCheck={ this._onToggleCompleteClick } checked={ todo.complete } key={ todo.id } text={ todo.text }>
                <ButtonBar style= { styles.buttonBar }> 
                     <Button hidden = { !todo.url } onClick={ this._onOpenURL } tooltip='Link öffnen' image="icons/link-button.svg" />
                     <Button onClick={ this._onToggleActiveClick } tooltip='Eintrag bearbeiten' image="icons/black-wrench.svg" />
@@ -34,6 +35,10 @@ class TodoEntry extends Component {
 
     _onDestroyClick() {
         TodoActions.destroy(this.props.todo.id)
+    }
+
+    _onToggleCompleteClick() {
+        TodoActions.toggleComplete(this.props.todo)
     }
 
     _onOpenURL() {

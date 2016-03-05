@@ -7,7 +7,10 @@ class Label extends Component {
             style={ this.props.style } 
             key={ this.props.id }
             className={ this.props.className }> 
-            <label style={ styles.lbl } onClick={ this.props.onClick }> { this.props.text } </label> 
+            <label style={ styles.lbl } onClick={ this.props.onClick }> 
+                <input style={ this.props.onCheck ? styles.chk : styles.hidden } type='checkbox' 
+                    onClick={ this.props.onCheck } checked={ this.props.checked } /> 
+                { this.props.text } </label> 
             { this.props.children } 
         </div>
     }
@@ -17,6 +20,12 @@ var styles = {
   lbl: {
     'display': 'table-cell', 
     'vertical-align': 'middle'
+  },
+  chk: {
+      
+  },
+  hidden: {
+      'display': 'none'
   }
 }
 
