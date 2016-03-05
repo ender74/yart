@@ -66,7 +66,7 @@ var styles = {
     },
 
     newTodoText: {
-        'background': 'rgba(160,160,66,0.7)',
+        'background': 'rgba(220,220,110,0.7)',
         'border': 'none',
         'border-radius': '10px',
         'padding': '1.0em 0.5em 1.0em 0.5em',

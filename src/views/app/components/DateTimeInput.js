@@ -24,6 +24,12 @@ class DateTimeInput extends Component {
         this.closeModal = this.closeModal.bind(this)
     }
         
+    componentDidMount() { 
+    }
+    
+    componentWillUnmount() { 
+    }
+
     render() {
         const value = this.state.valueSet ? this.state.value : this.formatUTCText(this.props.defaultValue)
         const valuePick = value ? this.parse(value).toDate() : value
@@ -76,12 +82,13 @@ class DateTimeInput extends Component {
     }
     
     _save() {
-        this.props.onSave( this.parse(this.state.value).toISOString() )
+        if (this.state.value)
+            this.props.onSave( this.parse(this.state.value).toISOString() )
         this.setState({ valueSet: false })
     } 
    
     _onBlur() {
-        this.setState({ valueSet: false })
+        this._save()
     } 
 
     _onChange(event) {
@@ -90,7 +97,8 @@ class DateTimeInput extends Component {
     } 
 
     _onChangePick(date, moment) {
-        this.setState({ value: this.format(moment), valueSet: true })
+        this.props.onSave( moment.toISOString() )
+        this.setState({ valueSet: false })
         this.closeModal()
     } 
 
@@ -109,7 +117,7 @@ const styles = {
             left              : 0,
             right             : 0,
             bottom            : 0,
-            backgroundColor   : 'rgba(255, 255, 255, 0.75)'
+            backgroundColor   : 'rgba(255, 255, 255, 0.3)'
         },
         content : {
             position                   : 'absolute',

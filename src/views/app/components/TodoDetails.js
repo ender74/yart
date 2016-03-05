@@ -25,11 +25,13 @@ class TodoDetails extends Component {
         return <aside style={ styles[editAreaStyle] }>
                     <TodoTextInput
                         style={ styles.editText }
+                        mandatory = 'true'
                         defaultValue={ this.props.text } 
                         onSave={ this._onUpdateText } />
                     <TodoTextInput
                         style={ styles.editText }
                         defaultValue={ this.props.url } 
+                        placeholder='http://www.log84.de'
                         onSave={ this._onUpdateURL } />
                     <DateTimeInput
                         style={ styles.editText }
@@ -72,7 +74,7 @@ var styles = {
         'flex': '1 6 40%',
         '-webkit-order': '2',
         'order': '2',
-        'background': 'rgba(228,228,228,0.5)',
+        'background': 'rgba(255,255,255,0.3)',
         'display': '-webkit-flex',
         '-webkit-flex-direction': 'column',
         'display': 'flex',
@@ -80,7 +82,7 @@ var styles = {
     },
     
     editText: {
-        'background': 'rgba(128,128,128,0.5)',
+        'background': 'rgba(255,255,255,0.7)',
         'border': 'none',
         'border-radius': '10px',
         'padding': '10px 10px 10px 10px',

@@ -31,12 +31,13 @@ class TodoTextInput extends Component {
     }
     
     _save() {
-        this.props.onSave( this.state.value )
+        if (this.state.value || !this.props.mandatory)
+            this.props.onSave( this.state.value )
         this.setState({ valueSet: false })
     } 
    
     _onBlur() {
-        this.setState({ valueSet: false })
+        this._save()
     } 
 
     _onChange(event) {
