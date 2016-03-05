@@ -9,7 +9,7 @@ class AppView extends Component {
     render() {
         return <div>
                 <header style={ styles.header }>
-                    <a href='http://www.log84.de'>Log84.de</a>< hr />
+                    <a href='http://www.log84.de'>Log84.de</a>
                 </header>
                 <div style={ styles.main }>
                     <Todos />
@@ -24,12 +24,22 @@ class AppView extends Component {
 
 const styles = {
     header: {
+        'background': 'rgba(255,255,255,0.3)',
+        'position': 'fixed',
+        'top': '0',
+        'left': '0px',
+        'z-index': '100000',
+        'min-height': '40px',
+        'margin': 'auto',
+        'padding': '5px',
+        'width': '100%'
     },
     main: {
-        'margin-top': '2.0em'        
+        'margin-top': '60px',       
+        'min-height': '300px'
     },
     footer: {
-        'margin-top': '2.0em'
+        'margin-top': '20px'
     }
 }
 

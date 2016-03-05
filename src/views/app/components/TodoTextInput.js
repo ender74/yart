@@ -31,7 +31,7 @@ class TodoTextInput extends Component {
     }
     
     _save() {
-        if (this.state.value || !this.props.mandatory)
+        if (this.state.valueSet && (this.state.value || !this.props.mandatory))
             this.props.onSave( this.state.value )
         this.setState({ valueSet: false })
     } 

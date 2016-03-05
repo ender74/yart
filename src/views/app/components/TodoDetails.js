@@ -21,8 +21,7 @@ class TodoDetails extends Component {
     }
         
     render() {
-        const editAreaStyle = this.props.id ? 'editTodoArea' : 'hidden'
-        return <aside style={ styles[editAreaStyle] }>
+        return <aside style={ this.props.style }>
                     <TodoTextInput
                         style={ styles.editText }
                         mandatory = 'true'
@@ -68,29 +67,13 @@ class TodoDetails extends Component {
     }
 }
 
-var styles = {
-    editTodoArea: {
-        '-webkit-flex': '1 6 40%',
-        'flex': '1 6 40%',
-        '-webkit-order': '2',
-        'order': '2',
-        'background': 'rgba(255,255,255,0.3)',
-        'display': '-webkit-flex',
-        '-webkit-flex-direction': 'column',
-        'display': 'flex',
-        'flex-direction': 'column'
-    },
-    
+var styles = {    
     editText: {
         'background': 'rgba(255,255,255,0.7)',
         'border': 'none',
         'border-radius': '10px',
         'padding': '10px 10px 10px 10px',
         'margin': '10px 10px 10px 10px'
-    },
-
-    hidden: {
-        'display': 'none'
     },
     
     buttonBar: {

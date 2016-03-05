@@ -37,14 +37,14 @@ class Todos extends Component {
     render() {
         const todo = this.state.active
         return <section style={ styles.todosArea }>
-                <article style={ styles.todoList }>
+                <article style={ todo ?  styles.todoList.active : styles.todoList.default }>
                     <TodoTextInput
                         style={ styles.newTodoText }
                         placeholder="+ Einen neuen Eintrag hinzufügen" 
                         onSave={this._onAddNew} />
                     <TodoList active={ todo } todos={ this.state.allTodos } />
                 </article>
-                <TodoDetails {...todo }/>
+                <TodoDetails style = { todo ? styles.editTodoArea : styles.hidden } {...todo }/>
             </section>
     }
     
@@ -59,31 +59,44 @@ class Todos extends Component {
 
 var styles = {
     todosArea: {
-        'display': '-webkit-flex',
-        '-webkit-flex-direction': 'row',
-        'display': 'flex',
-        'flex-direction': 'row'
     },
 
     newTodoText: {
-        'background': 'rgba(220,220,110,0.7)',
+        'background': 'rgba(0,200,255,0.7)',
         'border': 'none',
         'border-radius': '10px',
         'padding': '1.0em 0.5em 1.0em 0.5em',
-        'margin': '0em 0em 0em 0.5em',
         'width': '95%'
     },
 
-   todoList: {
-        '-webkit-flex': '3 1 60%',
-        'flex': '3 1 60%',
-        '-webkit-order': '1',
-        'order': '1'        
+    todoList: {
+        'default': {
+            'width': '100%'
+        },
+        'active': {
+            'width': '60%'
+        }
     },
         
     buttonBar: {
         'float': 'right'
-    }
+    },
+    
+    editTodoArea: {
+        'background': 'rgba(255,255,255,0.3)',
+        'width': '40%',
+        'position': 'fixed',
+        'top': '60px',
+        'left': '60%',
+        'display': '-webkit-flex',
+        '-webkit-flex-direction': 'column',
+        'display': 'flex',
+        'flex-direction': 'column'
+    },
+    
+    hidden: {
+        'display': 'none'
+    },
 }
 
 export default Radium(Todos)
