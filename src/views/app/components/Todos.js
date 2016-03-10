@@ -88,8 +88,6 @@ var styles = {
         'position': 'fixed',
         'top': '60px',
         'left': '60%',
-        'display': '-webkit-flex',
-        '-webkit-flex-direction': 'column',
         'display': 'flex',
         'flex-direction': 'column'
     },
