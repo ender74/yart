@@ -15,12 +15,18 @@
         {
             "id": "letsencrypt",
             "text": "Let's encrypt",
-            "url": "https://letsencrypt.org/"
+            "url": "https://letsencrypt.org/",
+            "complete": "true"
         },
         {
             "id": "redux",
             "text": "Full stack redux tutorial",
             "url": "http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html"
+        },
+        {
+            "id": "reflux",
+            "text": "flux vs. reflux",
+            "url": "http://blog.krawaller.se/posts/react-js-architecture-flux-vs-reflux/"  
         }
     ]
 

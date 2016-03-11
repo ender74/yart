@@ -135,11 +135,11 @@ const styles = {
         }
     },
     buttonBar: {
-        'display': 'table-cell', 
-        'vertical-align': 'middle'
+        display: 'table-cell', 
+        verticalAlign: 'middle'
     },
     base: {
-        'display': 'table'
+        display: 'table'
     }
 }
 

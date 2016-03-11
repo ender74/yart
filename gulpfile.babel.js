@@ -14,7 +14,7 @@ import globify from 'require-globify'
 var path = {
     STATIC: ['src/static/**/*.*'],
     ALL: ['src/**/*.js', 'src/static/**/*.*'],
-    ENTRY_POINT: ['src/app.js'],
+    ENTRY_POINT: ['src/start.js'],
     MINIFIED_OUT: 'build.min.js',
     DEST_SRC: 'dist/src',
     DEST_BUILD: 'dist/',

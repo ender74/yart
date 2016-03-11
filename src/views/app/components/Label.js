@@ -18,14 +18,14 @@ class Label extends Component {
 
 var styles = {
   lbl: {
-    'display': 'table-cell', 
-    'vertical-align': 'middle'
+    display: 'table-cell', 
+    verticalAlign: 'middle'
   },
   chk: {
       
   },
   hidden: {
-      'display': 'none'
+      display: 'none'
   }
 }
 

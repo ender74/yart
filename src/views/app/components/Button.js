@@ -15,7 +15,7 @@ var styles = {
   btn: {
     background: 'none',
     padding: '1px 6px 1px 6px',
-    'border-style': 'none',
+    borderStyle: 'none',
  
     ':hover': {
       background: color('#CCCCCC').lighten(0.2).hexString()
@@ -24,7 +24,7 @@ var styles = {
   img: {
     width: '24px',
     height: '24px',
-    'vertical-align': 'middle'  //Text zur Bildmitte ausrichten
+    verticalAlign: 'middle'  //Text zur Bildmitte ausrichten
   },
   hidden: {
       'display': 'none'
