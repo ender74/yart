@@ -25,7 +25,7 @@ class TodoList extends Component {
         return(
             <div style={ styles.base }>
             { entries }
-            <input style={ styles.chk } type="checkbox" onClick={this._toggleShowAll}>Alle zeigen</input>
+            <input style={ styles.chk } type='checkbox' onClick={this._toggleShowAll} />Alle zeigen
             </div>
         )
     }
@@ -47,10 +47,10 @@ TodoList.propTypes={
 
 var styles = {
     base: {
-        width: '95%'
+        width: '100%'
     },
     chk: {
-        'margin-top': '10px'
+        'marginTop': '10px'
     }
 }
 

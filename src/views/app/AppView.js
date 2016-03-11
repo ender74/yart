@@ -1,45 +1,66 @@
 import React, { Component } from 'react'
+import Radium from 'radium'
 
-import Todos from './components/Todos'
-import TodoConstants from '../../todoConstants'
-import TodoStore from '../../todoStore'
-import AppDispatcher from '../../appDispatcher'
+import { Router, Route, Link, browserHistory } from 'react-router'
 
-class AppView extends Component {
+import TodosView from './todos/TodosView'
+import LoginView from './login/LoginView'
+
+class App extends Component {
     render() {
         return <div>
                 <header style={ styles.header }>
                     <a href='http://www.log84.de'>Log84.de</a>
+                    <Link to='/login'>Login</Link><br/>
                 </header>
                 <div style={ styles.main }>
-                    <Todos />
+                    { this.props.children }
                 </div>
                 <footer style={ styles.footer }>
-                    <hr/>
                     <a href="http://www.flaticon.com/authors/freepik">Icon design by Freepik</a> 
                 < /footer>
-            </div>
+        </div>
     }
 }
 
 const styles = {
     header: {
-        'background': 'rgba(255,255,255,0.3)',
-        'position': 'fixed',
-        'top': '0',
-        'left': '0px',
-        'z-index': '100000',
-        'min-height': '40px',
-        'margin': 'auto',
-        'padding': '5px',
-        'width': '100%'
+        background: 'rgba(255,255,255,0.9)',
+        position: 'fixed',
+        top: '0',
+        left: '0px',
+        zIndex: '100000',
+        minHeight: '40px',
+        padding: '5px',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column'
     },
     main: {
-        'margin-top': '60px',       
-        'min-height': '300px'
+        'margin': '60px 15px 0px 0px',       
+        'minHeight': '300px'
     },
     footer: {
-        'margin-top': '20px'
+        background: 'rgba(255,255,255,0.9)',
+        position: 'fixed',
+        bottom: '0px',
+        left: '0px',
+        width: '100%',
+        zIndex: '100000',
+        height: '40px',
+        padding: '15px 0px 0px 10px'
+    }
+}
+
+
+class AppView extends Component {
+    render() {
+        return <Router history={ browserHistory }>
+            <Route path='/' component= { Radium(App) } >
+                <Route path='login' component= { LoginView } />
+                <Route path='app' component= { TodosView } />
+            </Route>
+        </Router>
     }
 }
 

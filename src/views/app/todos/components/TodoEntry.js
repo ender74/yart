@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Radium from 'radium'
 
-import Button from './Button'
-import ButtonBar from './ButtonBar'
-import Label from './Label'
-import TodoActions from '../../../todoActions'
+import Button from '../../components/Button'
+import ButtonBar from '../../components/ButtonBar'
+import Label from '../../components/Label'
+
+import TodoActions from '../../../../todoActions'
 
 class TodoEntry extends Component {
     constructor(props) {
@@ -52,16 +53,16 @@ var styles = {
             'padding': '0.5em 0.5em 0.5em 0.5em',
             'margin': '0.5em 0em 0em 0em',
             'width': '100%',
-            'border-radius': '10px',
+            'borderRadius': '10px',
             'color': '#000000'
         },
         default: {
             'background': 'rgba(255, 255, 255, 0.7)',
-            'font-weight': 'normal'
+            'fontWeight': 'normal'
         },
         active: {
             'background': 'rgba(255, 255, 255, 0.7)',
-            'font-weight': 'bold'
+            'fontWeight': 'bold'
         },
         buttonBar: {
             'float': 'right'

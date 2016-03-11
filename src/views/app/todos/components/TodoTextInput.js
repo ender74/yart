@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Radium from 'radium'
 
-import Input from './Input'
+import Input from '../../components/Input'
 
 const ENTER_KEY_CODE = 13
 
