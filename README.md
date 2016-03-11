@@ -2,10 +2,11 @@
 
 - [Summary](#summary)
 - [Installation](#installation)
+- [Deployment](#deployment-with-docker)
 - [TODO List](#todo-list)
 
 #### Summary
-Yet another react TODO list. To try it goto the [example page](https://rawgit.com/ender74/yart/master/dist/index.html).
+Yet another react TODO list. To try it goto the [example page](https://www.log84.de).
 
 #### Installation
 follow these steps to get the project running (assuming you have node and npm already installed):
@@ -15,6 +16,9 @@ follow these steps to get the project running (assuming you have node and npm al
     npm install
 
     gulp
+    
+#### Deployment with Docker
+you need to install docker and docker-compose. Then you can just do an docker-compose up to get an running server.
 
 #### TODO List
 - [ ] basic implementation
