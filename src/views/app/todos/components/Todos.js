@@ -8,29 +8,18 @@ import TodoDetails from './TodoDetails'
 import ButtonBar from '../../components/ButtonBar'
 import Button from '../../components/Button'
 
-import TodoActions from '../../../../todoActions'
-
-class Todos extends Component {
-    constructor(props) {
-        super(props)
-        this._onAddNew = this._onAddNew.bind(this)
-    }
-    
-    render() {
-        return <section style={ [ this.props.style, styles.todosArea] }>
-                <article style={ styles.todoList }>
-                    <TodoTextInput
-                        style={ styles.newTodoText }
-                        placeholder="+ Einen neuen Eintrag hinzufügen" 
-                        onSave={ this._onAddNew } />
-                    <TodoList active={ this.props.activeTodo } todos={ this.props.allTodos } />
-                </article>
-            </section>
-    }
-    
-    _onAddNew(text) {
-        TodoActions.create(text)
-    }
+const Todos = ( { style, allTodos, activeTodo, children, addNewTodo, toggleActive, toggleComplete, destroyTodo, openURL } ) => {
+    return <section style={ [ style, styles.todosArea] }>
+            <article style={ styles.todoList }>
+                <TodoTextInput
+                    style={ styles.newTodoText }
+                    placeholder="+ Einen neuen Eintrag hinzufügen" 
+                    onSubmitEditing={ addNewTodo } />
+                <TodoList active={ activeTodo } todos={ allTodos } onToggleTodoCompleteClick={ toggleComplete }
+                    onToggleTodoActiveClick={ toggleActive } onDestroyClick={ destroyTodo } onOpenURL={ openURL } />
+                { children }
+            </article>
+        </section>
 }
 
 var styles = {

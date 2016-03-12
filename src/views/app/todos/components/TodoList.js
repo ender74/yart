@@ -1,56 +1,49 @@
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
+
 import TodoEntry from './TodoEntry'
+import Button from '../../components/Button'
+import ButtonBar from '../../components/ButtonBar'
 
-class TodoList extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            'showAll': false
-        }
-        this._toggleShowAll=this._toggleShowAll.bind(this)
+const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoCompleteClick, onDestroyClick, onOpenURL } ) => {
+    if (todos === undefined || Object.keys(todos).length < 1) {
+        return <div/>
     }
-    render() {
-        if (Object.keys(this.props.todos).length < 1) {
-            return null
-        }
-        var allTodos = this.props.todos
-        var entries = []
+    var entries = []
 
-        for (var key in allTodos) {
-            const todo = allTodos[key]
-            if (this.filterTodo(todo))
-                entries.push(<TodoEntry key={key} todo={todo} active={this.props.active==todo}/>)
-        }
-        
-        return(
-            <div style={ styles.base }>
-            { entries }
-            <input style={ styles.chk } type='checkbox' onClick={this._toggleShowAll} />Alle zeigen
-            </div>
+    for (var key in todos) {
+        const todo = todos[key]
+        entries.push(<TodoEntry key={ key } todo={ todo } active={ active==todo } 
+            onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
+            <ButtonBar style= { styles.buttonBar }> 
+                <Button hidden = { !todo.url } onClick={ () => onOpenURL(todo) } tooltip='Link öffnen' image="icons/link-button.svg" />
+                <Button onClick={ () => onToggleTodoActiveClick( todo ) } tooltip='Eintrag bearbeiten' image="icons/black-wrench.svg" />
+                <Button onClick={ () => onDestroyClick(todo) } tooltip='Eintrag löschen' image="icons/delete-button.svg" />
+            </ButtonBar>
+        </TodoEntry>
         )
     }
     
-    _toggleShowAll() {
-        this.setState({
-            'showAll': !this.state.showAll
-        })
-    }
-    
-    filterTodo(todo) {
-        return this.state.showAll || !todo.complete
-    }
+    return(
+        <div style={ styles.base }>
+        { entries }
+        </div>
+    )
 }
 
 TodoList.propTypes={ 
-    todos: React.PropTypes.object.isRequired 
+    todos: PropTypes.array.isRequired,
+    active: PropTypes.object,
+    onToggleTodoActiveClick: PropTypes.func, 
+    onDestroyClick: PropTypes.func, 
+    onOpenURL: PropTypes.func
 }
 
 var styles = {
     base: {
         width: '100%'
     },
-    chk: {
-        'marginTop': '10px'
+    buttonBar: {
+        'float': 'right'
     }
 }
 

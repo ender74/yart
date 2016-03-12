@@ -1,12 +1,15 @@
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
 import Radium from 'radium'
 
-class ButtonBar extends Component {
-    render() {        
-        return <div style= { this.props.style }> 
-                    { this.props.children }
-               </div> 
-    }
+const ButtonBar = ( { style, children } ) => {
+    return <div style= { style }> 
+                { children }
+            </div> 
+}
+
+ButtonBar.propTypes={ 
+    style: PropTypes.object,
+    children: PropTypes.node.isRequired
 }
 
 export default Radium(ButtonBar)

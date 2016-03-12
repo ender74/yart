@@ -1,70 +1,43 @@
 import React, { Component } from 'react'
 import Radium from 'radium'
 import color from 'color'
+import {reduxForm} from 'redux-form'
 
-import TodoTextInput from './TodoTextInput'
+import Input from '../../components/Input'
 import DateTimeInput from '../../components/DateTimeInput'
 import ButtonBar from '../../components/ButtonBar'
 import Button from '../../components/Button'
 
-import TodoActions from '../../../../todoActions'
-
 class TodoDetails extends Component {
-    constructor(props) {
-        super(props)
-        this._onUpdateText = this._onUpdateText.bind(this)
-        this._onUpdateDue = this._onUpdateDue.bind(this)
-        this._onUpdateURL = this._onUpdateURL.bind(this)
-        this._onUpdateLocation = this._onUpdateLocation.bind(this)
-        this._onClose = this._onClose.bind(this)
-    }
-        
     render() {
+        const {fields: {text, url, due, location}, handleSubmit} = this.props
         return <aside style={ this.props.style }>
-                    <div style={ styles.editTodoArea }>
-                        <TodoTextInput
-                            style={ styles.editText }
-                            mandatory = 'true'
-                            defaultValue={ this.props.text } 
-                            onSave={ this._onUpdateText } />
-                        <TodoTextInput
-                            style={ styles.editText }
-                            defaultValue={ this.props.url } 
-                            placeholder='http://www.log84.de'
-                            onSave={ this._onUpdateURL } />
-                        <DateTimeInput
-                            style={ styles.editText }
-                            defaultValue={ this.props.due } 
-                            onSave={ this._onUpdateDue } />
-                        <TodoTextInput
-                            style={ styles.editText }
-                            defaultValue={ this.props.location } 
-                            onSave={ this._onUpdateLocation } />
-                        <ButtonBar style= { styles.buttonBar }>
-                            <Button className='editButton' onClick={ this._onClose } text='X' />
-                        </ButtonBar>
-                    </div>
-                </aside>
-    }
-    
-    _onUpdateText(text) {
-        TodoActions.update(this.props.id, { text: text } )
-    }
-
-    _onUpdateDue(text) {
-        TodoActions.update(this.props.id, { due: text } )
-    }
-
-    _onUpdateURL(text) {
-        TodoActions.update(this.props.id, { url: text } )
-    }
-
-    _onUpdateLocation(text) {
-        TodoActions.update(this.props.id, { location: text } )
-    }
-
-    _onClose() {
-        TodoActions.deactivate()
+            <div style={ styles.editTodoArea }>
+                <Input
+                    type = 'text'
+                    style={ styles.editText }
+                    {...text} />
+                <Input
+                    type = 'text'
+                    style={ styles.editText }
+                    placeholder='http://www.log84.de'
+                    {...url} />
+                <DateTimeInput
+                    type = 'text'
+                    style={ styles.editText }
+                    placeholder='17.03.2016'
+                    onSave = { (text) => this.props.update( this.props.todo, 'due', text ) }
+                    {...due} />
+                <Input
+                    type = 'text'
+                    style={ styles.editText }
+                    {...location} />
+                <ButtonBar style= { styles.buttonBar }>
+                    <Button tooltip='Fenster schließen' onClick={ () => this.props.onClose( this.props.todo ) } text='X' />
+                    <Button tooltip='Änderungen speichern' onClick={ handleSubmit } text='U' />
+                </ButtonBar>
+            </div>
+        </aside>
     }
 }
 
@@ -88,4 +61,14 @@ var styles = {
     }
 }
 
-export default Radium(TodoDetails)
+const TodoDetailsForm = reduxForm({ 
+  form: 'todoDetails',                           
+  fields: ['text', 'url', 'due', 'location'] 
+},
+state => ({ 
+  initialValues: state.todos.activeTodo
+}),
+{}
+)(Radium(TodoDetails))
+
+export default TodoDetailsForm

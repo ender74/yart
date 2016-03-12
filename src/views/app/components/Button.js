@@ -1,17 +1,24 @@
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
 import Radium from 'radium'
 import color from 'color'
 
-class Button extends Component {
-    render() {
-        return <button title={ this.props.tooltip } style={ this.props.hidden ? styles.hidden : [ styles.btn, this.props.style ] } className={ this.props.className } onClick={ this.props.onClick }>
-            {this.props.image ? <img style={ styles.img } align='middle' src={ this.props.image } /> : ''}
-            {this.props.text ? this.props.text : ''}
-        </button>
-    }
+const Button = ( { tooltip, style, hidden, image, text, onClick } ) => {
+    return <button title={ tooltip } style={ hidden ? styles.hidden : [ styles.btn, style ] } onClick={ onClick }>
+        { image ? <img style={ styles.img } align='middle' src={ image } /> : ''}
+        { text ? text : ''}
+    </button>
 }
 
-var styles = {
+Button.propTypes={ 
+    tooltip: PropTypes.string.isRequired,
+    style: PropTypes.object,
+    hidden: PropTypes.bool,
+    image: PropTypes.string,
+    text: PropTypes.string,
+    onClick: PropTypes.func.isRequired 
+}
+
+const styles = {
   btn: {
     background: 'none',
     padding: '1px 6px 1px 6px',
