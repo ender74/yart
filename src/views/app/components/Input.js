@@ -1,19 +1,11 @@
 import React, { Component } from 'react'
-import Radium from 'radium'
+import ErrorDecorator from './ErrorDecorator'
 
 class Input extends Component {
     render() {
-        return <input 
-            style={ this.props.style }
-            className={ this.props.className }
-            id = { this.props.id }
-            placeholder = { this.props.placeholder }
-            onBlur = { this.props.onBlur }
-            onChange = { this.props.onChange }
-            onKeyDown = { this.props.onKeyDown }
-            value = { this.props.value }
-            autoFocus = { this.props.autofocus } />
+        const { error, touched } = this.props
+        return <ErrorDecorator error={ error } touched={ touched }><input {...this.props} /></ErrorDecorator>
     }
 }
 
-export default Radium(Input)
+export default Input

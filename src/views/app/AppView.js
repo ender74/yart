@@ -1,45 +1,39 @@
 import React, { Component } from 'react'
+import Radium from 'radium'
 
-import Todos from './components/Todos'
-import TodoConstants from '../../todoConstants'
-import TodoStore from '../../todoStore'
-import AppDispatcher from '../../appDispatcher'
+import { Router, Route, browserHistory } from 'react-router'
+import { Provider } from 'react-redux'
+import watch from 'redux-watch'
+
+import BoundApp from './BoundApp'
+import BoundTodosView from './todos/BoundTodosView'
+import BoundLoginView from './login/BoundLoginView'
+
+import store from './store'
 
 class AppView extends Component {
-    render() {
-        return <div>
-                <header style={ styles.header }>
-                    <a href='http://www.log84.de'>Log84.de</a>
-                </header>
-                <div style={ styles.main }>
-                    <Todos />
-                </div>
-                <footer style={ styles.footer }>
-                    <hr/>
-                    <a href="http://www.flaticon.com/authors/freepik">Icon design by Freepik</a> 
-                < /footer>
-            </div>
+    constructor() {
+        super()
+        
+        let w = watch(store.getState, 'auth.user')
+        store.subscribe(w((newVal, oldVal, objectPath) => {
+            console.log('%s changed from %s to %s', objectPath, oldVal, newVal)
+            if (newVal)
+                browserHistory.push('/app')
+            else
+                browserHistory.push('/')
+        }))        
     }
-}
-
-const styles = {
-    header: {
-        'background': 'rgba(255,255,255,0.3)',
-        'position': 'fixed',
-        'top': '0',
-        'left': '0px',
-        'z-index': '100000',
-        'min-height': '40px',
-        'margin': 'auto',
-        'padding': '5px',
-        'width': '100%'
-    },
-    main: {
-        'margin-top': '60px',       
-        'min-height': '300px'
-    },
-    footer: {
-        'margin-top': '20px'
+    
+    render() {
+        return <Provider store={store}> 
+            <Router history={ browserHistory }>
+                <Route path='/' component= { BoundApp } >
+                    <Route path='login' component= { BoundLoginView } />
+                    <Route path='app' component= { BoundTodosView } />
+                </Route>
+            </Router>
+        </Provider>
     }
 }
 

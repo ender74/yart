@@ -21,7 +21,15 @@ follow these steps to get the project running (assuming you have node and npm al
 you need to install docker and docker-compose. Then you can just do an docker-compose up to get an running server.
 
 #### TODO List
-- [ ] basic implementation
-- [ ] add some nice styling
-- [ ] authentification with OpenID
+- [X] basic implementation
+- [X] add some nice styling
+- [ ] authentification 
+    - [ ] custom Open ID
+    - [X] Google
+    - [ ] Facebook
 - [ ] cloud based storage
+- [ ] storage backend (e.g. mongo db)
+- [ ] native app
+    - [ ] Android
+    - [ ] iOS
+    - [ ] Windows 10

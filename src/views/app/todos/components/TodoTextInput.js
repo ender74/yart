@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Radium from 'radium'
 
-import Input from './Input'
+import Input from '../../components/Input'
 
 const ENTER_KEY_CODE = 13
 
@@ -11,9 +11,7 @@ class TodoTextInput extends Component {
         this.state = {
         }
         this._save=this._save.bind(this)
-        this._onChange=this._onChange.bind(this)
         this._onKeyDown=this._onKeyDown.bind(this)
-        this._onBlur=this._onBlur.bind(this)
     }
     
     render() {
@@ -23,8 +21,8 @@ class TodoTextInput extends Component {
             style={ this.props.style }
             id = { this.props.id }
             placeholder = { this.props.placeholder }
-            onBlur = { this._onBlur }
-            onChange = { this._onChange }
+            onBlur = { this._save }
+            onChangeText = { (text) => this.setState({ value: text, valueSet: true }) }
             onKeyDown = { this._onKeyDown }
             value = { value }
             autoFocus = { true} />
@@ -32,18 +30,10 @@ class TodoTextInput extends Component {
     
     _save() {
         if (this.state.valueSet && (this.state.value || !this.props.mandatory))
-            this.props.onSave( this.state.value )
+            this.props.onSubmitEditing( this.state.value )
         this.setState({ valueSet: false })
     } 
    
-    _onBlur() {
-        this._save()
-    } 
-
-    _onChange(event) {
-        this.setState({ value: event.target.value, valueSet: true })
-    } 
-
     _onKeyDown(event) {
         if (event.keyCode === ENTER_KEY_CODE) {
             this._save()

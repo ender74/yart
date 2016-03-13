@@ -1,31 +1,26 @@
 import React, { Component } from 'react'
 import Radium from 'radium'
 
-class Label extends Component {
-    render() {
-        return <div 
-            style={ this.props.style } 
-            key={ this.props.id }
-            className={ this.props.className }> 
-            <label style={ styles.lbl } onClick={ this.props.onClick }> 
-                <input style={ this.props.onCheck ? styles.chk : styles.hidden } type='checkbox' 
-                    onClick={ this.props.onCheck } checked={ this.props.checked } /> 
-                { this.props.text } </label> 
-            { this.props.children } 
-        </div>
-    }
+const Label = ( { id, style, checked, text, children, onCheck, onClick } ) => {
+    return <div style={ style } key={ id }> 
+        <label style={ styles.lbl } onClick={ onClick }> 
+            <input style={ onCheck ? styles.chk : styles.hidden } type='checkbox' 
+                onClick={ onCheck } defaultChecked={ checked } /> 
+            { text } </label> 
+        { children } 
+    </div>
 }
 
 var styles = {
   lbl: {
-    'display': 'table-cell', 
-    'vertical-align': 'middle'
+    display: 'table-cell', 
+    verticalAlign: 'middle'
   },
   chk: {
       
   },
   hidden: {
-      'display': 'none'
+      display: 'none'
   }
 }
 
