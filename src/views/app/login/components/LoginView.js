@@ -5,16 +5,17 @@ import $ from 'jquery'
 class LoginView extends Component {
     constructor() {
         super()
-        this.state={
-            user: '', 
-            password: ''
-        }
         this.onSignIn = this.onSignIn.bind(this)
     }
     
     onSignIn(googleUser) {
         console.log(googleUser)
-        this.props.history.push('/app')
+        const user = {
+            name: googleUser.getBasicProfile().getName(),
+            email: googleUser.getBasicProfile().getEmail()
+        }
+        const accessToken = googleUser.getAuthResponse().access_token
+        this.props.onLogin(user, accessToken)
     }
     
     componentDidMount() {
@@ -25,7 +26,7 @@ class LoginView extends Component {
                 'width': 200,
                 'height': 50,
                 'longtitle': true,
-                'theme': 'light',
+                'theme': 'dark',
                 'onsuccess': this.onSignIn
                 })
             })        
@@ -33,17 +34,8 @@ class LoginView extends Component {
     
     render() {
         return <form style={ styles.login } role='form'>
-        <div style={ styles.user }>
-          <input type='text' placeholder='Benutzername' />
-          <input type='password' placeholder='Passwort' />
-        </div>
-        <button type='submit' onClick={this.login.bind(this)}>Anmelden</button>
         <div id="my-signin2"></div>
       </form>
-    }
-    
-    login() {
-        //this.props.history.push('/app')        
     }
 }
 

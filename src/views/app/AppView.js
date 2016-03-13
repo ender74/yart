@@ -3,19 +3,33 @@ import Radium from 'radium'
 
 import { Router, Route, browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
+import watch from 'redux-watch'
 
-import App from './components/App'
+import BoundApp from './BoundApp'
 import BoundTodosView from './todos/BoundTodosView'
-import LoginView from './login/LoginView'
+import BoundLoginView from './login/BoundLoginView'
 
 import store from './store'
 
 class AppView extends Component {
+    constructor() {
+        super()
+        
+        let w = watch(store.getState, 'auth.user')
+        store.subscribe(w((newVal, oldVal, objectPath) => {
+            console.log('%s changed from %s to %s', objectPath, oldVal, newVal)
+            if (newVal)
+                browserHistory.push('/app')
+            else
+                browserHistory.push('/')
+        }))        
+    }
+    
     render() {
         return <Provider store={store}> 
             <Router history={ browserHistory }>
-                <Route path='/' component= { App } >
-                    <Route path='login' component= { LoginView } />
+                <Route path='/' component= { BoundApp } >
+                    <Route path='login' component= { BoundLoginView } />
                     <Route path='app' component= { BoundTodosView } />
                 </Route>
             </Router>

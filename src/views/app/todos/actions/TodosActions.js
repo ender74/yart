@@ -1,4 +1,4 @@
-import C from './todosConstants'
+import C from './TodosConstants'
 
 const TodoActions = {
     toggleShowAll() {

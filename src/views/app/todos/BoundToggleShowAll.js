@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Radium from 'radium'
 import {connect} from 'react-redux'
 
-import TodoActions from './actions/todosActions'
+import TodoActions from './actions/TodosActions'
 
 const ToggleShowAll = ( { defaultChecked, toggleShowAll } ) => {
     return <div><input style={ styles.chk } type='checkbox' 

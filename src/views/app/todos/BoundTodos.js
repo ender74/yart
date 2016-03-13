@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 
 import Todos from './components/Todos'
-import TodoActions from './actions/todosActions'
+import TodoActions from './actions/TodosActions'
 
 function mapStateToPropsTodos(state) {
     const todos = state.todos.showAll ? 

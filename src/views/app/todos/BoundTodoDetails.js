@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 
 import TodoDetails, { valuesToState } from './components/TodoDetails'
-import TodoActions from './actions/todosActions'
+import TodoActions from './actions/TodosActions'
 
 function mapStateToPropsTodos(state) {
     return state.todos.activeTodo ? state.todos.activeTodo : {}

@@ -1,5 +1,5 @@
 import Uuid from 'uuid-lib'
-import C from './todosConstants'
+import C from './TodosConstants'
 import initialState from '../../initialState'
 
 function todoAddNew(state, text) {
