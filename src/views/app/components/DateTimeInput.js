@@ -46,7 +46,7 @@ class DateTimeInput extends Component {
         return <div style= {styles.base}> 
                 <Input {...this.props} />
                 <ButtonBar style= { styles.buttonBar }> 
-                    <Button onClick={ this.openModal } tooltip='Datum auswählen' image="icons/calendar.svg" />
+                    <Button onClick={ this.openModal } tooltip='Datum auswählen' image="images/calendar.svg" />
                 </ButtonBar>
                 <Modal
                     isOpen={ this.state.modalIsOpen }

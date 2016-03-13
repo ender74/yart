@@ -1,10 +1,10 @@
-import Uuid from 'uuid-lib'
+import uuid from 'node-uuid'
 import C from './TodosConstants'
 import initialState from '../../initialState'
 
 function todoAddNew(state, text) {
     const newTodo = {
-        id: Uuid.raw(),
+        id: uuid.v4(),
         text: text,
         complete: false
     }

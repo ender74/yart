@@ -46,9 +46,9 @@
     "react-router": "~2.0.1",
     "redux-thunk": "~2.0.1",
     "immutable": "~3.7.6",
-    "uuid-lib": "0.0.6",
     "redux-form": "~4.2.2",
-    "redux-watch": "~1.1.0"
+    "redux-watch": "~1.1.0",
+    "node-uuid": "~1.4.7"
   },
   "devDependencies": {
     "babelify": "~7.2.0",
