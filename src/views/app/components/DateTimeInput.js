@@ -8,6 +8,30 @@ import Input from './Input'
 import ButtonBar from './ButtonBar'
 import Button from './Button'
 
+export function isValidDate(date) {
+    return date && moment(date).isValid()
+}
+
+export function parseDate(text) {
+    return moment(text, moment.localeData().longDateFormat('LL'))
+}
+    
+export function formatDate(moment) {
+    return moment.format('LL') 
+}
+
+export function parseISODate(date) {
+    return isValidDate(date) ? moment(date) : moment()
+}
+
+export function formatISODate(moment) {
+    return moment.toISOString()
+}
+
+export function formatUTCText(date) {
+    return isValidDate(date) ? formatDate(moment(date)) : date
+}
+        
 class DateTimeInput extends Component {
     constructor(props) {
         super(props)
@@ -17,9 +41,10 @@ class DateTimeInput extends Component {
     }
         
     render() {
+        const date = parseDate(this.props.value)
+        const valueForPicker = date != null && date.isValid() ? date : moment()
         return <div style= {styles.base}> 
-                <Input 
-                    {...this.props} />
+                <Input {...this.props} />
                 <ButtonBar style= { styles.buttonBar }> 
                     <Button onClick={ this.openModal } tooltip='Datum auswählen' image="icons/calendar.svg" />
                 </ButtonBar>
@@ -28,7 +53,7 @@ class DateTimeInput extends Component {
                     onRequestClose={ this.closeModal }
                     style={styles.modal} >                
                     <DatePicker
-                        date={ this.props.value }
+                        date={ valueForPicker }
                         onChange={ this._onChangePick }
                         hideFooter='true'
                     />
@@ -43,21 +68,9 @@ class DateTimeInput extends Component {
     closeModal() {
         this.setState({modalIsOpen: false})
     }
-
-    parse(text) {
-       return moment(text, moment.localeData().longDateFormat('LL'))
-    }
-    
-    formatUTCText(date) {
-        return date ? this.format(moment(date)) : date
-    }
-    
-    format(moment) {
-        return moment.format('LL') 
-    }
     
     _onChangePick(date, moment) {
-        this.props.onSave( moment.toISOString() )
+        this.props.onChange( formatDate(moment) )
         this.closeModal()
     } 
 }

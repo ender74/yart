@@ -4,9 +4,22 @@ import color from 'color'
 import {reduxForm} from 'redux-form'
 
 import Input from '../../components/Input'
-import DateTimeInput from '../../components/DateTimeInput'
+import DateTimeInput, { isValidDate, parseISODate, formatISODate, parseDate, formatDate } from '../../components/DateTimeInput'
 import ButtonBar from '../../components/ButtonBar'
 import Button from '../../components/Button'
+
+const todoDetailsForm = { 
+  form: 'todoDetails',                           
+  fields: ['text', 'url', 'due', 'location'],
+  touchOnChange: true,
+  validate(todo) {
+      var errors = {}
+      if (!todo.text) errors.text = 'Bitte geben Sie einen Text ein.'
+      const date = parseDate(todo.due)
+      if (!date || !date.isValid()) errors.due = todo.due + ' ist kein gültiges Datum.'
+      return errors
+  }
+}
 
 class TodoDetails extends Component {
     render() {
@@ -26,7 +39,6 @@ class TodoDetails extends Component {
                     type = 'text'
                     style={ styles.editText }
                     placeholder='17.03.2016'
-                    onSave = { (text) => this.props.update( this.props.todo, 'due', text ) }
                     {...due} />
                 <Input
                     type = 'text'
@@ -61,14 +73,28 @@ var styles = {
     }
 }
 
-const TodoDetailsForm = reduxForm({ 
-  form: 'todoDetails',                           
-  fields: ['text', 'url', 'due', 'location'] 
-},
+function stateToValues(todo) {
+    if (!todo)
+        return todo
+    var ret = Object.assign({}, todo)
+    if (ret.due) 
+        ret.due = formatDate(parseISODate(ret.due))
+    return ret
+}
+
+export function valuesToState(todo) {
+    if (!todo)
+        return todo
+    var ret = Object.assign({}, todo)
+    if (ret.due) 
+        ret.due = formatISODate(parseDate(ret.due))
+    return ret
+}
+
+const TodoDetailsForm = reduxForm(todoDetailsForm,
 state => ({ 
-  initialValues: state.todos.activeTodo
+  initialValues: stateToValues(state.todos.activeTodo)
 }),
-{}
-)(Radium(TodoDetails))
+{})(Radium(TodoDetails))
 
 export default TodoDetailsForm
