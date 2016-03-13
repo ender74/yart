@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Radium from 'radium'
 
 import Input from '../../components/Input'
 
@@ -16,19 +15,20 @@ class TodoTextInput extends Component {
     
     render() {
         const value = this.state.valueSet ? this.state.value : this.props.defaultValue
-        return <Input 
+        return <input 
             className={ this.props.className }
             style={ this.props.style }
             id = { this.props.id }
             placeholder = { this.props.placeholder }
             onBlur = { this._save }
-            onChangeText = { (text) => this.setState({ value: text, valueSet: true }) }
+            onChange = { (event) => this.setState({ value: event.target.value, valueSet: true }) }
             onKeyDown = { this._onKeyDown }
             value = { value }
             autoFocus = { true} />
     }
     
     _save() {
+        console.log(this.state)
         if (this.state.valueSet && (this.state.value || !this.props.mandatory))
             this.props.onSubmitEditing( this.state.value )
         this.setState({ valueSet: false })
@@ -41,4 +41,4 @@ class TodoTextInput extends Component {
     }
 }
 
-export default Radium(TodoTextInput)
+export default TodoTextInput
