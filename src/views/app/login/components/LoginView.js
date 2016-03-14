@@ -7,9 +7,8 @@ class LoginView extends Component {
         super()
         this.onSignIn = this.onSignIn.bind(this)
     }
-    
+
     onSignIn(googleUser) {
-        console.log(googleUser)
         const user = {
             name: googleUser.getBasicProfile().getName(),
             email: googleUser.getBasicProfile().getEmail()
@@ -17,21 +16,22 @@ class LoginView extends Component {
         const accessToken = googleUser.getAuthResponse().access_token
         this.props.onLogin(user, accessToken)
     }
-    
+
     componentDidMount() {
+        console.log('componentDidMount')
         $.getScript('https://apis.google.com/js/platform.js')
             .done(() => {
                 gapi.signin2.render('my-signin2', {
                 'scope': 'https://www.googleapis.com/auth/plus.login',
-                'width': 200,
-                'height': 50,
+                'width': 400,
+                'height': 100,
                 'longtitle': true,
-                'theme': 'dark',
+                'theme': 'light',
                 'onsuccess': this.onSignIn
                 })
-            })        
+            })
     }
-    
+
     render() {
         return <form style={ styles.login } role='form'>
         <div id="my-signin2"></div>

@@ -14,19 +14,18 @@ import store from './store'
 class AppView extends Component {
     constructor() {
         super()
-        
+
         let w = watch(store.getState, 'auth.user')
         store.subscribe(w((newVal, oldVal, objectPath) => {
-            console.log('%s changed from %s to %s', objectPath, oldVal, newVal)
             if (newVal)
                 browserHistory.push('/app')
             else
                 browserHistory.push('/')
-        }))        
+        }))
     }
-    
+
     render() {
-        return <Provider store={store}> 
+        return <Provider store={store}>
             <Router history={ browserHistory }>
                 <Route path='/' component= { BoundApp } >
                     <Route path='login' component= { BoundLoginView } />
