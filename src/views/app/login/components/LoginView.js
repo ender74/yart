@@ -18,7 +18,6 @@ class LoginView extends Component {
     }
 
     componentDidMount() {
-        console.log('componentDidMount')
         $.getScript('https://apis.google.com/js/platform.js')
             .done(() => {
                 gapi.signin2.render('my-signin2', {
@@ -30,6 +29,9 @@ class LoginView extends Component {
                 'onsuccess': this.onSignIn
                 })
             })
+            .fail(
+		(xhr,settings,error) => {window.alert('Google API nicht geladen. Haben Sie AdBlockPlus installiert?')}
+	    )
     }
 
     render() {
