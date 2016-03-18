@@ -9,7 +9,7 @@
 Yet another react TODO list. To try it goto the [example page](https://www.log84.de).
 
 #### Installation
-follow these steps to get the project running (assuming you have node and npm already installed):
+Follow these steps to get the project running (assuming you have node and npm already installed):
 
     sudo npm install --global gulp gulp-babel babel-core babel-register babel-preset-es2015 babel-preset-react
 
@@ -18,9 +18,12 @@ follow these steps to get the project running (assuming you have node and npm al
     gulp
     
 #### Deployment with Docker
-you need to install docker and docker-compose. Then you can just do an docker-compose up to get an running server.
+You need to install docker and docker-compose. Then you can just do an docker-compose up in the docker subfolder 
+to get an running server.
 
 #### TODO List
+- [ ] better README
+- [ ] automated testing
 - [X] basic implementation
 - [X] add some nice styling
 - [ ] authentification 
@@ -28,7 +31,7 @@ you need to install docker and docker-compose. Then you can just do an docker-co
     - [X] Google
     - [ ] Facebook
 - [ ] cloud based storage
-- [ ] storage backend (e.g. mongo db)
+- [ ] storage backend (e.g. mongo db, parse-server)
 - [ ] native app
     - [ ] Android
     - [ ] iOS
