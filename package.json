@@ -7,12 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp dev",
     "build-min": "gulp release",
-    "add-dist": "git add dist/",
     "dev": "docker-compose up -d && gulp"
   },
   "pre-commit": [
-    "build-min",
-    "add-dist"
+    "build-min"
   ],
   "babel": {
     "presets": [
