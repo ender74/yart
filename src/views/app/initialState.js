@@ -28,6 +28,11 @@ let state = {
                 "id": "reflux",
                 "text": "flux vs. reflux",
                 "url": "http://blog.krawaller.se/posts/react-js-architecture-flux-vs-reflux/"  
+            },
+            {
+                "id": "todo-parse-backbone",
+                "text": "TODO app backbone with parse",
+                "url": "https://parse.com/tutorials/todo-app-with-javascript"  
             }
         ],
         activeTodo: null,
