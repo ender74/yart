@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Radium from 'radium'
 import $ from 'jquery'
-import Parse from 'node-parse-api'
 
 import UsernamePassword from './UsernamePassword'
 import Register from './Register'
