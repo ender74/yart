@@ -4,7 +4,7 @@ import Radium from 'radium'
 
 const App = ( { children, user, logout } ) => {
     const Login = <div><Link to='/login'>Login</Link><br/></div>
-    const Logout = <div>Hallo {user ? user.name : ""} <button onClick={ logout }>Logout</button><br/></div>
+    const Logout = <div>Hallo {user ? user.username : ""} <button onClick={ logout }>Logout</button><br/></div>
     return <div>
             <header style={ styles.header }>
                 <a href='http://www.log84.de'>Log84.de</a>

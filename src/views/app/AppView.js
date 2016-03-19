@@ -11,6 +11,19 @@ import BoundLoginView from './login/BoundLoginView'
 
 import store from './store'
 
+function loggedIn(state) {
+    return state.auth.user
+}
+
+function requireAuth(nextState, replace) {
+  if (!loggedIn(store.getState())) {
+    replace({
+      pathname: '/login',
+      state: { nextPathname: nextState.location.pathname }
+    })
+  }
+}
+
 class AppView extends Component {
     constructor() {
         super()
@@ -20,15 +33,15 @@ class AppView extends Component {
             if (newVal)
                 browserHistory.push('/app')
             else
-                browserHistory.push('/')
+                browserHistory.push('/login')
         }))
     }
 
     render() {
         return <Provider store={store}>
             <Router history={ browserHistory }>
-                <Route path='/' component= { BoundApp } >
-                    <Route path='login' component= { BoundLoginView } />
+                <Route path='login' component= { BoundLoginView } />
+                <Route path='/' component = { BoundApp } onEnter = { requireAuth } >
                     <Route path='app' component= { BoundTodosView } />
                 </Route>
             </Router>
