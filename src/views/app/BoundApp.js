@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import AuthActions from './login/actions/AuthActions'
 import App from './components/App'
 
+import { logout } from './login/AuthFunctions'
+
 function mapStateToProps(state) {
     return {
         user: state.auth.user
@@ -11,7 +13,7 @@ function mapStateToProps(state) {
 
 var mapDispatchToProps = function(dispatch) { 
     return {
-        logout: () => dispatch(AuthActions.logout())
+        logout: () => logout(() => dispatch(AuthActions.logout()))
     }
 }
 

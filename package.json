@@ -48,7 +48,8 @@
     "immutable": "~3.7.6",
     "redux-form": "~4.2.2",
     "redux-watch": "~1.1.0",
-    "node-uuid": "~1.4.7"
+    "node-uuid": "~1.4.7",
+    "parse": "~1.8.1"
   },
   "devDependencies": {
     "babelify": "~7.2.0",
