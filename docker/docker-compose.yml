@@ -12,8 +12,6 @@ services:
             - ./server/env.properties
         expose: 
             - "1337"
-        ports:
-            - "1337:1337"
         links:
             - mongodb
         depends_on:
