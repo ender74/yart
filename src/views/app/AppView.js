@@ -30,6 +30,7 @@ class AppView extends Component {
 
         let w = watch(store.getState, 'auth.user')
         store.subscribe(w((newVal, oldVal, objectPath) => {
+            console.log('auth.user changed')
             if (newVal)
                 browserHistory.push('/app')
             else

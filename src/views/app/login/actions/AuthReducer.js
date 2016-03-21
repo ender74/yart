@@ -2,6 +2,8 @@ import C from './AuthConstants'
 import $ from 'jquery'
 import Parse from 'parse'
 
+import initialState from '../../initialState'
+
 function loginSucceded(state, user) {
     state.user = user
     return state
@@ -20,9 +22,9 @@ function loginFailed(state, user, code, message) {
 }
 
 function authReducer(state,action){
-    console.log(action)
-    console.log(state)
-    state = state ? JSON.parse(JSON.stringify(state)) : {}  //quick deep copy
+    if (typeof state == 'undefined')
+        state = initialState()
+    state = Object.assign({}, state) 
     switch (action.type) {
         case C.AUTH_LOGIN_SUCCEDED:
             state=loginSucceded(state, action.user)
@@ -37,7 +39,6 @@ function authReducer(state,action){
             state=loginFailed(state, action.user, action.code, action.error)
             break;
     }
-    console.log(state)
     return state
 }
 

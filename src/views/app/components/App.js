@@ -3,12 +3,13 @@ import { Link } from 'react-router'
 import Radium from 'radium'
 
 const App = ( { children, user, logout } ) => {
-    const Login = <div><Link to='/login'>Login</Link><br/></div>
-    const Logout = <div>Hallo {user ? user.username : ""} <button onClick={ logout }>Logout</button><br/></div>
     return <div>
             <header style={ styles.header }>
                 <a href='http://www.log84.de'>Log84.de</a>
-                {user ? Logout : Login}
+                <div>
+                    <span>Hallo { user.username }</span> 
+                    <button onClick={ logout }>Logout</button>
+                </div>
             </header>
             <div style={ styles.main }>
                 { children }
