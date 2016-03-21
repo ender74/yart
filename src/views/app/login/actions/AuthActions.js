@@ -3,37 +3,6 @@ import Parse from 'parse'
 import C from './AuthConstants'
 
 const AuthActions = {
-    loginSucceeded(user) {
-        return {
-            type: C.AUTH_LOGIN_SUCCEDED,
-            user: user
-        }    
-    },
-        
-    logout() {
-        return {
-            type: C.AUTH_LOGOUT
-        }
-    },
-    
-    signUpFailed(user, code, error) {
-        return {
-            type: C.AUTH_SIGNUP_FAILED,
-            user: user,
-            code: code,
-            error: error
-        }
-    },
-    
-    loginFailed(user, code, error) {
-        return {
-            type: C.AUTH_LOGIN_FAILED,
-            user: user,
-            code: code,
-            error: error
-        }
-    },
-    
     loginBasic(username, password) {
         return dispatch => {
             Parse.User.logIn(username, password, {
@@ -46,7 +15,29 @@ const AuthActions = {
             })            
         }
     },
+
+    loginSucceeded(user) {
+        return {
+            type: C.AUTH_LOGIN_SUCCEDED,
+            user: user
+        }    
+    },
+        
+    loginFailed(user, code, error) {
+        return {
+            type: C.AUTH_LOGIN_FAILED,
+            user: user,
+            code: code,
+            error: error
+        }
+    },
     
+    logout() {
+        return {
+            type: C.AUTH_LOGOUT
+        }
+    },
+
     signUp(username, password, email) {
         return dispatch => {
             var user = new Parse.User();
@@ -63,7 +54,16 @@ const AuthActions = {
                 }
             })
         }
-    }    
+    },    
+
+    signUpFailed(user, code, error) {
+        return {
+            type: C.AUTH_SIGNUP_FAILED,
+            user: user,
+            code: code,
+            error: error
+        }
+    }
 }
 
 export default AuthActions
