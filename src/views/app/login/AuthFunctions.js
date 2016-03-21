@@ -11,7 +11,7 @@ export function signUp(username, password, email, signUpSucceeded, signUpFailed)
 
     user.signUp(null, {
         success: function(user) {
-            signUpSucceeded(user)
+            signUpSucceeded(user.toJSON())
         },
         error: function(user, error) {
             signUpFailed(user, error)
@@ -22,7 +22,7 @@ export function signUp(username, password, email, signUpSucceeded, signUpFailed)
 export function login(username, password, loginSucceeded, loginFailed) {
     Parse.User.logIn(username, password, {
         success: function(user) {
-            loginSucceeded(user)
+            loginSucceeded(user.toJSON())
         },
         error: function(user, error) {
             loginFailed(user, error)
