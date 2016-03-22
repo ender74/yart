@@ -2,8 +2,7 @@ import Immutable from 'immutable'
 
 let state = {
     todos: {
-        todos: [],
-        activeTodo: null,
+        todos: Immutable.List(),
         showAll: false
     }
 }

@@ -15,8 +15,10 @@ const todoDetailsForm = {
   validate(todo) {
       var errors = {}
       if (!todo.text) errors.text = 'Bitte geben Sie einen Text ein.'
-      const date = parseDate(todo.due)
-      if (!date || !date.isValid()) errors.due = todo.due + ' ist kein gültiges Datum.'
+      if (todo.due) {
+          const date = parseDate(todo.due)
+          if (!date.isValid()) errors.due = todo.due + ' ist kein gültiges Datum.'
+      }
       return errors
   }
 }
@@ -24,6 +26,7 @@ const todoDetailsForm = {
 class TodoDetails extends Component {
     render() {
         const {fields: {text, url, due, location}, handleSubmit} = this.props
+        console.log(text)
         return <aside style={ this.props.style }>
             <div style={ styles.editTodoArea }>
                 <Input
@@ -76,7 +79,7 @@ var styles = {
 function stateToValues(todo) {
     if (!todo)
         return todo
-    var ret = Object.assign({}, todo)
+    var ret = Object.assign({}, todo.toObject())
     if (ret.due) 
         ret.due = formatDate(parseISODate(ret.due))
     return ret

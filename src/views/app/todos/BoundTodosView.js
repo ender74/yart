@@ -47,7 +47,7 @@ const styles = {
 function mapStateToProps(state) {
     return {
         styleName: state.todos.activeTodo ? 'active' : 'default',
-        activeTodo: state.todos.activeTodo
+        activeTodo: state.todos.activeTodo ? state.todos.activeTodo.toObject() : {}
     }
 }
 
