@@ -26,7 +26,6 @@ const todoDetailsForm = {
 class TodoDetails extends Component {
     render() {
         const {fields: {text, url, due, location}, handleSubmit} = this.props
-        console.log(text)
         return <aside style={ this.props.style }>
             <div style={ styles.editTodoArea }>
                 <Input
