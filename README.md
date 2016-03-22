@@ -27,11 +27,12 @@ by the build container for you.
 #### TODO List
 - [ ] better README
 - [ ] automated testing
+- [ ] internationalization
 - [X] basic implementation
-- [X] add some nice styling
-- [ ] authentification 
-    - [ ] custom Open ID
-    - [X] Google
+- [X] add some styling
+- [ ] authentication 
+    - [X] custom (signup / login)
+    - [ ] Google
     - [ ] Facebook
 - [ ] cloud based storage
 - [ ] storage backend (e.g. mongo db, parse-server)
