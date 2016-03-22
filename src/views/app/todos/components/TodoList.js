@@ -10,19 +10,18 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
     }
     var entries = []
 
-    for (var key in todos) {
-        const todo = todos[key]
-        entries.push(<TodoEntry key={ key } todo={ todo } active={ active==todo } 
+    todos.forEach(todo =>
+        entries.push(<TodoEntry key={ todo.id } todo={ todo } active={ active && active.id == todo.id }
             onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
-            <ButtonBar style= { styles.buttonBar }> 
+            <ButtonBar style= { styles.buttonBar }>
                 <Button hidden = { !todo.url } onClick={ () => onOpenURL(todo) } tooltip='Link öffnen' image="images/link-button.svg" />
                 <Button onClick={ () => onToggleTodoActiveClick( todo ) } tooltip='Eintrag bearbeiten' image="images/black-wrench.svg" />
                 <Button onClick={ () => onDestroyClick(todo) } tooltip='Eintrag löschen' image="images/delete-button.svg" />
             </ButtonBar>
         </TodoEntry>
         )
-    }
-    
+    )
+
     return(
         <div style={ styles.base }>
         { entries }

@@ -3,11 +3,11 @@ import {connect} from 'react-redux'
 import TodoDetails, { valuesToState } from './components/TodoDetails'
 import TodoActions from './actions/TodosActions'
 
-function mapStateToPropsTodos(state) {
-    return state.todos.activeTodo ? state.todos.activeTodo : {}
+function mapStateToProps(state) {
+    return {}
 }
 
-var mapDispatchToProps = function(dispatch) { 
+var mapDispatchToProps = function(dispatch) {
     return {
         onUpdate: (todo, prop, text) => dispatch(TodoActions.updateTodoProp(todo, prop, text)),
         onSubmit: (values) => dispatch(TodoActions.updateActiveTodo(valuesToState(values))),
@@ -15,6 +15,6 @@ var mapDispatchToProps = function(dispatch) {
     }
 }
 
-const BoundTodoDetails = connect(mapStateToPropsTodos, mapDispatchToProps)(TodoDetails)
+const BoundTodoDetails = connect(mapStateToProps, mapDispatchToProps)(TodoDetails)
 
 export default BoundTodoDetails

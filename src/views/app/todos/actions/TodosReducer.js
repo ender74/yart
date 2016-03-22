@@ -1,52 +1,74 @@
+import Immutable from 'immutable'
+import { Record, Maybe } from 'typed-immutable'
 import uuid from 'node-uuid'
 import C from './TodosConstants'
 import initialState from '../../initialState'
 
+const Todo = Record({
+    id: String,
+    text: String,
+    url: Maybe(String),
+    due: Maybe(String),
+    location: Maybe(String),
+    complete: Boolean
+})
+
 function todoAddNew(state, text) {
-    const newTodo = {
+    const newTodo = new Todo({
         id: uuid.v4(),
         text: text,
         complete: false
-    }
-    state.todos.push(newTodo)
+    })
+    state.todos = state.todos.push(newTodo)
     return state
 }
 
 function todoDestroy(state, todo) {
-    const todoFromState = state.todos.find(t => t.id === todo.id)
-    if (todoFromState)
-        state.todos.splice(state.todos.indexOf(todoFromState), 1)
+    const indexFromState = state.todos.findIndex(t => t.id === todo.id)
+    if (indexFromState >= 0)
+        state.todos = state.todos.delete(indexFromState)
     return state
 }
 
 function todoUpdateProp(state, todo, prop, text) {
-    const todoFromState = state.todos.find(t => t.id === todo.id)
-    if (todoFromState)
-        todoFromState[prop] = text
+    const indexFromState = state.todos.findIndex(t => t.id === todo.id)
+    if (indexFromState >= 0) {
+        const todo = state.todos.get(indexFromState)
+        state.todos = state.todos.set(indexFromState, todo.set(prop, text))
+    }
     return state
 }
 
 function todoUpdateActive(state, props) {
-    const todoFromState = state.todos.find(t => t.id === state.activeTodo.id)
-    if (todoFromState) 
-        for (var key in props) 
-            todoFromState[key] = props[key]    
-        
+    if (state.activeTodo) {
+        const indexFromState = state.todos.findIndex(t => t.id === state.activeTodo.id)
+        if (indexFromState >= 0) {
+            const todo = state.todos.get(indexFromState)
+            state.todos = state.todos.set(indexFromState, todo.merge(props))
+        }
+    }
     return state
 }
 
 function toggleComplete(state, todo) {
-    const todoFromState = state.todos.find(t => t.id === todo.id)
-    if (todoFromState)
-        todoFromState.complete = !todoFromState.complete
-    return state    
+    const indexFromState = state.todos.findIndex(t => t.id === todo.id)
+    if (indexFromState >= 0) {
+        const todo = state.todos.get(indexFromState)
+        state.todos = state.todos.set(indexFromState, todo.set("complete", !todo.complete))
+    }
+    return state
 }
 
 function toggleActive(state, todo) {
-    if (state.activeTodo && state.activeTodo.id == todo.id)
-        state.activeTodo = null
-    else
-        state.activeTodo = state.todos.find(t => t.id === todo.id)
+    if (state.activeTodo && state.activeTodo.id === todo.id)
+        delete state.activeTodo
+    else {
+        const indexFromState = state.todos.findIndex(t => t.id === todo.id)
+        if (indexFromState >= 0)
+            state.activeTodo = state.todos.get(indexFromState)
+        else
+            delete state.activeTodo
+    }
     return state
 }
 
@@ -56,9 +78,9 @@ function todoToggleShowAll(state) {
 }
 
 function todosReducer(state,action){
-    console.log(action)
-    console.log(state)
-    state = state ? JSON.parse(JSON.stringify(state)) : initialState()  //quick deep copy
+    if (typeof state === 'undefined')
+        state = initialState()
+    state = Object.assign({}, state)
     switch (action.type) {
         case C.TODO_ADD_NEW:
             state=todoAddNew(state, action.text)
@@ -82,7 +104,6 @@ function todosReducer(state,action){
             state=todoToggleShowAll(state)
             break;
     }
-    console.log(state)
     return state
 }
 

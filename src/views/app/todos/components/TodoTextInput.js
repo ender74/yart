@@ -28,7 +28,6 @@ class TodoTextInput extends Component {
     }
     
     _save() {
-        console.log(this.state)
         if (this.state.valueSet && (this.state.value || !this.props.mandatory))
             this.props.onSubmitEditing( this.state.value )
         this.setState({ valueSet: false })
