@@ -39,7 +39,7 @@ services:
             - mongodb
             - server
         volumes:
-            - ../:/var/lib/project/
+            - ../:/var/lib/project/:rw
 
     www: 
         container_name: log84-www
