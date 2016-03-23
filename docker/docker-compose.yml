@@ -49,9 +49,7 @@ services:
             - ../dist:/usr/share/nginx/html:ro
         links:
             - server
-            - build
         depends_on:
             - server
-            - build
         ports:
             - "8080:80"
