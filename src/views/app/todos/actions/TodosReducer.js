@@ -1,15 +1,10 @@
 import Immutable from 'immutable'
-import uuid from 'node-uuid'
 import C from './TodosConstants'
 import { Todo } from '../../Types'
 import initialState from '../../initialState'
 
-function todoAddNew(state, text) {
-    const newTodo = new Todo({
-        id: uuid.v4(),
-        text: text,
-        complete: false
-    })
+function todoAddNew(state, todo) {
+    const newTodo = new Todo(todo)
     state = state.set("todos", state.todos.push(newTodo))
     return state
 }
@@ -73,7 +68,7 @@ function todosReducer(state,action){
         state = initialState()
     switch (action.type) {
         case C.TODO_ADD_NEW:
-            state=todoAddNew(state, action.text)
+            state=todoAddNew(state, action.todo)
             break;
         case C.TODO_DESTROY:
             state=todoDestroy(state, action.todo)
