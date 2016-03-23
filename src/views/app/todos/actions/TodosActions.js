@@ -1,4 +1,5 @@
 import C from './TodosConstants'
+import uuid from 'node-uuid'
 
 const TodoActions = {
     toggleShowAll() {
@@ -24,7 +25,11 @@ const TodoActions = {
     addNewTodo(text) {
         return {
             type: C.TODO_ADD_NEW,
-            text: text
+            todo: {
+                id: 'TEMP-' + uuid.v4(),
+                text: text,
+                complete: false
+            }
         }
     },
     
