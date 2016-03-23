@@ -1,10 +1,8 @@
 import Immutable from 'immutable'
+import { TodoState } from './Types'
 
 let state = {
-    todos: {
-        todos: Immutable.List(),
-        showAll: false
-    }
+    todos: TodoState()
 }
 
 export default function initialState() {

@@ -18,7 +18,7 @@ function simpleLogger({ getState }) {
 
     let returnValue = next(action)
 
-    console.log('state after dispatch', getState())
+    console.log('state after dispatch', JSON.stringify(getState()))
 
     return returnValue
   }

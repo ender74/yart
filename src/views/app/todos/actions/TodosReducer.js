@@ -1,17 +1,8 @@
 import Immutable from 'immutable'
-import { Record, Maybe } from 'typed-immutable'
 import uuid from 'node-uuid'
 import C from './TodosConstants'
+import { Todo } from '../../Types'
 import initialState from '../../initialState'
-
-const Todo = Record({
-    id: String,
-    text: String,
-    url: Maybe(String),
-    due: Maybe(String),
-    location: Maybe(String),
-    complete: Boolean
-})
 
 function todoAddNew(state, text) {
     const newTodo = new Todo({
@@ -19,14 +10,14 @@ function todoAddNew(state, text) {
         text: text,
         complete: false
     })
-    state.todos = state.todos.push(newTodo)
+    state = state.set("todos", state.todos.push(newTodo))
     return state
 }
 
 function todoDestroy(state, todo) {
     const indexFromState = state.todos.findIndex(t => t.id === todo.id)
     if (indexFromState >= 0)
-        state.todos = state.todos.delete(indexFromState)
+        state = state.set("todos", state.todos.delete(indexFromState))
     return state
 }
 
@@ -34,7 +25,7 @@ function todoUpdateProp(state, todo, prop, text) {
     const indexFromState = state.todos.findIndex(t => t.id === todo.id)
     if (indexFromState >= 0) {
         const todo = state.todos.get(indexFromState)
-        state.todos = state.todos.set(indexFromState, todo.set(prop, text))
+        state = state.set("todos", state.todos.set(indexFromState, todo.set(prop, text)))
     }
     return state
 }
@@ -44,7 +35,7 @@ function todoUpdateActive(state, props) {
         const indexFromState = state.todos.findIndex(t => t.id === state.activeTodo.id)
         if (indexFromState >= 0) {
             const todo = state.todos.get(indexFromState)
-            state.todos = state.todos.set(indexFromState, todo.merge(props))
+            state = state.set("todos", state.todos.set(indexFromState, todo.merge(props)))
         }
     }
     return state
@@ -54,33 +45,32 @@ function toggleComplete(state, todo) {
     const indexFromState = state.todos.findIndex(t => t.id === todo.id)
     if (indexFromState >= 0) {
         const todo = state.todos.get(indexFromState)
-        state.todos = state.todos.set(indexFromState, todo.set("complete", !todo.complete))
+        state = state.set("todos", state.todos.set(indexFromState, todo.set("complete", !todo.complete)))
     }
     return state
 }
 
 function toggleActive(state, todo) {
     if (state.activeTodo && state.activeTodo.id === todo.id)
-        delete state.activeTodo
+        state = state.remove("activeTodo")
     else {
         const indexFromState = state.todos.findIndex(t => t.id === todo.id)
         if (indexFromState >= 0)
-            state.activeTodo = state.todos.get(indexFromState)
+            state = state.set("activeTodo", state.todos.get(indexFromState))
         else
-            delete state.activeTodo
+            state = state.remove("activeTodo")
     }
     return state
 }
 
 function todoToggleShowAll(state) {
-    state.showAll = !state.showAll
+    state = state.set("showAll", !state.showAll)
     return state
 }
 
 function todosReducer(state,action){
     if (typeof state === 'undefined')
         state = initialState()
-    state = Object.assign({}, state)
     switch (action.type) {
         case C.TODO_ADD_NEW:
             state=todoAddNew(state, action.text)
