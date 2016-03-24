@@ -1,11 +1,15 @@
 import Immutable from 'immutable'
 import C from './TodosConstants'
-import { Todo } from '../../Types'
+import { Todo, TodoList } from '../../Types'
 import initialState from '../../initialState'
+
+function addTodo(state, newTodo) {
+    return state.set("todos", state.todos.push(newTodo))
+}
 
 function todoAddNew(state, todo) {
     const newTodo = new Todo(todo)
-    state = state.set("todos", state.todos.push(newTodo))
+    state = addTodo(state, newTodo)
     return state
 }
 
@@ -16,23 +20,19 @@ function todoDestroy(state, todo) {
     return state
 }
 
-function todoUpdateProp(state, todo, prop, text) {
-    const indexFromState = state.todos.findIndex(t => t.id === todo.id)
+function todoUpdate(state, newTodo) {
+    const indexFromState = state.todos.findIndex(t => t.id === newTodo.id)
     if (indexFromState >= 0) {
         const todo = state.todos.get(indexFromState)
-        state = state.set("todos", state.todos.set(indexFromState, todo.set(prop, text)))
+        state = state.set("todos", state.todos.set(indexFromState, todo.merge(newTodo)))
     }
     return state
 }
 
-function todoUpdateActive(state, props) {
-    if (state.activeTodo) {
-        const indexFromState = state.todos.findIndex(t => t.id === state.activeTodo.id)
-        if (indexFromState >= 0) {
-            const todo = state.todos.get(indexFromState)
-            state = state.set("todos", state.todos.set(indexFromState, todo.merge(props)))
-        }
-    }
+function todoLoad(state, todos) {
+    state = state.set("todos", new TodoList())
+    for (var key in todos)
+        state = addTodo(state, new Todo(todos[key]))
     return state
 }
 
@@ -73,14 +73,14 @@ function todosReducer(state,action){
         case C.TODO_DESTROY:
             state=todoDestroy(state, action.todo)
             break;
+        case C.TODO_LOAD:
+            state=todoLoad(state, action.todos)
+            break;
         case C.TODO_TOGGLE_COMPLETE:
             state=toggleComplete(state, action.todo)
             break;
-        case C.TODO_UPDATE_PROP:
-            state=todoUpdateProp(state, action.todo, action.prop, action.text)
-            break;
-        case C.TODO_UPDATE_ACTIVE:
-            state=todoUpdateActive(state, action.props)
+        case C.TODO_UPDATE:
+            state=todoUpdate(state, action.todo)
             break;
         case C.TODO_TOGGLE_ACTIVE:
             state=toggleActive(state, action.todo)

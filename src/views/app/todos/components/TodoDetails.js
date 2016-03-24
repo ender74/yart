@@ -25,6 +25,7 @@ const todoDetailsForm = {
 
 class TodoDetails extends Component {
     render() {
+        const onSubmit = (values) => this.props.onUpdate(this.props.todo, values)
         const {fields: {text, url, due, location}, handleSubmit} = this.props
         return <aside style={ this.props.style }>
             <div style={ styles.editTodoArea }>
@@ -48,7 +49,7 @@ class TodoDetails extends Component {
                     {...location} />
                 <ButtonBar style= { styles.buttonBar }>
                     <Button tooltip='Fenster schließen' onClick={ () => this.props.onClose( this.props.todo ) } text='X' />
-                    <Button tooltip='Änderungen speichern' onClick={ handleSubmit } text='U' />
+                    <Button tooltip='Änderungen speichern' onClick={ handleSubmit(onSubmit) } text='U' />
                 </ButtonBar>
             </div>
         </aside>

@@ -1,7 +1,63 @@
 import C from './TodosConstants'
 import uuid from 'node-uuid'
 
+import { loadTodosBackend, createTodoBackend, destroyTodoBackend, updateTodoBackend } from './TodosBackend'
+
+function _toggleComplete(todo) {
+    return {
+        type: C.TODO_TOGGLE_COMPLETE,
+        todo: todo
+    }
+}
+
+function _destroyTodo(oldTodo) {
+    return {
+         type: C.TODO_DESTROY,
+         todo: todo
+    }
+}
+
+function _updateTodo(todo) {
+    return {
+        type: C.TODO_UPDATE,
+        todo: todo
+    }
+}
+
+function _loadTodos(todos) {
+    return {
+        type: C.TODO_LOAD,
+        todos: todos
+    }
+}
+
 const TodoActions = {
+    addNewTodo(text) {
+        return (dispatch) => {
+            const newTodo = {
+                text: text,
+                complete: "false"
+            }
+
+            createTodoBackend(newTodo, (todo) => {
+                dispatch({
+                    type: C.TODO_ADD_NEW,
+                    todo: todo
+                },
+                (error) => alert(error))
+            })
+        }
+    },
+
+    load() {
+        return (dispatch) => {
+            loadTodosBackend(
+                (todos) => dispatch(_loadTodos(todos)),
+                (todos, error) => alert(error)
+            )
+        }
+    },
+    
     toggleShowAll() {
         return {
             type: C.TODO_TOGGLE_SHOWALL  
@@ -15,44 +71,28 @@ const TodoActions = {
         }
     },
 
-    toggleComplete(todo) {
-        return {
-            type: C.TODO_TOGGLE_COMPLETE,
-            todo: todo
+    toggleComplete(completedTodo) {
+        return TodoActions.updateTodo({
+            id: completedTodo.id,
+            complete: completedTodo.complete ? 'false' : 'true'
+        })
+    },
+
+    destroyTodo(oldTodo) {
+        return (dispatch) => {
+            destroyTodoBackend(oldTodo,
+                (todo) => dispatch(_destroyTodo(todo)),
+                (error) => alert(error)
+            )
         }
     },
     
-    addNewTodo(text) {
-        return {
-            type: C.TODO_ADD_NEW,
-            todo: {
-                id: 'TEMP-' + uuid.v4(),
-                text: text,
-                complete: false
-            }
-        }
-    },
-    
-    destroyTodo(todo) {
-        return {
-            type: C.TODO_DESTROY,
-            todo: todo
-        }
-    },
-    
-    updateTodoProp(todo, prop, text) {
-        return {
-            type: C.TODO_UPDATE_PROP,
-            todo: todo,
-            prop: prop,
-            text: text
-        }
-    },
-    
-    updateActiveTodo(props) {
-        return {
-            type: C.TODO_UPDATE_ACTIVE,
-            props: props
+    updateTodo(newTodo) {
+        return (dispatch) => {
+            updateTodoBackend(newTodo,
+                (todo) => dispatch(_updateTodo(todo)),
+                (error) => alert(error)
+            )
         }
     }
 }

@@ -15,7 +15,7 @@ const TodosView = ( { styleName, activeTodo, toggleActive, saveChanges, update }
             <BoundTodos style={ styles.list[styleName] }>
                 <BoundToggleShowAll />
             </BoundTodos>
-            <BoundTodoDetails style={ styles.details[styleName] } update = { update } todo = { activeTodo } />
+            <BoundTodoDetails style={ styles.details[styleName] } todo = { activeTodo } />
         </div>
 }
 
@@ -53,8 +53,7 @@ function mapStateToProps(state) {
 
 var mapDispatchToProps = function(dispatch) { 
     return {
-        toggleActive: (todo) => dispatch(TodoActions.toggleActive(todo)), 
-        update: (todo, prop, text) => dispatch(TodoActions.updateTodoProp(todo, prop, text))
+        toggleActive: (todo) => dispatch(TodoActions.toggleActive(todo))
     }
 }
 
