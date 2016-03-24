@@ -4,13 +4,20 @@ import TodoDetails, { valuesToState } from './components/TodoDetails'
 import TodoActions from './actions/TodosActions'
 
 function mapStateToProps(state) {
-    return {}
+    return {
+        todo: state.todos.activeTodo ? state.todos.activeTodo.toJSON() : {}
+    }
 }
 
 var mapDispatchToProps = function(dispatch) {
     return {
-        onUpdate: (todo, prop, text) => dispatch(TodoActions.updateTodoProp(todo, prop, text)),
-        onSubmit: (values) => dispatch(TodoActions.updateActiveTodo(valuesToState(values))),
+        onUpdate: (todo, values) => {
+            const mergedTodo = valuesToState(values)
+            for (var key in todo)
+                if (typeof mergedTodo[key] == 'undefined')
+                    mergedTodo[key] = todo[key]
+            dispatch(TodoActions.updateTodo(mergedTodo))
+        },
         onClose: (todo) => dispatch(TodoActions.toggleActive(todo))
     }
 }

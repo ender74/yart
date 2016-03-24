@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
 
 function simpleLogger({ getState }) {
   return (next) => (action) => {
-    console.log('will dispatch', action)
+    console.log('will dispatch', JSON.stringify(action))
 
     let returnValue = next(action)
 
@@ -24,4 +24,6 @@ function simpleLogger({ getState }) {
   }
 }
 
-export default applyMiddleware(thunk, simpleLogger)(createStore)(rootReducer,initialState())
+const store = applyMiddleware(thunk, simpleLogger)(createStore)(rootReducer,initialState())
+
+export default store

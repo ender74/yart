@@ -1,12 +1,14 @@
 import Parse from 'parse'
 
 import C from './AuthConstants'
+import TodosActions from '../../todos/actions/TodosActions'
 
 const AuthActions = {
     loginBasic(username, password) {
         return dispatch => {
             Parse.User.logIn(username, password, {
                 success: function(user) {
+                    dispatch(TodosActions.load())
                     dispatch(AuthActions.loginSucceeded(user.toJSON()))
                 },
                 error: function(user, error) {
