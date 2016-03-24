@@ -26,16 +26,18 @@ by the build container for you.
 
 #### TODO List
 - [ ] better README
+- [ ] tags
 - [ ] automated testing
 - [ ] internationalization
 - [X] basic implementation
 - [X] add some styling
+    - [ ] better styling / bootstrap
 - [ ] authentication 
     - [X] custom (signup / login)
     - [ ] Google
     - [ ] Facebook
 - [ ] cloud based storage
-- [ ] storage backend (e.g. mongo db, parse-server)
+- [X] storage backend (e.g. mongo db, parse-server)
 - [ ] native app
     - [ ] Android
     - [ ] iOS
