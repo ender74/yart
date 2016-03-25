@@ -13,7 +13,7 @@ function _toggleComplete(todo) {
 function _destroyTodo(oldTodo) {
     return {
          type: C.TODO_DESTROY,
-         todo: todo
+         todo: oldTodo
     }
 }
 
