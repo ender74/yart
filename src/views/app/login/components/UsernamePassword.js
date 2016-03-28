@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {reduxForm} from 'redux-form'
-import { Input, ButtonInput, Grid, Row, Col, Glyphicon } from 'react-bootstrap'
+import { Input, ButtonInput, Glyphicon } from 'react-bootstrap'
 
 const usernamePasswordForm = {
   form: 'usernamePassword',                           

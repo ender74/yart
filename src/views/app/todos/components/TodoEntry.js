@@ -1,12 +1,35 @@
 import React, { Component } from 'react'
 
-import Label from '../../components/Label'
+import { Input } from 'react-bootstrap'
 
-const TodoEntry = ( { todo, active, children, onToggleCompleteClick } ) => {
-    return <Label onCheck={ onToggleCompleteClick }
-        checked={ todo.complete } key={ todo.id } text={ todo.text }>
-        { children }
-    </Label>
+const CheckedInput = (props) => {
+    return <Input {...props} checked />
+}
+
+const TodoEntry = ( { todo, children, onToggleCompleteClick } ) => {
+    const MyClass = todo.complete ? CheckedInput : Input
+    return (
+        <div style={ style.base }>
+            <MyClass type="checkbox" label={ todo.text } onClick={ onToggleCompleteClick }>
+            </MyClass>
+            <div style={ style.children }>
+                { children }
+            </div>
+        </div>
+    )
+
+}
+
+const style = {
+    base: {
+        display: 'flex'
+    },
+
+    children: {
+        marginLeft: 'auto',
+        marginTop: 'auto',
+        marginBottom: 'auto'
+    }
 }
 
 export default TodoEntry

@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { ListGroup, ListGroupItem, ButtonGroup, Button, Glyphicon } from 'react-bootstrap'
+import { ListGroup, ListGroupItem, ButtonToolbar, Button, Glyphicon, Grid, Row, Col } from 'react-bootstrap'
 
 import TodoEntry from './TodoEntry'
 
@@ -9,26 +9,36 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
     }
     var entries = []
 
-    todos.forEach(todo =>
-        entries.push(
-            <ListGroupItem key={ todo.id }>
+    todos.forEach(todo => {
+            var btnOpenUrl
+            if (todo.url)
+                btnOpenUrl = <Button onClick={ () => onOpenURL(todo) } tooltip='Link öffnen'><Glyphicon glyph='link' /></Button>
+
+            entries.push(
                 <TodoEntry todo={ todo } active={ active && active.id == todo.id }
                     onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
+                    <ButtonToolbar>
+                        {btnOpenUrl}
+                        <Button onClick={ () => onToggleTodoActiveClick( todo ) } tooltip='Eintrag bearbeiten'><Glyphicon glyph='wrench' /></Button>
+                        <Button onClick={ () => onDestroyClick(todo) } tooltip='Eintrag löschen'><Glyphicon glyph='trash' /></Button>
+                    </ButtonToolbar>
                 </TodoEntry>
-                <ButtonGroup>
-                    <Button hidden = { !todo.url } onClick={ () => onOpenURL(todo) } tooltip='Link öffnen'><Glyphicon glyph='link' /></Button>
-                    <Button onClick={ () => onToggleTodoActiveClick( todo ) } tooltip='Eintrag bearbeiten'><Glyphicon glyph='wrench' /></Button>
-                    <Button onClick={ () => onDestroyClick(todo) } tooltip='Eintrag löschen'><Glyphicon glyph='trash' /></Button>
-                </ButtonGroup>
-            </ListGroupItem>
-        )
+            )
+        }
     )
-
+    const styleName = active ? 'active' : 'default'
     return (
-        <ListGroup>
+        <div>
         { entries }
-        </ListGroup>
+        </div>
     )
+}
+
+const styles = {
+    list: {
+        display: 'flex',
+        flexDirection: 'row'
+    }
 }
 
 TodoList.propTypes={ 

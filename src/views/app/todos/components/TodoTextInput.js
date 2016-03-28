@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Input from '../../components/Input'
+import { Input } from 'react-bootstrap'
 
 const ENTER_KEY_CODE = 13
 
@@ -15,9 +15,10 @@ class TodoTextInput extends Component {
     
     render() {
         const value = this.state.valueSet ? this.state.value : this.props.defaultValue
-        return <input 
-            className={ this.props.className }
-            style={ this.props.style }
+        return <Input
+            type = 'text'
+            className= { this.props.className }
+            style= { this.props.style }
             id = { this.props.id }
             placeholder = { this.props.placeholder }
             onBlur = { this._save }

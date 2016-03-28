@@ -7,7 +7,7 @@ const App = ( { children, user, logout } ) => {
     return (
         <div>
             <header>
-                <AppHeader />
+                <AppHeader user={user} logout={logout} />
             </header>
             <div>
                 { children }

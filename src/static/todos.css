@@ -1,3 +1,10 @@
 body {
     padding-top: 70px;
 }
+
+.modal-container {
+    position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+po  sition: absolute;
+}

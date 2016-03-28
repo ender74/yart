@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import {reduxForm} from 'redux-form'
 
-import Input from '../../components/Input'
+import { ButtonToolbar, Button } from 'react-bootstrap'
+
+import ValidatedInput from '../../components/ValidatedInput'
 import DateTimeInput, { isValidDate, parseISODate, formatISODate, parseDate, formatDate } from '../../components/DateTimeInput'
-import ButtonBar from '../../components/ButtonBar'
-import Button from '../../components/Button'
 
 const todoDetailsForm = { 
   form: 'todoDetails',                           
@@ -27,10 +27,10 @@ class TodoDetails extends Component {
         const {fields: {text, url, due, location}, handleSubmit} = this.props
         return <aside style={ this.props.style }>
             <div>
-                <Input
+                <ValidatedInput
                     type = 'text'
                     {...text} />
-                <Input
+                <ValidatedInput
                     type = 'text'
                     placeholder='http://www.log84.de'
                     {...url} />
@@ -38,13 +38,13 @@ class TodoDetails extends Component {
                     type = 'text'
                     placeholder='17.03.2016'
                     {...due} />
-                <Input
+                <ValidatedInput
                     type = 'text'
                     {...location} />
-                <ButtonBar>
-                    <Button tooltip='Fenster schließen' onClick={ () => this.props.onClose( this.props.todo ) } text='X' />
-                    <Button tooltip='Änderungen speichern' onClick={ handleSubmit(onSubmit) } text='U' />
-                </ButtonBar>
+                <ButtonToolbar>
+                    <Button bsStyle='primary' tooltip='Fenster schließen' onClick={ () => this.props.onClose( this.props.todo ) }>Schließen</Button>
+                    <Button bsStyle='success' tooltip='Änderungen speichern' onClick={ handleSubmit(onSubmit) }>Aktualisieren</Button>
+                </ButtonToolbar>
             </div>
         </aside>
     }
