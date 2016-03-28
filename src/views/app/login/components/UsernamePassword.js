@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
-import Radium from 'radium'
-import color from 'color'
 import {reduxForm} from 'redux-form'
+import { Input, ButtonInput, Glyphicon } from 'react-bootstrap'
 
-import Label from '../../components/Label'
-import Input from '../../components/Input'
-import DateTimeInput, { isValidDate, parseISODate, formatISODate, parseDate, formatDate } from '../../components/DateTimeInput'
-import ButtonBar from '../../components/ButtonBar'
-import Button from '../../components/Button'
-
-const usernamePasswordForm = { 
+const usernamePasswordForm = {
   form: 'usernamePassword',                           
   fields: ['username', 'password'],
   touchOnChange: true,
@@ -21,49 +14,23 @@ const usernamePasswordForm = {
   }
 }
 
+const glyphiconUser = <Glyphicon glyph='user' />
+const glyphiconLock = <Glyphicon glyph='lock' />
+
 class UsernamePassword extends Component {
     render() {
         const {fields: {username, password}, handleSubmit} = this.props
-        return <aside style={ this.props.style }>
-            <div style={ styles.form }>
-                <Label text="Benutzername: " />
+        return (
+            <form>
                 <Input
                     type = 'text'
-                    style={ styles.editText }
-                    {...username} />
-                <Label text="Passwort: " />
+                    {...username} addonBefore={ glyphiconUser } />
                 <Input
                     type = 'password'
-                    style={ styles.editText }
-                    {...password} />
-                <ButtonBar style= { styles.buttonBar }>
-                    <Button tooltip='Anmelden' onClick={ handleSubmit } text='Anmelden' />
-                </ButtonBar>
-            </div>
-        </aside>
-    }
-}
-
-var styles = {    
-    editText: {
-        background: 'rgba(255,255,255,0.7)',
-        border: 'none',
-        borderRadius: '10px',
-        padding: '5px 5px 5px 5px',
-        margin: '5px 5px 5px 5px'
-    },
-    
-    form: {
-        background: 'rgba(255,255,255,0.3)',
-        margin: '10px 30% 10px 30%',
-        padding: '10px 10px 10px 10px',
-        width: '40%',
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    
-    buttonBar: {
-        float: 'right'
+                    {...password}  addonBefore={ glyphiconLock } />
+                <ButtonInput bsStyle='success' type='submit' value='Anmelden' onClick={ handleSubmit } />
+            </form>
+        )
     }
 }
 
@@ -79,6 +46,6 @@ const UsernamePasswordForm = reduxForm(usernamePasswordForm,
 state => ({ 
   initialValues: stateToValues(state)
 }),
-{})(Radium(UsernamePassword))
+{})(UsernamePassword)
 
 export default UsernamePasswordForm

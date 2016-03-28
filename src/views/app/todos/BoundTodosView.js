@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Radium from 'radium'
 import {connect} from 'react-redux'
 
 import TodoActions from './actions/TodosActions'
@@ -7,40 +6,33 @@ import TodoActions from './actions/TodosActions'
 import BoundTodos from './BoundTodos'
 import BoundToggleShowAll from './BoundToggleShowAll'
 import BoundTodoDetails from './BoundTodoDetails'
-import ButtonBar from '../components/ButtonBar'
-import Button from '../components/Button'
 
 const TodosView = ( { styleName, activeTodo, toggleActive, saveChanges, update } ) => {
-    return <div> 
-            <BoundTodos style={ styles.list[styleName] }>
+    const detailsVisible = typeof activeTodo.id != 'undefined'
+    const detailsStyle = detailsVisible ? styles.details : styles.hidden
+    return <div style = { styles.main }>
+            <BoundTodos style={ styles.list }>
                 <BoundToggleShowAll />
             </BoundTodos>
-            <BoundTodoDetails style={ styles.details[styleName] } todo = { activeTodo } />
+            <BoundTodoDetails style={ detailsStyle } todo = { activeTodo } />
         </div>
 }
 
 const styles = {
+    main: {
+        display: 'flex'
+    },
+
     list: {
-        default: {
-            width: '100%'
-        },
-        
-        active: {
-            width: '60%'
-        }
+        flexBasis: '60%'
     },
     
     details: {
-        default: {
-            display: 'none'            
-        },
-        
-        active: {
-            position: 'fixed',
-            width: '38%',
-            top: '60px',
-            right: '10px'
-        }
+        flexBasis: '40%'
+    },
+
+    hidden: {
+        display: 'none'
     }
 }
 
@@ -57,6 +49,6 @@ var mapDispatchToProps = function(dispatch) {
     }
 }
 
-const BoundTodosView = connect(mapStateToProps, mapDispatchToProps)(Radium(TodosView))
+const BoundTodosView = connect(mapStateToProps, mapDispatchToProps)(TodosView)
 
 export default BoundTodosView

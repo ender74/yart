@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import Radium from 'radium'
-import color from 'color'
 import {reduxForm} from 'redux-form'
 
-import Input from '../../components/Input'
+import { ButtonToolbar, Button } from 'react-bootstrap'
+
+import ValidatedInput from '../../components/ValidatedInput'
 import DateTimeInput, { isValidDate, parseISODate, formatISODate, parseDate, formatDate } from '../../components/DateTimeInput'
-import ButtonBar from '../../components/ButtonBar'
-import Button from '../../components/Button'
 
 const todoDetailsForm = { 
   form: 'todoDetails',                           
@@ -28,51 +26,27 @@ class TodoDetails extends Component {
         const onSubmit = (values) => this.props.onUpdate(this.props.todo, values)
         const {fields: {text, url, due, location}, handleSubmit} = this.props
         return <aside style={ this.props.style }>
-            <div style={ styles.editTodoArea }>
-                <Input
+            <div>
+                <ValidatedInput
                     type = 'text'
-                    style={ styles.editText }
                     {...text} />
-                <Input
+                <ValidatedInput
                     type = 'text'
-                    style={ styles.editText }
                     placeholder='http://www.log84.de'
                     {...url} />
                 <DateTimeInput
                     type = 'text'
-                    style={ styles.editText }
                     placeholder='17.03.2016'
                     {...due} />
-                <Input
+                <ValidatedInput
                     type = 'text'
-                    style={ styles.editText }
                     {...location} />
-                <ButtonBar style= { styles.buttonBar }>
-                    <Button tooltip='Fenster schließen' onClick={ () => this.props.onClose( this.props.todo ) } text='X' />
-                    <Button tooltip='Änderungen speichern' onClick={ handleSubmit(onSubmit) } text='U' />
-                </ButtonBar>
+                <ButtonToolbar>
+                    <Button bsStyle='primary' tooltip='Fenster schließen' onClick={ () => this.props.onClose( this.props.todo ) }>Schließen</Button>
+                    <Button bsStyle='success' tooltip='Änderungen speichern' onClick={ handleSubmit(onSubmit) }>Aktualisieren</Button>
+                </ButtonToolbar>
             </div>
         </aside>
-    }
-}
-
-var styles = {    
-    editText: {
-        background: 'rgba(255,255,255,0.7)',
-        border: 'none',
-        borderRadius: '10px',
-        padding: '10px 10px 10px 10px',
-        margin: '10px 10px 10px 10px'
-    },
-    
-    buttonBar: {
-        float: 'right'
-    },
-    
-    editTodoArea: {
-        background: 'rgba(255,255,255,0.3)',
-        display: 'flex',
-        flexDirection: 'column'
     }
 }
 
@@ -98,6 +72,6 @@ const TodoDetailsForm = reduxForm(todoDetailsForm,
 state => ({ 
   initialValues: stateToValues(state.todos.activeTodo)
 }),
-{})(Radium(TodoDetails))
+{})(TodoDetails)
 
 export default TodoDetailsForm

@@ -1,8 +1,7 @@
 import React, { PropTypes, Component } from 'react'
+import { ListGroup, ListGroupItem, ButtonToolbar, Button, Glyphicon, Grid, Row, Col } from 'react-bootstrap'
 
 import TodoEntry from './TodoEntry'
-import Button from '../../components/Button'
-import ButtonBar from '../../components/ButtonBar'
 
 const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoCompleteClick, onDestroyClick, onOpenURL } ) => {
     if (todos === undefined || Object.keys(todos).length < 1) {
@@ -10,23 +9,36 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
     }
     var entries = []
 
-    todos.forEach(todo =>
-        entries.push(<TodoEntry key={ todo.id } todo={ todo } active={ active && active.id == todo.id }
-            onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
-            <ButtonBar style= { styles.buttonBar }>
-                <Button hidden = { !todo.url } onClick={ () => onOpenURL(todo) } tooltip='Link öffnen' image="images/link-button.svg" />
-                <Button onClick={ () => onToggleTodoActiveClick( todo ) } tooltip='Eintrag bearbeiten' image="images/black-wrench.svg" />
-                <Button onClick={ () => onDestroyClick(todo) } tooltip='Eintrag löschen' image="images/delete-button.svg" />
-            </ButtonBar>
-        </TodoEntry>
-        )
-    )
+    todos.forEach(todo => {
+            var btnOpenUrl
+            if (todo.url)
+                btnOpenUrl = <Button onClick={ () => onOpenURL(todo) } tooltip='Link öffnen'><Glyphicon glyph='link' /></Button>
 
-    return(
-        <div style={ styles.base }>
+            entries.push(
+                <TodoEntry todo={ todo } active={ active && active.id == todo.id }
+                    onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
+                    <ButtonToolbar>
+                        {btnOpenUrl}
+                        <Button onClick={ () => onToggleTodoActiveClick( todo ) } tooltip='Eintrag bearbeiten'><Glyphicon glyph='wrench' /></Button>
+                        <Button onClick={ () => onDestroyClick(todo) } tooltip='Eintrag löschen'><Glyphicon glyph='trash' /></Button>
+                    </ButtonToolbar>
+                </TodoEntry>
+            )
+        }
+    )
+    const styleName = active ? 'active' : 'default'
+    return (
+        <div>
         { entries }
         </div>
     )
+}
+
+const styles = {
+    list: {
+        display: 'flex',
+        flexDirection: 'row'
+    }
 }
 
 TodoList.propTypes={ 
@@ -35,15 +47,6 @@ TodoList.propTypes={
     onToggleTodoActiveClick: PropTypes.func, 
     onDestroyClick: PropTypes.func, 
     onOpenURL: PropTypes.func
-}
-
-var styles = {
-    base: {
-        width: '100%'
-    },
-    buttonBar: {
-        'float': 'right'
-    }
 }
 
 export default TodoList

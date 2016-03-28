@@ -4,9 +4,9 @@ import moment from 'moment'
 import DatePicker from 'react-date-picker'
 import Modal from 'react-modal'
 
-import Input from './Input'
-import ButtonBar from './ButtonBar'
-import Button from './Button'
+import { Button, Glyphicon } from 'react-bootstrap'
+
+import ValidatedInput from './ValidatedInput'
 
 export function isValidDate(date) {
     return date && moment(date).isValid()
@@ -42,12 +42,14 @@ class DateTimeInput extends Component {
         
     render() {
         const date = parseDate(this.props.value)
+        const btnPickDate = (
+            <Button onClick={ this.openModal } tooltip='Datum auswählen'>
+                <Glyphicon glyph='calendar' />
+            </Button>
+        )
         const valueForPicker = date != null && date.isValid() ? date : moment()
         return <div style= {styles.base}> 
-                <Input {...this.props} />
-                <ButtonBar style= { styles.buttonBar }> 
-                    <Button onClick={ this.openModal } tooltip='Datum auswählen' image="images/calendar.svg" />
-                </ButtonBar>
+                <ValidatedInput {...this.props} buttonAfter = { btnPickDate } />
                 <Modal
                     isOpen={ this.state.modalIsOpen }
                     onRequestClose={ this.closeModal }

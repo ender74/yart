@@ -1,32 +1,35 @@
 import React, { Component } from 'react'
-import Radium from 'radium'
 
-import Label from '../../components/Label'
+import { Input } from 'react-bootstrap'
 
-const TodoEntry = ( { todo, active, children, onToggleCompleteClick } ) => {
-    return <Label style={ [styles.base, styles[active ? 'active' : 'default']] } onCheck={ onToggleCompleteClick } 
-        checked={ todo.complete } key={ todo.id } text={ todo.text }>
-        { children }
-    </Label>
+const CheckedInput = (props) => {
+    return <Input {...props} checked />
 }
 
-var styles = {
+const TodoEntry = ( { todo, children, onToggleCompleteClick } ) => {
+    const MyClass = todo.complete ? CheckedInput : Input
+    return (
+        <div style={ style.base }>
+            <MyClass type="checkbox" label={ todo.text } onClick={ onToggleCompleteClick }>
+            </MyClass>
+            <div style={ style.children }>
+                { children }
+            </div>
+        </div>
+    )
+
+}
+
+const style = {
     base: {
-        'display': 'table',
-        'padding': '0.5em 0.5em 0.5em 0.5em',
-        'margin': '0.5em 0em 0em 0em',
-        'width': '100%',
-        'borderRadius': '10px',
-        'color': '#000000'
+        display: 'flex'
     },
-    default: {
-        'background': 'rgba(255, 255, 255, 0.7)',
-        'fontWeight': 'normal'
-    },
-    active: {
-        'background': 'rgba(255, 255, 255, 0.7)',
-        'fontWeight': 'bold'
+
+    children: {
+        marginLeft: 'auto',
+        marginTop: 'auto',
+        marginBottom: 'auto'
     }
 }
 
-export default Radium(TodoEntry)
+export default TodoEntry
