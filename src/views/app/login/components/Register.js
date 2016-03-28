@@ -52,24 +52,12 @@ class Register extends Component {
 
 var styles = {    
     editText: {
-        background: 'rgba(255,255,255,0.7)',
-        border: 'none',
-        borderRadius: '10px',
-        padding: '5px 5px 5px 5px',
-        margin: '5px 5px 5px 5px'
     },
     
     form: {
-        background: 'rgba(255,255,255,0.3)',
-        margin: '10px 30% 10px 30%',
-        padding: '10px 10px 10px 10px',
-        width: '40%',
-        display: 'flex',
-        flexDirection: 'column'
     },
     
     buttonBar: {
-        float: 'right'
     }
 }
 

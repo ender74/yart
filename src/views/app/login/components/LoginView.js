@@ -1,61 +1,56 @@
 import React, { Component } from 'react'
-import Radium from 'radium'
-import $ from 'jquery'
+import { Grid, Row, Col, Jumbotron, Button, Modal, Glyphicon } from 'react-bootstrap'
 
 import UsernamePassword from './UsernamePassword'
 import Register from './Register'
 
+const LoginModal = ({ show, hide, onUpLogin }) => {
+    return (
+        <Modal show={ show } onHide={ hide } backdrop={ true } bsSize="large" aria-labelledby="contained-modal-title-lg">
+            <Modal.Header closeButton={ true } />
+            <Modal.Body>
+                <Grid>
+                    <Row>
+                        <Col xs={ 3 } xsOffset = { 3 }>
+                            <Button bsStyle="danger"><Glyphicon glyph='log-in' /> Google</Button>
+                        </Col>
+                        <Col xs={ 3 }>
+                            <Button bsStyle="primary"><Glyphicon glyph='log-in' /> Facebook</Button>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={ 2 } xsOffset = { 5 }>
+                            oder
+                        </Col>
+                    </Row>
+                </Grid>
+            </Modal.Body>
+            <Modal.Footer>
+                <UsernamePassword onSubmit={ onUpLogin } />
+            </Modal.Footer>
+        </Modal>
+    )
+}
+
 class LoginView extends Component {
     constructor() {
         super()
-        this.onSignIn = this.onSignIn.bind(this)
+        this.state={}
     }
 
-    onSignIn(googleUser) {
-        const user = {
-            name: googleUser.getBasicProfile().getName(),
-            email: googleUser.getBasicProfile().getEmail()
-        }
-        const accessToken = googleUser.getAuthResponse().access_token
-        this.props.onLogin(user, accessToken)
-    }
-
-    componentDidMount() {
-//        $.getScript('https://apis.google.com/js/platform.js')
-//            .done(() => {
-//                gapi.signin2.render('my-signin2', {
-//                'scope': 'https://www.googleapis.com/auth/plus.login',
-//                'width': 200,
-//                'height': 50,
-//                'longtitle': true,
-//                'theme': 'light',
-//                'onsuccess': this.onSignIn
-//                })
-//            })
-//           .fail(
-//		(xhr,settings,error) => {window.alert('Google API nicht geladen. Haben Sie AdBlockPlus installiert?')}
-//	    )
-    }
-    
     render() {
-        return <div styles={ styles.login }>
-            <UsernamePassword onSubmit={ this.props.onUpLogin } />
-            <center>--- Oder ---</center>
-            <Register onSubmit={ this.props.onSignUp } />
-        </div>
+        return (
+            <Grid>
+                <Jumbotron>
+                    <h1>Log84.de</h1>
+                    <p>Organisiere Deine Ideen.</p>
+                    <p><Button bsStyle="primary">Mehr erfahren</Button></p>
+                    <p><Button bsStyle="success" onClick={ () => this.setState({showLogin: true}) }><Glyphicon glyph='log-in' /> Anmelden</Button></p>
+                </Jumbotron>
+                <LoginModal show={ this.state.showLogin } hide={ () => this.setState({showLogin: false}) } onUpLogin={ this.props.onUpLogin }/>
+            </Grid>
+        )
     }
 }
 
-const styles = {
-    login: {
-        width: '30%',
-        paddingLeft: '35%',
-        paddingRight: '35%'
-    },
-    user: {
-        display: 'flex',
-        flexDirection: 'column'
-    }
-}
-
-export default Radium(LoginView)
+export default LoginView

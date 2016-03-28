@@ -1,13 +1,3 @@
-*
-{
-    font-size: 1em;
-    color: #000000;
-    font-family: Arial, sans-serif;
-}
-
-html {
-    background: #eeeeee;
-    background-image: url('background.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
+body {
+    padding-top: 70px;
 }

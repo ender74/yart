@@ -91,7 +91,7 @@ export function destroyTodoBackend(oldTodo, onSuccess, onFailure) {
             onSuccess(oldTodo)
         },
         (error) => {
-            onFailure(error)
+            onFailure(JSON.stringify(error))
         })
     }
 }

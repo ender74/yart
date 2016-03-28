@@ -39,14 +39,18 @@ class AppView extends Component {
     }
 
     render() {
-        return <Provider store={store}>
-            <Router history={ browserHistory }>
-                <Route path='login' component= { BoundLoginView } />
-                <Route path='/' component = { BoundApp } onEnter = { requireAuth } >
-                    <Route path='app' component= { BoundTodosView } />
-                </Route>
-            </Router>
-        </Provider>
+        return (
+            <Provider store={store}>
+                <Router history={ browserHistory }>
+                    <Route component = { BoundApp }>
+                        <Route path='login' component= { BoundLoginView } />
+                        <Route path='/' onEnter = { requireAuth } >
+                            <Route path='app' component= { BoundTodosView } />
+                        </Route>
+                    </Route>
+                </Router>
+            </Provider>
+        )
     }
 }
 
