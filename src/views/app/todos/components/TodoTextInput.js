@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import { Input } from 'react-bootstrap'
 
 const ENTER_KEY_CODE = 13
