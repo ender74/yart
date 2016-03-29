@@ -15,7 +15,7 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
                 btnOpenUrl = <Button onClick={ () => onOpenURL(todo) } tooltip='Link öffnen'><Glyphicon glyph='link' /></Button>
 
             entries.push(
-                <TodoEntry todo={ todo } active={ active && active.id == todo.id }
+                <TodoEntry key={ todo.id } todo={ todo } active={ active && active.id == todo.id }
                     onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
                     <ButtonToolbar>
                         {btnOpenUrl}
