@@ -26,7 +26,11 @@ function convertFromModel(todo) {
 
 function mergeTodo(todo, newVal) {
     for (var prop in newVal) {
-        todo.set(prop, "" + newVal[prop])
+        var v = newVal[prop]
+        if (v)
+            todo.set(prop, "" + v)
+        else
+            todo.unset(prop)
     }
 }
 
