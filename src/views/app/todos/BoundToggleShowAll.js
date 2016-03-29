@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import Radium from 'radium'
 import {connect} from 'react-redux'
+import { Input } from 'react-bootstrap'
 
 import TodoActions from './actions/TodosActions'
 
 const ToggleShowAll = ( { defaultChecked, toggleShowAll } ) => {
-    return <div><input style={ styles.chk } type='checkbox' 
-                        onClick={ toggleShowAll } 
-                        defaultChecked={ defaultChecked }/>Alle zeigen</div>
+    return <div style={ styles.chk }><Input type='checkbox' onClick={ toggleShowAll }
+                  defaultChecked={ defaultChecked } label='Alle zeigen'/></div>
 }
 
 function mapStateToPropsTodos(state) {
@@ -22,7 +21,7 @@ var mapDispatchToProps = function(dispatch) {
     }
 }
 
-const BoundToggleShowAll = connect(mapStateToPropsTodos, mapDispatchToProps)(Radium(ToggleShowAll))
+const BoundToggleShowAll = connect(mapStateToPropsTodos, mapDispatchToProps)(ToggleShowAll)
 
 const styles = {
     chk: {
