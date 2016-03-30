@@ -26,7 +26,6 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
             )
         }
     )
-    const styleName = active ? 'active' : 'default'
     return (
         <div>
         { entries }
@@ -34,14 +33,7 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
     )
 }
 
-const styles = {
-    list: {
-        display: 'flex',
-        flexDirection: 'row'
-    }
-}
-
-TodoList.propTypes={ 
+TodoList.propTypes={
     todos: PropTypes.array.isRequired,
     active: PropTypes.object,
     onToggleTodoActiveClick: PropTypes.func, 

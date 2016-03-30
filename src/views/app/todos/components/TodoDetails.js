@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import {reduxForm} from 'redux-form'
+import Radium from 'radium'
 
-import { ButtonToolbar, Button } from 'react-bootstrap'
+import { ButtonToolbar, Button, Glyphicon } from 'react-bootstrap'
 
 import ValidatedInput from '../../components/ValidatedInput'
 import DateTimeInput, { isValidDate, parseISODate, formatISODate, parseDate, formatDate } from '../../components/DateTimeInput'
@@ -21,12 +22,14 @@ const todoDetailsForm = {
   }
 }
 
+const glyphiconBack = <Glyphicon glyph='backward' />
+
 class TodoDetails extends Component {
     render() {
         const onSubmit = (values) => this.props.onUpdate(this.props.todo, values)
         const {fields: {text, url, due, location}, handleSubmit} = this.props
-        return <aside style={ this.props.style }>
-            <div>
+        return (
+            <aside style={ [{paddingLeft: '12px'}, this.props.style] }>
                 <ValidatedInput
                     type = 'text'
                     {...text} />
@@ -42,11 +45,11 @@ class TodoDetails extends Component {
                     type = 'text'
                     {...location} />
                 <ButtonToolbar>
-                    <Button bsStyle='primary' tooltip='Fenster schließen' onClick={ () => this.props.onClose( this.props.todo ) }>Schließen</Button>
-                    <Button bsStyle='success' tooltip='Änderungen speichern' onClick={ handleSubmit(onSubmit) }>Aktualisieren</Button>
+                    <Button bsStyle='primary' tooltip='Fenster schließen' onClick={ () => this.props.onClose( this.props.todo ) }>{glyphiconBack} Zurück</Button>
+                    <Button bsStyle='success' tooltip='Änderungen speichern' onClick={ handleSubmit(onSubmit) }>Speichern</Button>
                 </ButtonToolbar>
-            </div>
-        </aside>
+            </aside>
+        )
     }
 }
 
@@ -72,6 +75,6 @@ const TodoDetailsForm = reduxForm(todoDetailsForm,
 state => ({ 
   initialValues: stateToValues(state.todos.activeTodo)
 }),
-{})(TodoDetails)
+{})(Radium(TodoDetails))
 
 export default TodoDetailsForm

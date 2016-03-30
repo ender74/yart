@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Radium from 'radium'
 import {connect} from 'react-redux'
 
 import TodoActions from './actions/TodosActions'
@@ -22,7 +21,7 @@ var mapDispatchToProps = function(dispatch) {
     }
 }
 
-const BoundToggleShowAll = connect(mapStateToPropsTodos, mapDispatchToProps)(Radium(ToggleShowAll))
+const BoundToggleShowAll = connect(mapStateToPropsTodos, mapDispatchToProps)(ToggleShowAll)
 
 const styles = {
     chk: {
