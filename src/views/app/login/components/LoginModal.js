@@ -10,10 +10,12 @@ const LoginModal = ({ show, hide, onUpLogin }) => {
                 Anmelden
             </Modal.Header>
             <Modal.Title style={ styles.title }>
-                <ButtonToolbar>
-                    <Button bsStyle="danger"><Glyphicon glyph='log-in' /> Google</Button>
-                    <Button bsStyle="primary"><Glyphicon glyph='log-in' /> Facebook</Button>
-                </ButtonToolbar>
+                <div style={ styles.buttons }>
+                    <ButtonToolbar>
+                        <Button bsStyle="danger"><Glyphicon glyph='log-in' /> Google</Button>
+                        <Button bsStyle="primary"><Glyphicon glyph='log-in' /> Facebook</Button>
+                    </ButtonToolbar>
+                </div>
             </Modal.Title>
             <Modal.Body>
                 <UsernamePassword onSubmit={ onUpLogin } />
@@ -24,8 +26,13 @@ const LoginModal = ({ show, hide, onUpLogin }) => {
 
 const styles = {
     title: {
-        marginLeft: '35%',
-        marginTop: '10px'
+        marginTop: '10px',
+        display: 'flex'
+    },
+
+    buttons: {
+        marginLeft: 'auto',
+        marginRight: 'auto'
     }
 }
 
