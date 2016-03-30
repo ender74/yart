@@ -10,8 +10,10 @@ const TodoEntry = ( { todo, children, onToggleCompleteClick } ) => {
     const MyClass = todo.complete ? CheckedInput : Input
     return (
         <div style={ style.base }>
-            <MyClass type="checkbox" label={ todo.text } onClick={ onToggleCompleteClick }>
-            </MyClass>
+            <div style={ style.todo }>
+                <MyClass type="checkbox" label={ todo.text } onClick={ onToggleCompleteClick }>
+                </MyClass>
+            </div>
             <div style={ style.children }>
                 { children }
             </div>
@@ -23,6 +25,10 @@ const TodoEntry = ( { todo, children, onToggleCompleteClick } ) => {
 const style = {
     base: {
         display: 'flex'
+    },
+
+    todo: {
+        width: '55%'
     },
 
     children: {
