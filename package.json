@@ -28,6 +28,7 @@
   "dependencies": {
     "babel-core": "~6.7.2",
     "babel-register": "~6.7.2",
+    "browsernizr": "^2.1.0",
     "color": "~0.11.1",
     "es6-promise": "~3.1.2",
     "immutable": "~3.7.6",

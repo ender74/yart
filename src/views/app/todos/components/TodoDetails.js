@@ -31,18 +31,15 @@ class TodoDetails extends Component {
         return (
             <aside style={ [{paddingLeft: '12px'}, this.props.style] }>
                 <ValidatedInput
-                    type = 'text'
                     {...text} />
                 <ValidatedInput
-                    type = 'text'
                     placeholder='http://www.log84.de'
                     {...url} />
                 <DateTimeInput
-                    type = 'text'
                     placeholder='17.03.2016'
                     {...due} />
                 <ValidatedInput
-                    type = 'text'
+                    placeholder='Panoramastraße 1A, 10178 Berlin'
                     {...location} />
                 <ButtonToolbar>
                     <Button bsStyle='primary' tooltip='Fenster schließen' onClick={ () => this.props.onClose( this.props.todo ) }>{glyphiconBack} Zurück</Button>

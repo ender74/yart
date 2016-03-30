@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import Radium from 'radium'
 import moment from 'moment'
 import DatePicker from 'react-date-picker'
-import Modal from 'react-modal'
-
-import { Button, Glyphicon } from 'react-bootstrap'
+import { Button, Glyphicon, Modal } from 'react-bootstrap'
 
 import ValidatedInput from './ValidatedInput'
+
+require('browsernizr/test/inputtypes')
+
+var Modernizr = require('browsernizr')
 
 export function isValidDate(date) {
     return date && moment(date).isValid()
@@ -31,6 +33,23 @@ export function formatISODate(moment) {
 export function formatUTCText(date) {
     return isValidDate(date) ? formatDate(moment(date)) : date
 }
+
+const PickDateModal = ({ isOpen, onRequestClose, valueForPicker, onChange }) => {
+    return (
+        <Modal show={ isOpen } onHide={ onRequestClose } backdrop={ true } aria-labelledby="contained-modal-title-lg">
+            <Modal.Header closeButton={ true }>
+                Datum wählen
+            </Modal.Header>
+            <Modal.Body>
+                <DatePicker
+                    date={ valueForPicker }
+                    onChange={ onChange }
+                    hideFooter='true'
+                />
+            </Modal.Body>
+        </Modal>
+    )
+}
         
 class DateTimeInput extends Component {
     constructor(props) {
@@ -42,27 +61,40 @@ class DateTimeInput extends Component {
         
     render() {
         const date = parseDate(this.props.value)
+/*
+        TODO: this doesn't work yet. The problem is, that the value is not in the right locale,
+            but rather standard JS format yyyy-mm-dd
+        if (Modernizr.inputtypes.date)
+            return (
+                <div style= {styles.base}>
+                    <ValidatedInput type='date' {...this.props} />
+                </div>
+            )
+*/
+        return this.renderWithDatePicker(date)
+    }
+    
+    renderWithDatePicker(date) {
         const btnPickDate = (
             <Button onClick={ this.openModal } tooltip='Datum auswählen'>
                 <Glyphicon glyph='calendar' />
             </Button>
         )
         const valueForPicker = date != null && date.isValid() ? date : moment()
-        return <div style= {styles.base}> 
+        return (
+            <div style= {styles.base}>
                 <ValidatedInput {...this.props} buttonAfter = { btnPickDate } />
-                <Modal
+                <PickDateModal
                     isOpen={ this.state.modalIsOpen }
                     onRequestClose={ this.closeModal }
-                    style={styles.modal} >                
-                    <DatePicker
-                        date={ valueForPicker }
-                        onChange={ this._onChangePick }
-                        hideFooter='true'
-                    />
-                </Modal>
-        </div>
+                    style={styles.modal}
+                    valueForPicker={ valueForPicker }
+                    onChange={ this._onChangePick }
+                />
+            </div>
+        )
     }
-    
+
     openModal() {
         this.setState({modalIsOpen: true})
     }
@@ -78,30 +110,6 @@ class DateTimeInput extends Component {
 }
 
 const styles = {
-    modal : {
-        overlay : {
-            position          : 'fixed',
-            top               : 0,
-            left              : 0,
-            right             : 0,
-            bottom            : 0,
-            backgroundColor   : 'rgba(255, 255, 255, 0.3)'
-        },
-        content : {
-            position                   : 'absolute',
-            top                        : '20%',
-            left                       : '20%',
-            right                      : '20%',
-            bottom                     : '20%',
-            border                     : '1px solid #ccc',
-            background                 : '#fff',
-            overflow                   : 'auto',
-            WebkitOverflowScrolling    : 'touch',
-            borderRadius               : '4px',
-            outline                    : 'none',
-            padding                    : '20px'
-        }
-    },
     buttonBar: {
         display: 'table-cell', 
         verticalAlign: 'middle'
