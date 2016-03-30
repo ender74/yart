@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { ListGroup, ListGroupItem, ButtonToolbar, Button, Glyphicon, Grid, Row, Col } from 'react-bootstrap'
+import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap'
 
 import TodoEntry from './TodoEntry'
 
@@ -17,11 +17,11 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
             entries.push(
                 <TodoEntry key={ todo.id } todo={ todo } active={ active && active.id == todo.id }
                     onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
-                    <ButtonToolbar>
+                    <ButtonGroup>
                         {btnOpenUrl}
                         <Button onClick={ () => onToggleTodoActiveClick( todo ) } tooltip='Eintrag bearbeiten'><Glyphicon glyph='wrench' /></Button>
                         <Button onClick={ () => onDestroyClick(todo) } tooltip='Eintrag löschen'><Glyphicon glyph='trash' /></Button>
-                    </ButtonToolbar>
+                    </ButtonGroup>
                 </TodoEntry>
             )
         }
