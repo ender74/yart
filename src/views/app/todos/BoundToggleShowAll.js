@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import { Input } from 'react-bootstrap'
 
 import TodoActions from './actions/TodosActions'
 
 const ToggleShowAll = ( { defaultChecked, toggleShowAll } ) => {
-    return <div><input style={ styles.chk } type='checkbox' 
-                        onClick={ toggleShowAll } 
-                        defaultChecked={ defaultChecked }/>Alle zeigen</div>
+    return <div style={ styles.chk }><Input type='checkbox' onClick={ toggleShowAll }
+                  defaultChecked={ defaultChecked } label='Alle zeigen'/></div>
 }
 
 function mapStateToPropsTodos(state) {
