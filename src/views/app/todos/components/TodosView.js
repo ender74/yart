@@ -55,6 +55,9 @@ const styles = {
         },
 
         details: {
+            '@media (max-width: 768px)': {
+                width: '100%'
+            },
             '@media (min-width: 768px)': {
                 flexBasis: '40%',
                 width: '40%'
