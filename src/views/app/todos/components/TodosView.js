@@ -49,7 +49,6 @@ const styles = {
                 display: 'none'
             },
             '@media (min-width: 768px)': {
-                flexBasis: '60%',
                 width: '60%'
             }
         },
@@ -59,8 +58,10 @@ const styles = {
                 width: '100%'
             },
             '@media (min-width: 768px)': {
-                flexBasis: '40%',
-                width: '40%'
+                position: 'fixed',
+                width: '40%',
+                top: '70px',
+                right: '10px'
             }
         },
     }
