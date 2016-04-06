@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import Radium from 'radium'
 
 import Todos from './components/Todos'
-import TodoActions from './actions/TodosActions'
+import TodosActions from './actions/TodosActions'
 
 function mapStateToPropsTodos(state) {
     //convert from immutable to plain JSON
@@ -19,10 +19,10 @@ function mapStateToPropsTodos(state) {
 
 var mapDispatchToProps = function(dispatch) { 
     return {
-        toggleActive: todo => dispatch(TodoActions.toggleActive(todo)),
-        toggleComplete: todo => dispatch(TodoActions.toggleComplete(todo)),
-        addNewTodo: text => dispatch(TodoActions.addNewTodo(text)),
-        destroyTodo: todo => dispatch(TodoActions.destroyTodo(todo)),
+        toggleActive: todo => dispatch(TodosActions.toggleActive(todo)),
+        toggleComplete: todo => dispatch(TodosActions.toggleComplete(todo)),
+        addNewTodo: text => dispatch(TodosActions.addNewTodo(text)),
+        destroyTodo: todo => dispatch(TodosActions.destroyTodo(todo)),
         openURL: todo => window.open(todo.url)
     }
 }

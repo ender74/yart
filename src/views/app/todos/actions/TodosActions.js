@@ -31,7 +31,7 @@ function _loadTodos(todos) {
     }
 }
 
-const TodoActions = {
+const TodosActions = {
     addNewTodo(text) {
         return (dispatch) => {
             const newTodo = {
@@ -39,13 +39,16 @@ const TodoActions = {
                 complete: "false"
             }
 
-            createTodoBackend(newTodo, (todo) => {
-                dispatch({
-                    type: C.TODO_ADD_NEW,
-                    todo: todo
+            createTodoBackend(newTodo,
+                (todo) => {
+                    dispatch({
+                        type: C.TODO_ADD_NEW,
+                        todo: todo
+                    })
+                    dispatch(TodosActions.toggleActive(todo))
                 },
-                (error) => alert(error))
-            })
+                (error) => alert(error)
+            )
         }
     },
 
@@ -97,4 +100,4 @@ const TodoActions = {
     }
 }
 
-export default TodoActions
+export default TodosActions
