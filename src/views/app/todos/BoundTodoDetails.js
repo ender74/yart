@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import Radium from 'radium'
 
 import TodoDetails, { valuesToState } from './components/TodoDetails'
-import TodoActions from './actions/TodosActions'
+import TodosActions from './actions/TodosActions'
 
 function mapStateToProps(state) {
     return {
@@ -19,7 +19,7 @@ var mapDispatchToProps = function(dispatch) {
                     mergedTodo[key] = todo[key]
             dispatch(TodoActions.updateTodo(mergedTodo))
         },
-        onClose: (todo) => dispatch(TodoActions.toggleActive(todo))
+        onClose: (todo) => dispatch(TodosActions.toggleActive(todo))
     }
 }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import Radium from 'radium'
 
-import TodoActions from './actions/TodosActions'
+import TodosActions from './actions/TodosActions'
 
 import TodosView from './components/TodosView'
 
@@ -15,7 +15,7 @@ function mapStateToProps(state) {
 
 var mapDispatchToProps = function(dispatch) { 
     return {
-        toggleActive: (todo) => dispatch(TodoActions.toggleActive(todo))
+        toggleActive: (todo) => dispatch(TodosActions.toggleActive(todo))
     }
 }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { Input } from 'react-bootstrap'
 
-import TodoActions from './actions/TodosActions'
+import TodosActions from './actions/TodosActions'
 
 const ToggleShowAll = ( { defaultChecked, toggleShowAll } ) => {
     return <div style={ styles.chk }><Input type='checkbox' onClick={ toggleShowAll }
@@ -17,7 +17,7 @@ function mapStateToPropsTodos(state) {
 
 var mapDispatchToProps = function(dispatch) {
     return {
-        toggleShowAll: () => dispatch(TodoActions.toggleShowAll())
+        toggleShowAll: () => dispatch(TodosActions.toggleShowAll())
     }
 }
 
