@@ -17,7 +17,7 @@ var mapDispatchToProps = function(dispatch) {
             for (var key in todo)
                 if (typeof mergedTodo[key] == 'undefined')
                     mergedTodo[key] = todo[key]
-            dispatch(TodoActions.updateTodo(mergedTodo))
+            dispatch(TodosActions.updateTodo(mergedTodo))
         },
         onClose: (todo) => dispatch(TodosActions.toggleActive(todo))
     }
