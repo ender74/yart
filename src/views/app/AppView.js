@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import Radium from 'radium'
 
 import { Router, Route, browserHistory } from 'react-router'
-import { Provider } from 'react-redux'
+import { Provider, update } from 'react-intl-redux'
+import moment from 'moment'
 import watch from 'redux-watch'
+import $ from 'jquery'
 
 import BoundApp from './BoundApp'
 import BoundTodosView from './todos/BoundTodosView'
@@ -28,6 +30,11 @@ class AppView extends Component {
     constructor() {
         super()
 
+        this.state = {
+            locale: 'en',
+            messages: {}
+        }
+
         let w = watch(store.getState, 'auth.user')
         store.subscribe(w((newVal, oldVal, objectPath) => {
             console.log('auth.user changed')
@@ -38,9 +45,31 @@ class AppView extends Component {
         }))
     }
 
+    componentDidMount() {
+        const appViewThis = this
+        const locale = window.navigator.userLanguage || window.navigator.language
+        $.getJSON( "messages_" + locale + ".json" )
+          .done(function( json ) {
+            appViewThis.setState({
+                locale: locale,
+                messages: json
+            })
+          })
+          .fail(function( jqxhr, textStatus, error ) {
+              $.getJSON( "messages.json" )
+                .done(function( json ) {
+                    appViewThis.setState({
+                        locale: 'en',
+                        messages: json
+                    })
+                })
+        })
+    }
+
     render() {
+        moment.locale(this.state.locale)
         return (
-            <Provider store={store}>
+            <Provider store={ store } locale={ this.state.locale } messages={ this.state.messages }>
                 <Router history={ browserHistory }>
                     <Route component = { BoundApp }>
                         <Route path='login' component= { BoundLoginView } />

@@ -19,8 +19,8 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
                     onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
                     <ButtonGroup>
                         {btnOpenUrl}
-                        <Button onClick={ () => onToggleTodoActiveClick( todo ) } tooltip='Eintrag bearbeiten'><Glyphicon glyph='wrench' /></Button>
-                        <Button onClick={ () => onDestroyClick(todo) } tooltip='Eintrag löschen'><Glyphicon glyph='trash' /></Button>
+                        <Button onClick={ () => onToggleTodoActiveClick( todo ) }><Glyphicon glyph='wrench' /></Button>
+                        <Button onClick={ () => onDestroyClick(todo) }><Glyphicon glyph='trash' /></Button>
                     </ButtonGroup>
                 </TodoEntry>
             )
