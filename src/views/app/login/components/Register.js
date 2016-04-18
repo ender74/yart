@@ -1,19 +1,31 @@
 import React, { Component } from 'react'
 import {reduxForm} from 'redux-form'
-
+import { FormField } from 'redux-form-fields'
 import { ButtonToolbar, Button, Glyphicon } from 'react-bootstrap'
+import { FormattedMessage } from 'react-intl'
 
-import ValidatedInput from '../../components/ValidatedInput'
-import DateTimeInput, { isValidDate, parseISODate, formatISODate, parseDate, formatDate } from '../../components/DateTimeInput'
-
-const registerForm = { 
+const registerForm = {
   form: 'register',                           
   fields: ['username', 'password'],
   touchOnChange: true,
   validate(login) {
       var errors = {}
-      if (!login.username) errors.username = 'Bitte geben Sie ihre email Adresse ein.'
-      if (!login.password) errors.password = 'Bitte geben Sie ihr Passwort ein.'
+        var errors = {}
+        if (!login.username)
+            errors.username = (
+                <FormattedMessage
+                    id='login.missing_username'
+                    defaultMessage='please input your email'
+                />
+            )
+        if (!login.password)
+            errors.password = (
+                <FormattedMessage
+                    id='login.missing_password'
+                    defaultMessage='please input your password'
+                />
+            )
+        return errors
       return errors
   }
 }
@@ -25,13 +37,11 @@ class Register extends Component {
         const {fields: {username, password}, handleSubmit} = this.props
         return (
             <form>
-                <ValidatedInput
-                    type = 'text'
+                <FormField
                     label = 'Email Adresse:'
                     {...username}
                     addonBefore={ glyphiconUser } />
-                <ValidatedInput
-                    type = 'password'
+                <FormField
                     label = 'Neues Passwort:'
                     {...password}
                     addonBefore={ glyphiconLock }/>

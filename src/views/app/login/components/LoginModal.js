@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button, ButtonToolbar, Modal, Glyphicon } from 'react-bootstrap'
+import { FormattedMessage } from 'react-intl'
 
 import UsernamePassword from './UsernamePassword'
 
@@ -7,7 +8,10 @@ const LoginModal = ({ show, hide, onUpLogin }) => {
     return (
         <Modal show={ show } onHide={ hide } backdrop={ true } aria-labelledby="contained-modal-title-lg">
             <Modal.Header closeButton={ true }>
-                Anmelden
+                <FormattedMessage
+                    id='login.login'
+                    defaultMessage='Login existing user'
+                />
             </Modal.Header>
             <Modal.Title style={ styles.title }>
                 <div style={ styles.buttons }>
