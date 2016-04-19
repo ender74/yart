@@ -6,6 +6,7 @@ import Parse from 'parse'
 import moment from 'moment'
 
 import AppView from './views/app/AppView'
+import polyfills from './polyfills'
 
 import { addLocaleData } from 'react-intl'
 import enLocaleData from 'react-intl/locale-data/en'
@@ -16,6 +17,8 @@ import esLocaleData from 'react-intl/locale-data/es'
 require('moment/locale/de')
 require('moment/locale/fr')
 require('moment/locale/es')
+
+polyfills()
 
 const locales = [enLocaleData, deLocaleData[0], frLocaleData, esLocaleData]
 const flatLocales = []

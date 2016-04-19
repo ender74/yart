@@ -24,7 +24,6 @@ function loginFailed(state, user, code, message) {
 function authReducer(state,action){
     if (typeof state == 'undefined')
         state = initialState()
-    state = Object.assign({}, state) 
     switch (action.type) {
         case C.AUTH_LOGIN_SUCCEDED:
             state=loginSucceded(state, action.user)
