@@ -51,8 +51,19 @@ class TodoDetails extends Component {
                         placeholder='Panoramastraße 1A, 10178 Berlin'
                         {...location} />
                     <ButtonToolbar>
-                        <Button bsStyle='primary' tooltip='Fenster schließen' onClick={ () => this.props.onClose( this.props.todo ) }>{glyphiconBack} Zurück</Button>
-                        <Button bsStyle='success' tooltip='Änderungen speichern' onClick={ handleSubmit(onSubmit) }>Speichern</Button>
+                        <Button bsStyle='primary' onClick={ () => this.props.onClose( this.props.todo ) }>
+                            {glyphiconBack}
+                            <FormattedMessage
+                                id='todo.close'
+                                defaultMessage='Back'
+                            />
+                        </Button>
+                        <Button bsStyle='success' onClick={ handleSubmit(onSubmit) }>
+                            <FormattedMessage
+                                id='todo.save'
+                                defaultMessage='Save'
+                            />
+                        </Button>
                     </ButtonToolbar>
                 </form>
             </aside>

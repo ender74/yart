@@ -1,1 +1,11 @@
-{}
+{
+  "login.missing_username": "Please insert your email address.",
+  "login.missing_password": "Please type in your password.",
+  "login.register": "Register",
+  "login.login": "Sign-In",
+  "jumbotron.slogan": "Organize your life.",
+  "todo.missing_text": "Please input the title for your todo.",
+  "todo.illegal_date": "The text {date} is no valid date.",
+  "todo.close": "Back",
+  "todo.save": "Save"
+}
