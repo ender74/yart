@@ -5,5 +5,7 @@
   "login.login": "Anmelden",
   "jumbotron.slogan": "Organisiere dein Leben.",
   "todo.missing_text": "Bitte geben Sie einen Text für das Todo ein.",
-  "todo.illegal_date": "Der Text {date} ist kein gültiges Datum."
+  "todo.illegal_date": "Der Text {date} ist kein gültiges Datum.",
+  "todo.close": "Zurück",
+  "todo.save": "Speichern"
 }
