@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
 import { PageHeader, Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap'
+import { FormattedMessage } from 'react-intl'
 
 const AppHeader = ({ user, logout }) => {
     var logout
     if (user)
         logout = (
             <Nav pullRight>
-                <NavItem onClick={ logout }><Glyphicon glyph='log-out' /> Abmelden</NavItem>
+                <NavItem onClick={ logout }><Glyphicon glyph='log-out' />
+                    <FormattedMessage
+                        id='logout'
+                        defaultMessage='Logout'
+                    />
+                </NavItem>
             </Nav>
         )
     return (

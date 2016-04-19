@@ -3,6 +3,7 @@
   "login.missing_password": "Bitte geben Sie ihr Passwort ein.",
   "login.register": "Registrieren",
   "login.login": "Anmelden",
+  "logout": "Abmelden",
   "jumbotron.slogan": "Organisiere dein Leben.",
   "todo.missing_text": "Bitte geben Sie einen Text für das Todo ein.",
   "todo.illegal_date": "Der Text {date} ist kein gültiges Datum.",
