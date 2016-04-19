@@ -1,6 +1,5 @@
 function polyfillAssign() {
     if (typeof Object.assign != 'function') {
-        console.log('polyfilling Object.assign')
         (function () {
             Object.assign = function (target) {
                 'use strict'
