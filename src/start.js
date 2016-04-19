@@ -1,7 +1,5 @@
 'use strict'
 
-import React from 'react'
-import ReactDOM from 'react-dom'
 import Parse from 'parse'
 import moment from 'moment'
 
@@ -13,11 +11,11 @@ import deLocaleData from 'react-intl/locale-data/de'
 import frLocaleData from 'react-intl/locale-data/fr'
 import esLocaleData from 'react-intl/locale-data/es'
 
-function init() {
-    require('moment/locale/de')
-    require('moment/locale/fr')
-    require('moment/locale/es')
+require('moment/locale/de')
+require('moment/locale/fr')
+require('moment/locale/es')
 
+function init() {
     polyfills()
 
     const locales = [enLocaleData, deLocaleData[0], frLocaleData, esLocaleData]
@@ -38,8 +36,7 @@ function init() {
 }
 
 function renderApp() {
-    const AppView = require('./views/app/AppView')
-    ReactDOM.render(<AppView />, document.getElementById("container"))
+    require('./renderApp')
 }
 
 init()
