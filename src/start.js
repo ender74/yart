@@ -39,5 +39,9 @@ function renderApp() {
     require('./renderApp')
 }
 
+window.onerror = function(message, source, lineno, colno, error) {
+    alert(message)
+}
+
 init()
 renderApp()

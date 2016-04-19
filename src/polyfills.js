@@ -1,3 +1,4 @@
+//needed for Android
 function polyfillAssign() {
     if (typeof Object.assign != 'function') {
         (function () {
@@ -24,6 +25,15 @@ function polyfillAssign() {
     }
 }
 
+//needed for webkit / safari
+function polyfillIntl() {
+    if (!global.Intl) {
+        require('intl');
+        require('intl/locale-data/jsonp/en.js');
+    }
+}
+
 export default () => {
     polyfillAssign()
+    polyfillIntl()
 }
