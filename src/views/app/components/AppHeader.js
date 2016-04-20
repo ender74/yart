@@ -14,11 +14,25 @@ class AppHeader extends Component {
     render() {
         const { user, logout, setLocale, intl } = this.props
 
+        const collapseNav = () => {
+            this.setState({
+                expanded: false
+            })
+        }
+        const myLogout = () => {
+            collapseNav()
+            logout()
+        }
+        const mySetLocale = (locale) => {
+            collapseNav()
+            setLocale(locale)
+        }
+
         var logoutItem
         if (user)
             logoutItem = (
                 <Nav pullRight>
-                    <NavItem onClick={ logout }><Glyphicon glyph='log-out' />
+                    <NavItem onClick={ myLogout }><Glyphicon glyph='log-out' />
                         <FormattedMessage
                             id='logout'
                             defaultMessage='Logout'
@@ -30,12 +44,6 @@ class AppHeader extends Component {
             id: 'app.language',
             defaultMessage: 'Language'
         })
-        const mySetLocale = (locale) => {
-            this.setState({
-                expanded: false
-            })
-            setLocale(locale)
-        }
         return (
             <Navbar fixedTop fluid expanded={this.state.expanded} onToggle={(expanded) => this.setState({expanded: expanded})}>
                 <Navbar.Header>
