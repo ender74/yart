@@ -35,7 +35,7 @@ class LoginView extends Component {
                             <Glyphicon glyph='log-in' /> &nbsp;
                             <FormattedMessage
                                 id='login.login'
-                                defaultMessage='Login for existing users'
+                                defaultMessage='Login as existing user'
                             />
                         </Button>
                     </p>

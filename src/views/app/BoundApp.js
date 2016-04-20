@@ -1,4 +1,6 @@
 import {connect} from 'react-redux'
+import $ from 'jquery'
+import {update} from 'react-intl-redux'
 
 import AuthActions from './login/actions/AuthActions'
 import App from './components/App'
@@ -11,7 +13,39 @@ function mapStateToProps(state) {
 
 var mapDispatchToProps = function(dispatch) { 
     return {
-        logout: () => dispatch(AuthActions.logout())
+        logout: () => dispatch(AuthActions.logout()),
+        setLocale: (locale) => dispatch(
+            (dispatch) => {
+                $.getJSON( "messages_" + locale + ".json" )
+                    .done(function( messages ) {
+                        dispatch(
+                            update(
+                                {
+                                    locale,
+                                    messages
+                                }
+                            )
+                        )
+                    })
+                    .fail(
+                        function( jqxhr, textStatus, error ) {
+                            $.getJSON( "messages.json" )
+                            .done(
+                                function( messages ) {
+                                    dispatch(
+                                        update(
+                                            {
+                                                locale,
+                                                messages
+                                            }
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                    )
+            }
+        )
     }
 }
 
