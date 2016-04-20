@@ -28,8 +28,11 @@ function polyfillAssign() {
 //needed for webkit / safari
 function polyfillIntl() {
     if (!global.Intl) {
-        require('intl');
-        require('intl/locale-data/jsonp/en.js');
+        require('intl')
+        require('intl/locale-data/jsonp/en.js')
+        require('intl/locale-data/jsonp/de.js')
+        require('intl/locale-data/jsonp/es.js')
+        require('intl/locale-data/jsonp/fr.js')
     }
 }
 

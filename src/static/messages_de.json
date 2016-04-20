@@ -5,6 +5,7 @@
   "login.login": "Anmelden",
   "logout": "Abmelden",
   "jumbotron.slogan": "Organisiere dein Leben.",
+  "todo.add_entry": "+ Einen neuen Eintrag hinzufügen",
   "todo.missing_text": "Bitte geben Sie einen Text für das Todo ein.",
   "todo.illegal_date": "Der Text {date} ist kein gültiges Datum.",
   "todo.close": "Zurück",
