@@ -26,50 +26,69 @@ function requireAuth(nextState, replace) {
   }
 }
 
+function detectLocale() {
+    var lang = window.navigator.userLanguage || window.navigator.browserLanguage || window.navigator.language
+    if (lang.indexOf('-') !== -1)
+        lang = lang.split('-')[0]
+
+    if (lang.indexOf('_') !== -1)
+        lang = lang.split('_')[0]
+
+    return lang
+}
+
 class AppView extends Component {
     constructor() {
         super()
 
-        this.state = {
-            locale: 'en',
-            messages: {}
-        }
-
-        let w = watch(store.getState, 'auth.user')
-        store.subscribe(w((newVal, oldVal, objectPath) => {
+        let wUser = watch(store.getState, 'auth.user')
+        store.subscribe(wUser((newVal, oldVal, objectPath) => {
             console.log('auth.user changed')
             if (newVal)
                 browserHistory.push('/app')
             else
                 browserHistory.push('/login')
         }))
+
+        let wLocale = watch(store.getState, 'intl.locale')
+        store.subscribe(wLocale((newVal, oldVal, objectPath) => {
+            console.log('intl.locale changed to ' + newVal)
+            moment.locale(newVal)
+        }))
     }
 
     componentDidMount() {
         const appViewThis = this
-        const locale = window.navigator.userLanguage || window.navigator.language
+        const locale = detectLocale()
         $.getJSON( "messages_" + locale + ".json" )
-          .done(function( json ) {
-            appViewThis.setState({
-                locale: locale,
-                messages: json
-            })
+          .done(function( messages ) {
+                store.dispatch(
+                    update(
+                        {
+                            locale,
+                            messages
+                        }
+                    )
+                )
           })
           .fail(function( jqxhr, textStatus, error ) {
               $.getJSON( "messages.json" )
-                .done(function( json ) {
-                    appViewThis.setState({
-                        locale: 'en',
-                        messages: json
-                    })
+                .done(function( messages ) {
+                store.dispatch(
+                    update(
+                        {
+                            locale,
+                            messages
+                        }
+                    )
+                )
                 })
         })
     }
 
     render() {
-        moment.locale(this.state.locale)
         return (
-            <Provider store={ store } locale={ this.state.locale } messages={ this.state.messages }>
+            <Provider store={ store }>
                 <Router history={ browserHistory }>
                     <Route component = { BoundApp }>
                         <Route path='login' component= { BoundLoginView } />

@@ -28,10 +28,10 @@ by the build container for you.
 - [ ] better README
 - [ ] tags
 - [ ] automated testing
-- [ ] internationalization
+- [X] internationalization
 - [X] basic implementation
 - [X] add some styling
-    - [ ] better styling / bootstrap
+    - [X] better styling / bootstrap
 - [ ] authentication 
     - [X] custom (signup / login)
     - [ ] Google

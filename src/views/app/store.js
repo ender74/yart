@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
     todos: todosReducer,
     auth: authReducer,
     form: formReducer,
-    intlReducer: intlReducer
+    intl: intlReducer
 })
 
 function simpleLogger({ getState }) {
@@ -26,6 +26,6 @@ function simpleLogger({ getState }) {
   }
 }
 
-const store = applyMiddleware(thunk)(createStore)(rootReducer,initialState())
+const store = applyMiddleware(thunk,simpleLogger)(createStore)(rootReducer,initialState())
 
 export default store
