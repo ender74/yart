@@ -75,7 +75,7 @@ const TodosActions = {
     },
 
     toggleComplete(completedTodo) {
-        return TodoActions.updateTodo({
+        return TodosActions.updateTodo({
             id: completedTodo.id,
             complete: completedTodo.complete ? 'false' : 'true'
         })
