@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input } from 'react-bootstrap'
+import { FormControl } from 'react-bootstrap'
 
 const ENTER_KEY_CODE = 13
 
@@ -14,7 +14,7 @@ class TodoTextInput extends Component {
     
     render() {
         const value = this.state.valueSet ? this.state.value : this.props.defaultValue
-        return <Input
+        return <FormControl
             type = 'text'
             className= { this.props.className }
             style= { this.props.style }
