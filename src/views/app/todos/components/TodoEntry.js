@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 
-import { Input } from 'react-bootstrap'
+import { Checkbox } from 'react-bootstrap'
 
 const CheckedInput = (props) => {
-    return <Input {...props} checked />
+    return <Checkbox {...props} checked />
 }
 
 const TodoEntry = ( { todo, children, onToggleCompleteClick } ) => {
-    const MyClass = todo.complete ? CheckedInput : Input
+    const MyClass = todo.complete ? CheckedInput : Checkbox
     return (
         <div style={ style.base }>
             <div style={ style.todo }>
-                <MyClass type="checkbox" label={ todo.text } onClick={ onToggleCompleteClick }>
+                <MyClass onClick={ onToggleCompleteClick } readOnly>
+                    { todo.text }
                 </MyClass>
             </div>
             <div style={ style.children }>
