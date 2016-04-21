@@ -12,7 +12,7 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
     todos.forEach(todo => {
             var btnOpenUrl
             if (todo.url)
-                btnOpenUrl = <Button onClick={ () => onOpenURL(todo) } tooltip='Link öffnen'><Glyphicon glyph='link' /></Button>
+                btnOpenUrl = <Button onClick={ () => onOpenURL(todo) }><Glyphicon glyph='link' /></Button>
 
             entries.push(
                 <TodoEntry key={ todo.id } todo={ todo } active={ active && active.id == todo.id }

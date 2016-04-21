@@ -2,15 +2,17 @@ import C from './AuthConstants'
 import $ from 'jquery'
 import Parse from 'parse'
 
-import initialState from '../../initialState'
+const initialState = {
+}
 
 function loginSucceded(state, user) {
+    state = Object.assign({}, state)
     state.user = user
     return state
 }
 
 function logout(state) {
-    return {}    
+    return initialState
 }
 
 function signUpFailed(state, user, code, message) {
@@ -21,9 +23,7 @@ function loginFailed(state, user, code, message) {
     alert(message)
 }
 
-function authReducer(state,action){
-    if (typeof state == 'undefined')
-        state = initialState()
+function authReducer(state = initialState,action){
     switch (action.type) {
         case C.AUTH_LOGIN_SUCCEDED:
             state=loginSucceded(state, action.user)

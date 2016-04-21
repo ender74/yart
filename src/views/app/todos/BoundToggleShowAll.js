@@ -1,12 +1,21 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import { Input } from 'react-bootstrap'
+import { FormattedMessage } from 'react-intl'
+import { Checkbox } from 'react-bootstrap'
 
 import TodosActions from './actions/TodosActions'
 
 const ToggleShowAll = ( { defaultChecked, toggleShowAll } ) => {
-    return <div style={ styles.chk }><Input type='checkbox' onClick={ toggleShowAll }
-                  defaultChecked={ defaultChecked } label='Alle zeigen'/></div>
+    return (
+        <div style={ styles.chk }>
+            <Checkbox onClick={ toggleShowAll } defaultChecked={ defaultChecked }>
+                <FormattedMessage
+                    id='todo.toggle_show_all'
+                    defaultMessage='show all'
+                />
+            </Checkbox>
+        </div>
+    )
 }
 
 function mapStateToPropsTodos(state) {

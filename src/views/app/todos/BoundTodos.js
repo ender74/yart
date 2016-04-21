@@ -5,14 +5,13 @@ import Todos from './components/Todos'
 import TodosActions from './actions/TodosActions'
 
 function mapStateToPropsTodos(state) {
-    //convert from immutable to plain JSON
-    const todoState = JSON.parse(JSON.stringify(state.todos))
+    const todoState = state.todos
     const allTodos = todoState.todos ? todoState.todos : []
     const todos = state.todos.showAll ?
         allTodos : allTodos.filter(t => !t.complete)
 
     return {
-        allTodos: todos,
+        allTodos: todos ? todos.toArray() : [], //convert from immutable to plain JSON
         activeTodo: state.todos.activeTodo
     }
 }

@@ -3,7 +3,6 @@ import thunk from 'redux-thunk'
 import { reducer as formReducer } from 'redux-form'
 import { intlReducer } from 'react-intl-redux'
 
-import initialState from './initialState'
 import todosReducer from './todos/actions/TodosReducer'
 import authReducer from './login/actions/AuthReducer'
 
@@ -26,6 +25,6 @@ function simpleLogger({ getState }) {
   }
 }
 
-const store = applyMiddleware(thunk,simpleLogger)(createStore)(rootReducer,initialState())
+const store = applyMiddleware(thunk)(createStore)(rootReducer)
 
 export default store
