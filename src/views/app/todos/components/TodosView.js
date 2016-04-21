@@ -1,70 +1,29 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import { Grid } from 'react-bootstrap'
-import Radium, {StyleRoot} from 'radium'
+import { Grid, Row, Col } from 'react-bootstrap'
 
 import BoundTodos from '../BoundTodos'
 import BoundToggleShowAll from '../BoundToggleShowAll'
 import BoundTodoDetails from '../BoundTodoDetails'
 
 const TodosView = ( { styleName, activeTodo, toggleActive, saveChanges, update } ) => {
-    const detailsVisible = typeof activeTodo.id != 'undefined'
-    const style = detailsVisible ? 'active' : 'default'
+    const detailsVisible = typeof activeTodo != 'undefined' && activeTodo.id
+    var col1Styles = detailsVisible ? {xsHidden: true, sm: 8} : {sm: 12}
+    var col2Styles = detailsVisible ? {sm:4} : {style: {'display': 'none'}}
     return (
-        <StyleRoot>
-            <Grid>
-                <div style = { styles[style].main }>
-                    <BoundTodos style={ styles[style].list }>
+        <Grid>
+            <Row>
+                <Col {...col1Styles}>
+                    <BoundTodos>
                         <BoundToggleShowAll />
                     </BoundTodos>
-                    <BoundTodoDetails style={ styles[style].details } todo = { activeTodo } />
-                </div>
-            </Grid>
-        </StyleRoot>
+                </Col>
+                <Col {...col2Styles}>
+                    <BoundTodoDetails todo = { activeTodo } />
+                </Col>
+            </Row>
+        </Grid>
     )
 }
 
-const styles = {
-    'default': {
-        main: {
-            width: '100%'
-        },
-
-        list: {
-        },
-
-        details: {
-            display: 'none'
-        },
-    },
-
-    'active': {
-        main: {
-            display: 'flex',
-            width: '100%'
-        },
-
-        list: {
-            '@media (max-width: 768px)': {
-                display: 'none'
-            },
-            '@media (min-width: 768px)': {
-                width: '60%'
-            }
-        },
-
-        details: {
-            '@media (max-width: 768px)': {
-                width: '100%'
-            },
-            '@media (min-width: 768px)': {
-                position: 'fixed',
-                width: '40%',
-                top: '70px',
-                right: '10px'
-            }
-        },
-    }
-}
-
-export default Radium(TodosView)
+export default TodosView
