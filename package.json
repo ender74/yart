@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp dev",
-    "build-min": "gulp release",
+    "build-min": "NODE_ENV=production gulp release",
     "dev": "docker-compose up -d && gulp"
   },
   "pre-commit": [
