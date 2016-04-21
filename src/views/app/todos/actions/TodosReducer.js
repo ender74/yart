@@ -1,7 +1,8 @@
 import Immutable from 'immutable'
 import C from './TodosConstants'
-import { Todo, TodoList } from '../../Types'
-import initialState from '../../initialState'
+import { Todo, TodoList, TodoState } from './Types'
+
+const initialState = TodoState()
 
 function addTodo(state, newTodo) {
     return state.set("todos", state.todos.push(newTodo))
@@ -63,9 +64,7 @@ function todoToggleShowAll(state) {
     return state
 }
 
-function todosReducer(state,action){
-    if (typeof state === 'undefined')
-        state = initialState()
+function todosReducer(state = initialState,action){
     switch (action.type) {
         case C.TODO_ADD_NEW:
             state=todoAddNew(state, action.todo)
