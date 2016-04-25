@@ -15,3 +15,13 @@ export const TodoState = Record({
     activeTodo: Maybe(Todo),
     showAll: Boolean(false)
 })
+
+export const Tag = Record({
+    id: String,
+    text: String
+})
+export const TagList = List(Tag)
+
+export const TagState = Record({
+    tags: TagList([])
+})
