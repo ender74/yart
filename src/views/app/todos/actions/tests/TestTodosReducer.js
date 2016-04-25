@@ -65,6 +65,38 @@ describe('todosReducer', () => {
             }
         })).to.equal(stateExpected)
     })
+    it('should load todos', () => {
+        const stateBefore = TodoState()
+        const stateExpected = TodoState({
+            todos: TodoList([
+                Todo({
+                    id: '0815',
+                    text: 'Hallo',
+                    complete: false
+                }),
+                Todo({
+                    id: '0816',
+                    text: 'Welt',
+                    complete: false
+                })
+            ])
+        })
+        expect(todosReducer(stateBefore, {
+            type: C.TODO_LOAD,
+            todos: [
+                {
+                    id: '0815',
+                    text: 'Hallo',
+                    complete: false
+                },
+                {
+                    id: '0816',
+                    text: 'Welt',
+                    complete: false
+                }
+            ]
+        })).to.equal(stateExpected)
+    })
     it('should activate todo', () => {
         const stateBefore = TodoState({
             todos: TodoList([
