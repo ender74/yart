@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { ButtonToolbar, Button, ButtonGroup, Glyphicon } from 'react-bootstrap'
+import { ButtonToolbar, Button, ButtonGroup, Glyphicon, ListGroupItem } from 'react-bootstrap'
 
 import TodoEntry from './TodoEntry'
 
@@ -15,14 +15,16 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
                 btnOpenUrl = <Button onClick={ () => onOpenURL(todo) }><Glyphicon glyph='link' /></Button>
 
             entries.push(
-                <TodoEntry key={ todo.id } todo={ todo } active={ active && active.id == todo.id }
-                    onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
-                    <ButtonGroup>
-                        {btnOpenUrl}
-                        <Button onClick={ () => onToggleTodoActiveClick( todo ) }><Glyphicon glyph='wrench' /></Button>
-                        <Button onClick={ () => onDestroyClick(todo) }><Glyphicon glyph='trash' /></Button>
-                    </ButtonGroup>
-                </TodoEntry>
+                <ListGroupItem key={ todo.id } active={ active && active.id == todo.id } style={ style.item } >
+                    <TodoEntry todo={ todo }
+                        onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
+                        <ButtonGroup>
+                            {btnOpenUrl}
+                            <Button onClick={ () => onToggleTodoActiveClick( todo ) }><Glyphicon glyph='wrench' /></Button>
+                            <Button onClick={ () => onDestroyClick(todo) }><Glyphicon glyph='trash' /></Button>
+                        </ButtonGroup>
+                    </TodoEntry>
+                </ListGroupItem>
             )
         }
     )
@@ -31,6 +33,13 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
         { entries }
         </div>
     )
+}
+
+const style = {
+    item: {
+        border: 'none',
+        padding: '5px 5px'
+    }
 }
 
 TodoList.propTypes={

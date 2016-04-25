@@ -2,25 +2,19 @@ import React, { Component } from 'react'
 
 import { Checkbox } from 'react-bootstrap'
 
-const CheckedInput = (props) => {
-    return <Checkbox {...props} checked />
-}
-
-const TodoEntry = ( { todo, children, onToggleCompleteClick } ) => {
-    const MyClass = todo.complete ? CheckedInput : Checkbox
+const TodoEntry = ( { todo, children, active, onToggleCompleteClick } ) => {
     return (
         <div style={ style.base }>
             <div style={ style.todo }>
-                <MyClass onClick={ onToggleCompleteClick } readOnly>
+                <Checkbox bsStyle='success' onClick={ onToggleCompleteClick } readOnly checked={ todo.complete }>
                     { todo.text }
-                </MyClass>
+                </Checkbox>
             </div>
             <div style={ style.children }>
                 { children }
             </div>
         </div>
     )
-
 }
 
 const style = {

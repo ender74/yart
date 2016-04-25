@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Radium from 'radium'
 import { injectIntl } from 'react-intl'
+import { Grid, Row, Col} from 'react-bootstrap'
 
 import TodoTextInput from './TodoTextInput'
 import TodoList from './TodoList'
@@ -13,12 +14,25 @@ const Todos = ( { style, allTodos, activeTodo, children, addNewTodo, toggleActiv
 
     return (
         <article style={style}>
-            <TodoTextInput
-                placeholder={ placeholder }
-                onSubmitEditing={ addNewTodo } />
-            <TodoList active={ activeTodo } todos={ allTodos } onToggleTodoCompleteClick={ toggleComplete }
-                onToggleTodoActiveClick={ toggleActive } onDestroyClick={ destroyTodo } onOpenURL={ openURL } />
-            { children }
+            <Row>
+                <Col>
+                    <TodoTextInput
+                        placeholder={ placeholder }
+                        onSubmitEditing={ addNewTodo }
+                        style={{marginBottom: '10px'}} />
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <TodoList active={ activeTodo } todos={ allTodos } onToggleTodoCompleteClick={ toggleComplete }
+                        onToggleTodoActiveClick={ toggleActive } onDestroyClick={ destroyTodo } onOpenURL={ openURL } />
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    { children }
+                </Col>
+            </Row>
         </article>
     )
 }
