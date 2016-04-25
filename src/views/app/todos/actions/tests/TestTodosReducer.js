@@ -11,8 +11,8 @@ chai.use(chaiImmutable)
 describe('todosReducer', () => {
     it('should return initialstate when given no state', () => {
         const stateExpected = TodoState()
-        const state = {}
-        expect(todosReducer(state.state, {type: 'INIT'})).to.equal(stateExpected)
+        let stateBefore
+        expect(todosReducer(stateBefore, {type: 'INIT'})).to.equal(stateExpected)
     })
     it('should add todo', () => {
         const stateBefore = TodoState()

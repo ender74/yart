@@ -79,7 +79,7 @@ function todosReducer(state = TodoState(), action){
         case C.TODO_TOGGLE_SHOWALL:
             return todoToggleShowAll(state)
         default:
-            return state;
+            return state
     }
 }
 

@@ -1,5 +1,4 @@
 import C from './TodosConstants'
-import uuid from 'node-uuid'
 
 import { loadTodosBackend, createTodoBackend, destroyTodoBackend, updateTodoBackend } from './TodosBackend'
 

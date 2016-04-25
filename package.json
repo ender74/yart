@@ -4,7 +4,7 @@
   "description": "yet another react todo app",
   "main": "index.js",
   "scripts": {
-    "test": "gulp test",
+    "test": "NODE_ENV=test gulp test",
     "build": "gulp dev",
     "build-min": "NODE_ENV=production gulp release",
     "dev": "docker-compose up -d && gulp"

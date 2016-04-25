@@ -18,7 +18,8 @@ export const TodoState = Record({
 
 export const Tag = Record({
     id: String,
-    text: String
+    text: String,
+    refCount: Number(1)
 })
 export const TagList = List(Tag)
 
