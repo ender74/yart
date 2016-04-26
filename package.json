@@ -10,7 +10,8 @@
     "dev": "docker-compose up -d && gulp"
   },
   "pre-commit": [
-    "build-min", "test"
+    "build-min",
+    "test"
   ],
   "browserify": {
     "transform": [
@@ -43,6 +44,7 @@
     "babel-register": "~6.7.2",
     "color": "~0.11.1",
     "es6-promise": "^3.1.2",
+    "fetch-check-http-status": "^1.0.0",
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
     "gulp-util": "^3.0.7",
