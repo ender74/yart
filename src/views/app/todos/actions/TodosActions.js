@@ -96,6 +96,22 @@ const TodosActions = {
                 (error) => alert(error)
             )
         }
+    },
+
+    addTag(tag) {
+        return (dispatch, getState) => {
+            const { todos: { activeTodo } } = getState()
+            if (typeof activeTodo == 'undefined')
+                return
+        }
+    },
+
+    removeTag(tag) {
+        return (dispatch, getState) => {
+            const { todos: { activeTodo } } = getState()
+            if (typeof activeTodo == 'undefined')
+                return
+        }
     }
 }
 

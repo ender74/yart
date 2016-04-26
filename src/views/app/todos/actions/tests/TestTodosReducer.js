@@ -2,7 +2,7 @@ import { describe, it } from 'mocha'
 import chai, { expect } from 'chai'
 import chaiImmutable from 'chai-immutable'
 
-import { TodoState, Todo, TodoList } from '../Types'
+import { TodoState, Todo, TodoList, Tag, TagList } from '../Types'
 import C from '../TodosConstants'
 import todosReducer from '../TodosReducer'
 
@@ -237,6 +237,132 @@ describe('todosReducer', () => {
             type: C.TODO_TOGGLE_COMPLETE,
             todo: {
                 id: '0816'
+            }
+        })).to.equal(stateExpected)
+    })
+    it('should add tag to active todo', () => {
+        const stateBefore = TodoState({
+            todos: TodoList([
+                Todo({
+                    id: '0815',
+                    text: 'Hallo',
+                    complete: false
+                })
+            ]),
+            activeTodo: Todo({
+                id: '0815',
+                text: 'Hallo',
+                complete: false
+            })
+        })
+        const stateExpected = TodoState({
+            todos: TodoList([
+                Todo({
+                    id: '0815',
+                    text: 'Hallo',
+                    complete: false,
+                    tags: TagList([
+                        Tag({
+                            id: '0815',
+                            text: 'Tag 1',
+                            refCount: 5
+                        })
+                    ])
+                })
+            ]),
+            activeTodo: Todo({
+                id: '0815',
+                text: 'Hallo',
+                complete: false,
+                tags: TagList([
+                    Tag({
+                        id: '0815',
+                        text: 'Tag 1',
+                        refCount: 5
+                    })
+                ])
+            })
+        })
+        expect(todosReducer(stateBefore, {
+            type: C.TODO_ADD_TAG,
+            tag: {
+                id: '0815',
+                text: 'Tag 1',
+                refCount: 5
+            }
+        })).to.equal(stateExpected)
+    })
+    it('should remove tag from active todo', () => {
+        const stateBefore = TodoState({
+            todos: TodoList([
+                Todo({
+                    id: '0815',
+                    text: 'Hallo',
+                    complete: false,
+                    tags: TagList([
+                        Tag({
+                            id: '1234',
+                            text: 'Tag 1',
+                            refCount: 5
+                        }),
+                        Tag({
+                            id: '1235',
+                            text: 'Tag 2',
+                            refCount: 1
+                        })
+                    ])
+                })
+            ]),
+            activeTodo: Todo({
+                id: '0815',
+                text: 'Hallo',
+                complete: false,
+                tags: TagList([
+                    Tag({
+                        id: '1234',
+                        text: 'Tag 1',
+                        refCount: 5
+                    }),
+                    Tag({
+                        id: '1235',
+                        text: 'Tag 2',
+                        refCount: 1
+                    })
+                ])
+            })
+        })
+        const stateExpected = TodoState({
+            todos: TodoList([
+                Todo({
+                    id: '0815',
+                    text: 'Hallo',
+                    complete: false,
+                    tags: TagList([
+                        Tag({
+                            id: '1234',
+                            text: 'Tag 1',
+                            refCount: 5
+                        })
+                    ])
+                })
+            ]),
+            activeTodo: Todo({
+                id: '0815',
+                text: 'Hallo',
+                complete: false,
+                tags: TagList([
+                    Tag({
+                        id: '1234',
+                        text: 'Tag 1',
+                        refCount: 5
+                    })
+                ])
+            })
+        })
+        expect(todosReducer(stateBefore, {
+            type: C.TODO_REMOVE_TAG,
+            tag: {
+                text: 'Tag 2'
             }
         })).to.equal(stateExpected)
     })
