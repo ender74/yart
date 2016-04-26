@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import Radium from 'radium'
 
 import { Router, Route, browserHistory } from 'react-router'
-import { Provider, update } from 'react-intl-redux'
+import { Provider } from 'react-intl-redux'
 import moment from 'moment'
 import watch from 'redux-watch'
-import $ from 'jquery'
 
+import LocaleActions from './actions/LocaleActions'
 import BoundApp from './BoundApp'
 import BoundTodosView from './todos/BoundTodosView'
 import BoundLoginView from './login/BoundLoginView'
@@ -52,7 +52,6 @@ class AppView extends Component {
 
         let wLocale = watch(store.getState, 'intl.locale')
         store.subscribe(wLocale((newVal, oldVal, objectPath) => {
-            console.log('intl.locale changed to ' + newVal)
             moment.locale(newVal)
         }))
     }
@@ -60,30 +59,7 @@ class AppView extends Component {
     componentDidMount() {
         const appViewThis = this
         const locale = detectLocale()
-        $.getJSON( "messages_" + locale + ".json" )
-          .done(function( messages ) {
-                store.dispatch(
-                    update(
-                        {
-                            locale,
-                            messages
-                        }
-                    )
-                )
-          })
-          .fail(function( jqxhr, textStatus, error ) {
-              $.getJSON( "messages.json" )
-                .done(function( messages ) {
-                store.dispatch(
-                    update(
-                        {
-                            locale,
-                            messages
-                        }
-                    )
-                )
-                })
-        })
+        store.dispatch(LocaleActions.setLocale(locale))
     }
 
     render() {
