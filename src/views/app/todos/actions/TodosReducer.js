@@ -22,8 +22,11 @@ const todoLoad = (state, todos) => {
 
 const todoDestroy = (state, todo) => {
     const indexFromState = state.todos.findIndex(t => t.id === todo.id)
-    if (indexFromState >= 0)
+    if (indexFromState >= 0) {
         state = state.set('todos', state.todos.delete(indexFromState))
+        if (state.activeTodo && state.activeTodo.id === todo.id)
+            state = state.remove('activeTodo')
+    }
     return state
 }
 
@@ -84,9 +87,12 @@ const todoAddTag = (state, tag) => {
     if (indexFromState >= 0) {
         const todo = state.todos.get(indexFromState)
         const tags = todo.tags
-        const newTags = tags.push(tag)
-        state = state.set('todos', state.todos.set(indexFromState, todo.set('tags', newTags)))
-        state = state.set('activeTodo', state.todos.get(indexFromState))
+        const tagIdx = tags.findIndex(t => t.text === tag.text)
+        if (tagIdx < 0) {
+            const newTags = tags.push(tag)
+            state = state.set('todos', state.todos.set(indexFromState, todo.set('tags', newTags)))
+            state = state.set('activeTodo', state.todos.get(indexFromState))
+        }
     }
     return state
 }
@@ -103,7 +109,7 @@ const todoRemoveTag = (state, tag) => {
             const newTags = tags.delete(tagIdx)
             state = state.set('todos', state.todos.set(indexFromState, todo.set('tags', newTags)))
             state = state.set('activeTodo', state.todos.get(indexFromState))
-        } 
+        }
     }
     return state
 }

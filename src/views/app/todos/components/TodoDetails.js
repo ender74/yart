@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import {reduxForm} from 'redux-form'
-import Radium  from 'radium'
 import { Form, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap'
 import { FormField, DateField } from 'redux-form-fields'
 import { FormattedMessage } from 'react-intl'
+
+import Tags from './Tags'
 
 const todoDetailsForm = {
     form: 'todoDetails',
@@ -35,38 +36,37 @@ const glyphiconBack = <Glyphicon glyph='backward' />
 class TodoDetails extends Component {
     render() {
         const onSubmit = (values) => this.props.onUpdate(this.props.todo, values)
-        const {fields: {text, url, due, location}, handleSubmit} = this.props
+        const {fields: {text, url, due, location}, tags, onAddTag, handleSubmit} = this.props
         return (
-            <aside style={ [{paddingLeft: '12px'}, this.props.style] }>
-                <form>
-                    <FormField
-                        {...text} />
-                    <FormField
-                        placeholder='http://www.log84.de'
-                        {...url} />
-                    <DateField
-                        placeholder='17.03.2016'
-                        {...due} />
-                    <FormField
-                        placeholder='Panoramastraße 1A, 10178 Berlin'
-                        {...location} />
-                    <ButtonToolbar>
-                        <Button bsStyle='primary' onClick={ () => this.props.onClose( this.props.todo ) }>
-                            {glyphiconBack}
-                            <FormattedMessage
-                                id='todo.close'
-                                defaultMessage='Back'
-                            />
-                        </Button>
-                        <Button bsStyle='success' onClick={ handleSubmit(onSubmit) }>
-                            <FormattedMessage
-                                id='todo.save'
-                                defaultMessage='Save'
-                            />
-                        </Button>
-                    </ButtonToolbar>
-                </form>
-            </aside>
+            <form>
+                <FormField
+                    {...text} />
+                <FormField
+                    placeholder='http://www.log84.de'
+                    {...url} />
+                <DateField
+                    placeholder='17.03.2016'
+                    {...due} />
+                <FormField
+                    placeholder='Panoramastraße 1A, 10178 Berlin'
+                    {...location} />
+                <ButtonToolbar>
+                    <Button bsStyle='primary' onClick={ () => this.props.onClose( this.props.todo ) }>
+                        {glyphiconBack}
+                        <FormattedMessage
+                            id='todo.close'
+                            defaultMessage='Back'
+                        />
+                    </Button>
+                    <Button bsStyle='success' onClick={ handleSubmit(onSubmit) }>
+                        <FormattedMessage
+                            id='todo.save'
+                            defaultMessage='Save'
+                        />
+                    </Button>
+                </ButtonToolbar>
+                <Tags tags = { tags } onAddTag = { onAddTag } />
+            </form>
         )
     }
 }
@@ -92,6 +92,6 @@ const TodoDetailsForm = reduxForm(todoDetailsForm,
 state => ({ 
   initialValues: stateToValues(state.todos.activeTodo)
 }),
-{})(Radium(TodoDetails))
+{})(TodoDetails)
 
 export default TodoDetailsForm

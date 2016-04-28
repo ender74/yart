@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Radium from 'radium'
 
 import { Router, Route, browserHistory } from 'react-router'
 import { Provider } from 'react-intl-redux'

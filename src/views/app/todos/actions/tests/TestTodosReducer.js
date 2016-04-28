@@ -65,6 +65,31 @@ describe('todosReducer', () => {
             }
         })).to.equal(stateExpected)
     })
+    it('should deactive removed todo', () => {
+        const stateBefore = TodoState({
+            todos: TodoList([
+                Todo({
+                    id: '0815',
+                    text: 'Hallo',
+                    complete: false
+                })
+            ]),
+            activeTodo: Todo({
+                id: '0815',
+                text: 'Hallo',
+                complete: false
+            })
+        })
+        const stateExpected = TodoState({
+            todos: TodoList([])
+        })
+        expect(todosReducer(stateBefore, {
+            type: C.TODO_DESTROY,
+            todo: {
+                id: '0815'
+            }
+        })).to.equal(stateExpected)
+    })
     it('should load todos', () => {
         const stateBefore = TodoState()
         const stateExpected = TodoState({
@@ -93,6 +118,52 @@ describe('todosReducer', () => {
                     id: '0816',
                     text: 'Welt',
                     complete: false
+                }
+            ]
+        })).to.equal(stateExpected)
+    })
+    it('should load todos with tags', () => {
+        const stateBefore = TodoState()
+        const stateExpected = TodoState({
+            todos: TodoList([
+                Todo({
+                    id: '0815',
+                    text: 'Hallo',
+                    complete: false
+                }),
+                Todo({
+                    id: '0816',
+                    text: 'Welt',
+                    complete: false,
+                    tags: TagList([
+                        Tag({
+                            id: 'tag1',
+                            text: 'Tag 1',
+                            refCount: 1
+                        })
+                    ])
+                })
+            ])
+        })
+        expect(todosReducer(stateBefore, {
+            type: C.TODO_LOAD,
+            todos: [
+                {
+                    id: '0815',
+                    text: 'Hallo',
+                    complete: false
+                },
+                {
+                    id: '0816',
+                    text: 'Welt',
+                    complete: false,
+                    tags: [
+                        {
+                            id: 'tag1',
+                            text: 'Tag 1',
+                            refCount: 1
+                        }
+                    ]
                 }
             ]
         })).to.equal(stateExpected)
@@ -363,6 +434,45 @@ describe('todosReducer', () => {
             type: C.TODO_REMOVE_TAG,
             tag: {
                 text: 'Tag 2'
+            }
+        })).to.equal(stateExpected)
+    })
+    it('should not add tag twice', () => {
+        const stateBefore = TodoState({
+            todos: TodoList([
+                Todo({
+                    id: '0815',
+                    text: 'Hallo',
+                    complete: false,
+                    tags: TagList([
+                        Tag({
+                            id: '1234',
+                            text: 'Tag 1',
+                            refCount: 5
+                        })
+                    ])
+                })
+            ]),
+            activeTodo: Todo({
+                id: '0815',
+                text: 'Hallo',
+                complete: false,
+                tags: TagList([
+                    Tag({
+                        id: '1234',
+                        text: 'Tag 1',
+                        refCount: 5
+                    })
+                ])
+            })
+        })
+        const stateExpected = stateBefore
+        expect(todosReducer(stateBefore, {
+            type: C.TODO_ADD_TAG,
+            tag: {
+                id: '0815',
+                text: 'Tag 1',
+                refCount: 5
             }
         })).to.equal(stateExpected)
     })

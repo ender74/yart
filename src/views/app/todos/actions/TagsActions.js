@@ -6,19 +6,35 @@ import { loadTagsBackend, createTagBackend, destroyTagBackend, updateTagBackend 
 const TagsActions = {
     addTag(text) {
         return (dispatch, getState) => {
-            const newTag = {
-                text: text
-            }
+            const { tags } = getState()
+            const tagIndex = tags.tags.findIndex(t => { return t.text == text } )
+            if (tagIndex >= 0) {
+                const tag = tags.tags.get(tagIndex)
+                dispatch({
+                    type: C.TAG_ADD_NEW,
+                    tag
+                })
+                updateTagBackend(
+                    tags.tags.get(tagIndex),
+                    (tag) => {},
+                    (error) => {}
+                )
+            } else {
+                const newTag = {
+                    text: text,
+                    refCounter: 1
+                }
 
-            createTagBackend(newTag,
-                (tag) => {
-                    dispatch({
-                        type: C.TAG_ADD_NEW,
-                        tag
-                    })
-                },
-                (error) => alert(error)
-            )
+                createTagBackend(newTag,
+                    (tag) => {
+                        dispatch({
+                            type: C.TAG_ADD_NEW,
+                            tag
+                        })
+                    },
+                    (error) => alert(error)
+                )
+            }
         }
     },
 

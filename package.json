@@ -56,7 +56,6 @@
     "node-uuid": "~1.4.7",
     "object-assign": "~4.0.1",
     "parse": "~1.8.1",
-    "radium": "~0.17.1",
     "react": "~15.0.1",
     "react-bootstrap": "^0.29.0",
     "react-date-field": "^0.2.3",

@@ -1,8 +1,8 @@
 import Parse from 'parse'
 
-const Tag = Parse.Object.extend("Tag")
+export const Tag = Parse.Object.extend("Tag")
 
-function convertToModel(tagFromParse) {
+export function convertTagToModel(tagFromParse) {
     return {
         id: tagFromParse.id,
         text: tagFromParse.get("text"),
@@ -14,7 +14,7 @@ function convertFromModel(tag) {
     return new Tag({
         id: tag.id,
         text: tag.text,
-        refCount: "" + tag.refCount
+        refCount: tag.refCount
     })
 }
 
@@ -22,7 +22,7 @@ function mergeTag(tag, newVal) {
     for (var prop in newVal) {
         var v = newVal[prop]
         if (v)
-            tag.set(prop, "" + v)
+            tag.set(prop, v)
         else
             tag.unset(prop)
     }
@@ -30,7 +30,7 @@ function mergeTag(tag, newVal) {
 
 function saveTag(tag, onSuccess, onFailure) {
     tag.save().then((obj) => {
-        onSuccess(convertToModel(obj))
+        onSuccess(convertTagToModel(obj))
     },
     (error) => {
         onFailure(error)
@@ -49,7 +49,7 @@ export function loadTagsBackend(onSuccess, onFailure) {
                 const tags = []
                 for (var i = 0; i < results.length; i++) {
                     var object = results[i]
-                    tags.push(convertToModel(object))
+                    tags.push(convertTagToModel(object))
                 }
                 onSuccess(tags)
             },
@@ -71,7 +71,7 @@ export function createTagBackend(newVal, onSuccess, onFailure) {
         mergeTag(tag, newVal)
         tag.set("username", username)
         tag.save().then((obj) => {
-            onSuccess(convertToModel(obj))
+            onSuccess(convertTagToModel(obj))
         },
         (error) => {
             onFailure(error)

@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { ButtonToolbar, Button, ButtonGroup, Glyphicon, ListGroupItem } from 'react-bootstrap'
+import { ButtonToolbar, Button, Nav, NavItem, Glyphicon } from 'react-bootstrap'
 
 import TodoEntry from './TodoEntry'
 
@@ -12,19 +12,17 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
     todos.forEach(todo => {
             var btnOpenUrl
             if (todo.url)
-                btnOpenUrl = <Button onClick={ () => onOpenURL(todo) }><Glyphicon glyph='link' /></Button>
+                btnOpenUrl = <NavItem onClick={ () => onOpenURL(todo) }><Glyphicon glyph='link' /></NavItem>
 
             entries.push(
-                <ListGroupItem key={ todo.id } active={ active && active.id == todo.id } style={ style.item } >
-                    <TodoEntry todo={ todo }
-                        onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
-                        <ButtonGroup>
-                            {btnOpenUrl}
-                            <Button onClick={ () => onToggleTodoActiveClick( todo ) }><Glyphicon glyph='wrench' /></Button>
-                            <Button onClick={ () => onDestroyClick(todo) }><Glyphicon glyph='trash' /></Button>
-                        </ButtonGroup>
-                    </TodoEntry>
-                </ListGroupItem>
+                <TodoEntry key={ todo.id } todo={ todo } active={ active && active.id == todo.id }
+                    onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
+                    <Nav bsStyle="pills" pullRight>
+                        {btnOpenUrl}
+                        <NavItem onClick={ () => onToggleTodoActiveClick( todo ) }><Glyphicon glyph='wrench' /></NavItem>
+                        <NavItem onClick={ () => onDestroyClick(todo) }><Glyphicon glyph='trash' /></NavItem>
+                    </Nav>
+                </TodoEntry>
             )
         }
     )
@@ -35,15 +33,8 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
     )
 }
 
-const style = {
-    item: {
-        border: 'none',
-        padding: '5px 5px'
-    }
-}
-
 TodoList.propTypes={
-    todos: PropTypes.array.isRequired,
+    todos: PropTypes.object.isRequired,
     active: PropTypes.object,
     onToggleTodoActiveClick: PropTypes.func, 
     onDestroyClick: PropTypes.func, 

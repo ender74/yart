@@ -2,6 +2,7 @@ import Parse from 'parse'
 
 import C from './AuthConstants'
 import TodosActions from '../../todos/actions/TodosActions'
+import TagActions from '../../todos/actions/TagsActions'
 
 const AuthActions = {
     loginBasic(username, password) {
@@ -9,6 +10,7 @@ const AuthActions = {
             Parse.User.logIn(username, password, {
                 success: function(user) {
                     dispatch(TodosActions.load())
+                    dispatch(TagActions.load())
                     dispatch(AuthActions.loginSucceeded(user.toJSON()))
                 },
                 error: function(user, error) {

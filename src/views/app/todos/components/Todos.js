@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
-import Radium from 'radium'
 import { injectIntl } from 'react-intl'
 import { Grid, Row, Col} from 'react-bootstrap'
 
 import TodoTextInput from './TodoTextInput'
 import TodoList from './TodoList'
 
-const Todos = ( { style, allTodos, activeTodo, children, addNewTodo, toggleActive, toggleComplete, destroyTodo, openURL, intl } ) => {
+const Todos = ( { allTodos, activeTodo, children, addNewTodo, toggleActive, toggleComplete, destroyTodo, openURL, intl } ) => {
     const placeholder = intl.formatMessage({
         id: 'todo.add_entry',
         defaultMessage: '+ add a new entry here'
     })
 
     return (
-        <article style={style}>
+        <Grid fluid>
             <Row>
                 <Col>
                     <TodoTextInput
@@ -33,8 +32,8 @@ const Todos = ( { style, allTodos, activeTodo, children, addNewTodo, toggleActiv
                     { children }
                 </Col>
             </Row>
-        </article>
+        </Grid>
     )
 }
 
-export default Radium(injectIntl(Todos))
+export default injectIntl(Todos)

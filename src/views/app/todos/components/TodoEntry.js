@@ -1,36 +1,20 @@
 import React, { Component } from 'react'
 
-import { Checkbox } from 'react-bootstrap'
+import { Checkbox, Grid, Row, Col} from 'react-bootstrap'
 
 const TodoEntry = ( { todo, children, active, onToggleCompleteClick } ) => {
     return (
-        <div style={ style.base }>
-            <div style={ style.todo }>
+        <Row>
+            <Col xs={ 8 }>
                 <Checkbox bsStyle='success' onClick={ onToggleCompleteClick } readOnly checked={ todo.complete }>
                     { todo.text }
                 </Checkbox>
-            </div>
-            <div style={ style.children }>
+            </Col>
+            <Col xsPush={ 4 }>
                 { children }
-            </div>
-        </div>
+            </Col>
+        </Row>
     )
-}
-
-const style = {
-    base: {
-        display: 'flex'
-    },
-
-    todo: {
-        width: '55%'
-    },
-
-    children: {
-        marginLeft: 'auto',
-        marginTop: 'auto',
-        marginBottom: 'auto'
-    }
 }
 
 export default TodoEntry

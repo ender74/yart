@@ -1,5 +1,4 @@
 import {connect} from 'react-redux'
-import Radium from 'radium'
 
 import Todos from './components/Todos'
 import TodosActions from './actions/TodosActions'
@@ -28,4 +27,4 @@ var mapDispatchToProps = function(dispatch) {
 
 const BoundTodos = connect(mapStateToProps, mapDispatchToProps)(Todos)
 
-export default Radium(BoundTodos)
+export default BoundTodos

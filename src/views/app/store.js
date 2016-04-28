@@ -27,6 +27,6 @@ function simpleLogger({ getState }) {
   }
 }
 
-const store = applyMiddleware(thunk)(createStore)(rootReducer)
+const store = applyMiddleware(thunk, simpleLogger)(createStore)(rootReducer)
 
 export default store
