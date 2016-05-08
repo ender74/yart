@@ -1,13 +1,24 @@
 import React, { PropTypes, Component } from 'react'
-import { Label, FormControl, Row, Col } from 'react-bootstrap'
-
-const ENTER_KEY_CODE = 13
+import { Button, Label, Row, Col } from 'react-bootstrap'
+import { FormField } from 'redux-form-fields'
 
 const TagEntry = ( { text } ) => {
-    return <Label>{ text }</Label>
+    return <h4 style={{ display: 'inline'}}><Label style={ styles.tag }>{ text }</Label></h4>
 }
 
-const Tags = ( { tags, onAddTag } ) => {
+const styles = {
+    tag: {
+        marginLeft: '5px'
+    },
+    main: {
+        marginLeft: '10px'
+    },
+    tags: {
+        marginBottom: '10px'
+    }
+}
+
+const Tags = ( { tags } ) => {
     if (tags === undefined || Object.keys(tags).length < 1) {
         return <div/>
     }
@@ -21,31 +32,17 @@ const Tags = ( { tags, onAddTag } ) => {
         }
     )
     return (
-        <div>
-            <Row>
+        <div style={ styles.main }>
+            <Row style={ styles.tags }>
                 <Col>
                     { entries }
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <FormControl
-                        value={ undefined }
-                        placeholder='add new tag here'
-                        onKeyDown = { ( event ) => {
-                                if (event.keyCode === ENTER_KEY_CODE) {
-                                    onAddTag(event.target.value)
-                                }
-                            }
-                        }
-                    />
                 </Col>
             </Row>
         </div>
     )
 }
 
-Tags.propTypes={
+Tags.propTypes = {
     tags: PropTypes.array.isRequired,
     onAddTag: PropTypes.func
 }

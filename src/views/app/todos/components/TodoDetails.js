@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import {reduxForm} from 'redux-form'
 import { Form, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap'
 import { FormField, DateField } from 'redux-form-fields'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 import Tags from './Tags'
+
+const ENTER_KEY_CODE = 13
 
 const todoDetailsForm = {
     form: 'todoDetails',
@@ -36,7 +38,11 @@ const glyphiconBack = <Glyphicon glyph='backward' />
 class TodoDetails extends Component {
     render() {
         const onSubmit = (values) => this.props.onUpdate(this.props.todo, values)
-        const {fields: {text, url, due, location}, tags, onAddTag, handleSubmit} = this.props
+        const {fields: {text, url, due, location}, tags, onAddTag, handleSubmit, intl} = this.props
+        const placeholder = intl.formatMessage({
+            id: 'todo.add_tag',
+            defaultMessage: '+ add new tag here'
+        })
         return (
             <form>
                 <FormField
@@ -50,6 +56,17 @@ class TodoDetails extends Component {
                 <FormField
                     placeholder='Panoramastraße 1A, 10178 Berlin'
                     {...location} />
+                <Tags tags = { tags } />
+                <FormField
+                    value={ undefined }
+                    placeholder={ placeholder }
+                    onKeyDown = { ( event ) => {
+                            if (event.keyCode === ENTER_KEY_CODE) {
+                                onAddTag(event.target.value)
+                            }
+                        }
+                    }
+                />
                 <ButtonToolbar>
                     <Button bsStyle='primary' onClick={ () => this.props.onClose( this.props.todo ) }>
                         {glyphiconBack}
@@ -65,7 +82,6 @@ class TodoDetails extends Component {
                         />
                     </Button>
                 </ButtonToolbar>
-                <Tags tags = { tags } onAddTag = { onAddTag } />
             </form>
         )
     }
@@ -92,6 +108,6 @@ const TodoDetailsForm = reduxForm(todoDetailsForm,
 state => ({ 
   initialValues: stateToValues(state.todos.activeTodo)
 }),
-{})(TodoDetails)
+{})(injectIntl(TodoDetails))
 
 export default TodoDetailsForm

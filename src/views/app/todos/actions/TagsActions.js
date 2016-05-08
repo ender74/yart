@@ -4,7 +4,7 @@ import { loadTagsBackend, createTagBackend, destroyTagBackend, updateTagBackend 
 
 //TODO: implement refCounter in Backend
 const TagsActions = {
-    addTag(text) {
+    addTag(text, onSuccess) {
         return (dispatch, getState) => {
             const { tags } = getState()
             const tagIndex = tags.tags.findIndex(t => { return t.text == text } )
@@ -16,7 +16,7 @@ const TagsActions = {
                 })
                 updateTagBackend(
                     tags.tags.get(tagIndex),
-                    (tag) => {},
+                    (tag) => { onSuccess(tag) },
                     (error) => {}
                 )
             } else {
@@ -31,6 +31,7 @@ const TagsActions = {
                             type: C.TAG_ADD_NEW,
                             tag
                         })
+                        onSuccess(tag)
                     },
                     (error) => alert(error)
                 )
@@ -50,15 +51,29 @@ const TagsActions = {
         }
     },
 
-    destroyTag(oldTag) {
-        return (dispatch) => {
-            destroyTagBackend(oldTag,
-                (tag) => dispatch({
-                    type: C.TAG_DESTROY,
-                    tag: oldTag
-                }),
-                (error) => alert(error)
-            )
+    destroyTag(oldTag, onSuccess) {
+        return (dispatch, getState) => {
+            dispatch({
+                type: C.TAG_DESTROY,
+                tag: oldTag
+            })
+            const { tags } = getState()
+            const tagIndex = tags.tags.findIndex(t => { return t.text == text } )
+            if (tagIndex < 0) {
+                destroyTagBackend(oldTag,
+                    (tag) => {
+                        onSuccess(tag)
+                    },
+                    (error) => alert(error)
+                )
+            } else {
+                updateTagBackend(tags.tags.get(tagIndex),
+                    (tag) => {
+                        onSuccess(tag)
+                    },
+                    (error) => alert(error)
+                )
+            }
         }
     }
 }

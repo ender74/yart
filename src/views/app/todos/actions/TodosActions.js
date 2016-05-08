@@ -102,20 +102,17 @@ const TodosActions = {
 
     addTag(text) {
         return (dispatch, getState) => {
-            const { todos: { activeTodo }, tags } = getState()
+            const { todos: { activeTodo } } = getState()
             if (typeof activeTodo == 'undefined')
                 return
             const tagInTodo = activeTodo.tags.findIndex(t => { return t.text == text })
             if (tagInTodo < 0) {
-                dispatch(TagsActions.addTag(text))
-                const tagIndex = tags.tags.findIndex(t => { return t.text == text })
-                if (tagIndex >= 0) {
+                dispatch(TagsActions.addTag(text, (tag) => {
                     dispatch({
                         type: C.TODO_ADD_TAG,
-                        tag: tags.tags.get(tagIndex)
+                        tag
                     })
-                } else
-                    alert('tag not found: ' + text) //should not happen
+                }))
             }
         }
     },
@@ -125,6 +122,15 @@ const TodosActions = {
             const { todos: { activeTodo } } = getState()
             if (typeof activeTodo == 'undefined')
                 return
+            const tagInTodo = activeTodo.tags.findIndex(t => { return t.text == text })
+            if (tagInTodo >= 0) {
+                dispatch(TagsActions.destroyTag(text, (tag) => {
+                    dispatch({
+                        type: C.TODO_REMOVE_TAG,
+                        tag
+                    })
+                }))
+            }
         }
     }
 }
