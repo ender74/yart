@@ -10,10 +10,12 @@ import watchify from 'watchify'
 import babelify from 'babelify'
 import streamify from 'gulp-streamify'
 import globify from 'require-globify'
+import mocha from 'gulp-mocha'
 
 var path = {
     STATIC: ['src/static/**/*.*'],
-    ALL: ['src/**/*.js', 'src/static/**/*.*'],
+    TEST: ['src/**/Test*.js'],
+    ALL: ['src/**/*.js', 'src/static/**/*.*', '**/test/Test*.js'],
     ENTRY_POINT: ['src/start.js'],
     MINIFIED_OUT: 'build.min.js',
     DEST_SRC: 'dist/src',
@@ -22,6 +24,16 @@ var path = {
     TEMPLATE_INDEX: 'src/templates/index.html',
     STATIC_INDEX: 'index.html'
 }
+
+gulp.task('test', function () {
+    return gulp.src(path.TEST, { read: false })
+        .pipe(mocha({ reporter: 'spec' }))
+        .on('error', gutil.log);
+})
+
+gulp.task('watch-test', function () {
+    gulp.watch(path.ALL)
+})
 
 function bundler() {
     const transformer = babelify.configure({

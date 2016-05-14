@@ -1,6 +1,7 @@
 version: '2'
 services:
     node:
+        container_name: log84-node
         build: ./node
         image: log84.de/node
         command: /bin/true
@@ -17,6 +18,7 @@ services:
         depends_on:
             - node
     dbdata:
+        container_name: log84-dbdata
         image: mongo
         volumes: 
             - /data/db
