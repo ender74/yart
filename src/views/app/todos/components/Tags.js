@@ -2,8 +2,8 @@ import React, { PropTypes, Component } from 'react'
 import { Button, Label, Row, Col } from 'react-bootstrap'
 import { FormField } from 'redux-form-fields'
 
-const TagEntry = ( { text } ) => {
-    return <h4 style={{ display: 'inline'}}><Label style={ styles.tag }>{ text }</Label></h4>
+const TagEntry = ( { text, onClick } ) => {
+    return <h4 style={{ display: 'inline'}}><Label style={ styles.tag } onClick={ onClick }>{ text }</Label></h4>
 }
 
 const styles = {
@@ -18,7 +18,7 @@ const styles = {
     }
 }
 
-const Tags = ( { tags } ) => {
+const Tags = ( { tags, onRemoveTag } ) => {
     if (tags === undefined || Object.keys(tags).length < 1) {
         return <div/>
     }
@@ -27,7 +27,7 @@ const Tags = ( { tags } ) => {
     tags.forEach(
         tag => {
             entries.push(
-                <TagEntry text={ tag.text } />
+                <TagEntry key={ tag.id } text={ tag.text } onClick={ () => onRemoveTag(tag.text) }/>
             )
         }
     )

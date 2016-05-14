@@ -38,7 +38,7 @@ const glyphiconBack = <Glyphicon glyph='backward' />
 class TodoDetails extends Component {
     render() {
         const onSubmit = (values) => this.props.onUpdate(this.props.todo, values)
-        const {fields: {text, url, due, location}, tags, onAddTag, handleSubmit, intl} = this.props
+        const {fields: {text, url, due, location}, tags, onAddTag, onRemoveTag, handleSubmit, intl} = this.props
         const placeholder = intl.formatMessage({
             id: 'todo.add_tag',
             defaultMessage: '+ add new tag here'
@@ -56,9 +56,8 @@ class TodoDetails extends Component {
                 <FormField
                     placeholder='Panoramastraße 1A, 10178 Berlin'
                     {...location} />
-                <Tags tags = { tags } />
+                <Tags tags = { tags } onRemoveTag = { onRemoveTag }/>
                 <FormField
-                    value={ undefined }
                     placeholder={ placeholder }
                     onKeyDown = { ( event ) => {
                             if (event.keyCode === ENTER_KEY_CODE) {

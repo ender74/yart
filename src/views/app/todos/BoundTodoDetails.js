@@ -20,7 +20,8 @@ var mapDispatchToProps = function(dispatch) {
             dispatch(TodosActions.updateTodo(mergedTodo))
         },
         onClose: (todo) => dispatch(TodosActions.toggleActive(todo)),
-        onAddTag: (text) => dispatch(TodosActions.addTag(text))
+        onAddTag: (text) => dispatch(TodosActions.addTag(text)),
+        onRemoveTag: (text) => dispatch(TodosActions.removeTag(text))
     }
 }
 

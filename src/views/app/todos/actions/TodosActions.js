@@ -119,17 +119,22 @@ const TodosActions = {
 
     removeTag(text) {
         return (dispatch, getState) => {
-            const { todos: { activeTodo } } = getState()
-            if (typeof activeTodo == 'undefined')
-                return
-            const tagInTodo = activeTodo.tags.findIndex(t => { return t.text == text })
-            if (tagInTodo >= 0) {
-                dispatch(TagsActions.destroyTag(text, (tag) => {
-                    dispatch({
-                        type: C.TODO_REMOVE_TAG,
-                        tag
-                    })
-                }))
+            const { tags } = getState()
+            const oldTagIdx = tags.tags.findIndex(t => { return t.text == text })
+            if (oldTagIdx >= 0) {
+                const oldTag = tags.tags.get(oldTagIdx)
+                const { todos: { activeTodo } } = getState()
+                if (typeof activeTodo == 'undefined')
+                    return
+                const tagInTodo = activeTodo.tags.findIndex(t => { return t.text == oldTag.text })
+                if (tagInTodo >= 0) {
+                    dispatch(TagsActions.destroyTag(oldTag, (tag) => {
+                        dispatch({
+                            type: C.TODO_REMOVE_TAG,
+                            tag
+                        })
+                    }))
+                }
             }
         }
     }

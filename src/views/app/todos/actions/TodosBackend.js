@@ -34,10 +34,12 @@ function mergeTodo(todo, newVal) {
     const fields = ['text', 'url', 'due', 'location', 'complete']
     for (var field of fields) {
         const src = newVal[field]
-        if (src)
-            todo.set(field, '' + src)
-        else
-            todo.unset(field)
+        if (typeof src != 'function') {
+            if (src)
+                todo.set(field, '' + src)
+            else
+                todo.unset(field)
+        }
     }
 
     todo.unset('tags')

@@ -21,10 +21,12 @@ function convertFromModel(tag) {
 function mergeTag(tag, newVal) {
     for (var prop in newVal) {
         var v = newVal[prop]
-        if (v)
-            tag.set(prop, v)
-        else
-            tag.unset(prop)
+        if (typeof v != 'function') {
+            if (v)
+                tag.set(prop, v)
+            else
+                tag.unset(prop)
+        }
     }
 }
 

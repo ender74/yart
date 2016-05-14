@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 
 import C from './TodosConstants'
-import { Todo, TodoList, TodoState } from './Types'
+import { Todo, TodoList, TodoState, TagRef } from './Types'
 
 const addTodo = (state, newTodo) => {
     return state.set('todos', state.todos.push(newTodo))
@@ -89,7 +89,10 @@ const todoAddTag = (state, tag) => {
         const tags = todo.tags
         const tagIdx = tags.findIndex(t => t.text === tag.text)
         if (tagIdx < 0) {
-            const newTags = tags.push(tag)
+            const newTags = tags.push(new TagRef({
+                id: tag.id,
+                text: tag.text
+            }))
             state = state.set('todos', state.todos.set(indexFromState, todo.set('tags', newTags)))
             state = state.set('activeTodo', state.todos.get(indexFromState))
         }

@@ -15,9 +15,9 @@ const TagsActions = {
                     tag
                 })
                 updateTagBackend(
-                    tags.tags.get(tagIndex),
+                    getState().tags.tags.get(tagIndex),
                     (tag) => { onSuccess(tag) },
-                    (error) => {}
+                    (error) => alert(error)
                 )
             } else {
                 const newTag = {
@@ -58,7 +58,7 @@ const TagsActions = {
                 tag: oldTag
             })
             const { tags } = getState()
-            const tagIndex = tags.tags.findIndex(t => { return t.text == text } )
+            const tagIndex = tags.tags.findIndex(t => { return t.text == oldTag.text } )
             if (tagIndex < 0) {
                 destroyTagBackend(oldTag,
                     (tag) => {

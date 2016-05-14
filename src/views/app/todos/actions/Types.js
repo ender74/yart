@@ -7,6 +7,12 @@ export const Tag = Record({
 })
 export const TagList = List(Tag)
 
+export const TagRef = Record({
+    id: String,
+    text: String
+})
+export const TagRefList = List(TagRef)
+
 export const TagState = Record({
     tags: TagList([])
 })
@@ -18,7 +24,7 @@ export const Todo = Record({
     due: Maybe(String),
     location: Maybe(String),
     complete: Boolean,
-    tags: TagList([])
+    tags: TagRefList([])
 })
 export const TodoList = List(Todo)
 
