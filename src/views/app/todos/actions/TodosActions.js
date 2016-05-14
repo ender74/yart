@@ -1,6 +1,6 @@
 import C from './TodosConstants'
-import uuid from 'node-uuid'
 
+import TagsActions from './TagsActions'
 import { loadTodosBackend, createTodoBackend, destroyTodoBackend, updateTodoBackend } from './TodosBackend'
 
 function _toggleComplete(todo) {
@@ -75,10 +75,11 @@ const TodosActions = {
     },
 
     toggleComplete(completedTodo) {
-        return TodosActions.updateTodo({
-            id: completedTodo.id,
-            complete: completedTodo.complete ? 'false' : 'true'
-        })
+        return TodosActions.updateTodo(
+            Object.assign({}, JSON.parse(JSON.stringify(completedTodo)), {
+                complete: !completedTodo.complete
+            })
+        )
     },
 
     destroyTodo(oldTodo) {
@@ -94,8 +95,47 @@ const TodosActions = {
         return (dispatch) => {
             updateTodoBackend(newTodo,
                 (todo) => dispatch(_updateTodo(todo)),
-                (error) => alert(error)
+                (error) => alert(JSON.stringify(error))
             )
+        }
+    },
+
+    addTag(text) {
+        return (dispatch, getState) => {
+            const { todos: { activeTodo } } = getState()
+            if (typeof activeTodo == 'undefined')
+                return
+            const tagInTodo = activeTodo.tags.findIndex(t => { return t.text == text })
+            if (tagInTodo < 0) {
+                dispatch(TagsActions.addTag(text, (tag) => {
+                    dispatch({
+                        type: C.TODO_ADD_TAG,
+                        tag
+                    })
+                }))
+            }
+        }
+    },
+
+    removeTag(text) {
+        return (dispatch, getState) => {
+            const { tags } = getState()
+            const oldTagIdx = tags.tags.findIndex(t => { return t.text == text })
+            if (oldTagIdx >= 0) {
+                const oldTag = tags.tags.get(oldTagIdx)
+                const { todos: { activeTodo } } = getState()
+                if (typeof activeTodo == 'undefined')
+                    return
+                const tagInTodo = activeTodo.tags.findIndex(t => { return t.text == oldTag.text })
+                if (tagInTodo >= 0) {
+                    dispatch(TagsActions.destroyTag(oldTag, (tag) => {
+                        dispatch({
+                            type: C.TODO_REMOVE_TAG,
+                            tag
+                        })
+                    }))
+                }
+            }
         }
     }
 }

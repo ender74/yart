@@ -1,36 +1,53 @@
 import Parse from 'parse'
 
-const Todo = Parse.Object.extend("Todo")
+import { Tag, convertTagToModel } from './TagsBackend'
+
+export const Todo = Parse.Object.extend('Todo')
 
 function convertToModel(todoFromParse) {
-    return {
+    const completeParse = todoFromParse.get('complete')
+    let complete = false
+    if (typeof completeParse === 'string')
+        complete = 'true' === completeParse
+    else
+        complete = completeParse
+    const ret = {
         id: todoFromParse.id,
-        text: todoFromParse.get("text"),
-        url: todoFromParse.get("url"),
-        due: todoFromParse.get("due"),
-        location: todoFromParse.get("location"),
-        complete: todoFromParse.get("complete") === "true"
+        text: todoFromParse.get('text') || 'Todo',
+        url: todoFromParse.get('url'),
+        due: todoFromParse.get('due'),
+        location: todoFromParse.get('location'),
+        complete: complete || false,
+        tags: []
     }
-}
-
-function convertFromModel(todo) {
-    return new Todo({
-        id: todo.id,
-        text: todo.text,
-        url: todo.url,
-        due: todo.due,
-        location: todo.location,
-        complete: todo.complete ? "true" : "false"
-    })
+    const tagsBackend = todoFromParse.get('tags')
+    if (tagsBackend) {
+        for (var i = 0; i < tagsBackend.length; i++) {
+            var object = tagsBackend[i]
+            ret.tags.push(convertTagToModel(object))
+        }
+    }
+    return ret
 }
 
 function mergeTodo(todo, newVal) {
-    for (var prop in newVal) {
-        var v = newVal[prop]
-        if (v)
-            todo.set(prop, "" + v)
-        else
-            todo.unset(prop)
+    const fields = ['text', 'url', 'due', 'location', 'complete']
+    for (var field of fields) {
+        const src = newVal[field]
+        if (typeof src != 'function') {
+            if (src)
+                todo.set(field, '' + src)
+            else
+                todo.unset(field)
+        }
+    }
+
+    todo.unset('tags')
+    if (newVal.tags) {
+        for (var tag of newVal.tags) {
+            const tagBackend = new Tag(JSON.parse(JSON.stringify(tag)))
+            todo.add('tags', tagBackend)
+        }
     }
 }
 
@@ -49,7 +66,8 @@ export function loadTodosBackend(onSuccess, onFailure) {
     if (currentUser) {
         const username = currentUser.getUsername()
         const query = new Parse.Query(Todo)
-        query.equalTo("username", username)
+        query.include('tags')
+        query.equalTo('username', username)
         query.find().then(
             (results) => {
                 const todos = []
@@ -75,7 +93,7 @@ export function createTodoBackend(newVal, onSuccess, onFailure) {
 
         const todo = new Todo()
         mergeTodo(todo, newVal)
-        todo.set("username", username)
+        todo.set('username', username)
         todo.save().then((obj) => {
             onSuccess(convertToModel(obj))
         },
@@ -107,6 +125,8 @@ export function updateTodoBackend(newTodo, onSuccess, onFailure) {
         query.get(newTodo.id).then(
             (todo) => {
                 mergeTodo(todo, newTodo)
+                const mergedTodo = JSON.stringify(todo)
+                console.log('mergedTodo: ' + mergedTodo)
                 saveTodo(todo, onSuccess, onFailure)
             },
             (error) => {

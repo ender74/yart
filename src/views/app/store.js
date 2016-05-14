@@ -4,10 +4,12 @@ import { reducer as formReducer } from 'redux-form'
 import { intlReducer } from 'react-intl-redux'
 
 import todosReducer from './todos/actions/TodosReducer'
+import tagsReducer from './todos/actions/TagsReducer'
 import authReducer from './login/actions/AuthReducer'
 
 const rootReducer = combineReducers({
     todos: todosReducer,
+    tags: tagsReducer,
     auth: authReducer,
     form: formReducer,
     intl: intlReducer
@@ -25,6 +27,6 @@ function simpleLogger({ getState }) {
   }
 }
 
-const store = applyMiddleware(thunk)(createStore)(rootReducer)
+const store = applyMiddleware(thunk, simpleLogger)(createStore)(rootReducer)
 
 export default store

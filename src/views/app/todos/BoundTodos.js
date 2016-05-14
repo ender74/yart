@@ -1,17 +1,16 @@
 import {connect} from 'react-redux'
-import Radium from 'radium'
 
 import Todos from './components/Todos'
 import TodosActions from './actions/TodosActions'
 
-function mapStateToPropsTodos(state) {
+function mapStateToProps(state) {
     const todoState = state.todos
-    const allTodos = todoState.todos ? todoState.todos : []
+    const allTodos = todoState.todos || []
     const todos = state.todos.showAll ?
         allTodos : allTodos.filter(t => !t.complete)
 
     return {
-        allTodos: todos ? todos.toArray() : [], //convert from immutable to plain JSON
+        allTodos: todos,
         activeTodo: state.todos.activeTodo
     }
 }
@@ -26,6 +25,6 @@ var mapDispatchToProps = function(dispatch) {
     }
 }
 
-const BoundTodos = connect(mapStateToPropsTodos, mapDispatchToProps)(Todos)
+const BoundTodos = connect(mapStateToProps, mapDispatchToProps)(Todos)
 
-export default Radium(BoundTodos)
+export default BoundTodos

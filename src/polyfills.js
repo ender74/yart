@@ -36,7 +36,12 @@ function polyfillIntl() {
     }
 }
 
+function polyfillPromise() {
+    require('es6-promise').polyfill()
+}
+
 export default () => {
+    polyfillPromise()
     polyfillAssign()
     polyfillIntl()
 }

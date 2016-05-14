@@ -7,7 +7,9 @@ const C = keyMirror({
     TODO_UPDATE: null,
     TODO_TOGGLE_COMPLETE: null,
     TODO_TOGGLE_ACTIVE: null,
-    TODO_TOGGLE_SHOWALL: null
+    TODO_TOGGLE_SHOWALL: null,
+    TODO_ADD_TAG: null,
+    TODO_REMOVE_TAG: null
 })
 
 export default C

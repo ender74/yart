@@ -1,12 +1,12 @@
 import {connect} from 'react-redux'
-import Radium from 'radium'
 
 import TodoDetails, { valuesToState } from './components/TodoDetails'
 import TodosActions from './actions/TodosActions'
 
 function mapStateToProps(state) {
     return {
-        todo: state.todos.activeTodo ? state.todos.activeTodo.toJSON() : {}
+        todo: state.todos.activeTodo ? state.todos.activeTodo : {},
+        tags: state.todos.activeTodo ? state.todos.activeTodo.tags : []
     }
 }
 
@@ -19,10 +19,12 @@ var mapDispatchToProps = function(dispatch) {
                     mergedTodo[key] = todo[key]
             dispatch(TodosActions.updateTodo(mergedTodo))
         },
-        onClose: (todo) => dispatch(TodosActions.toggleActive(todo))
+        onClose: (todo) => dispatch(TodosActions.toggleActive(todo)),
+        onAddTag: (text) => dispatch(TodosActions.addTag(text)),
+        onRemoveTag: (text) => dispatch(TodosActions.removeTag(text))
     }
 }
 
 const BoundTodoDetails = connect(mapStateToProps, mapDispatchToProps)(TodoDetails)
 
-export default Radium(BoundTodoDetails)
+export default BoundTodoDetails
