@@ -105,14 +105,18 @@ const TodosActions = {
             const { todos: { activeTodo } } = getState()
             if (typeof activeTodo == 'undefined')
                 return
-            const tagInTodo = activeTodo.tags.findIndex(t => { return t.text == text })
-            if (tagInTodo < 0) {
-                dispatch(TagsActions.addTag(text, (tag) => {
-                    dispatch({
-                        type: C.TODO_ADD_TAG,
-                        tag
-                    })
-                }))
+            const tags = text.split(' ')
+            for (const key in tags) {
+                const tag = tags[key]
+                const tagInTodo = activeTodo.tags.findIndex(t => { return t.text == tag })
+                if (tagInTodo < 0) {
+                    dispatch(TagsActions.addTag(tag, (tag) => {
+                        dispatch({
+                            type: C.TODO_ADD_TAG,
+                            tag
+                        })
+                    }))
+                }
             }
         }
     },
