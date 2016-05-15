@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { ButtonToolbar, Button, Nav, NavItem, Glyphicon } from 'react-bootstrap'
+import { Grid, Col, Row, DropdownButton, MenuItem, Nav, NavItem, Glyphicon } from 'react-bootstrap'
 
 import TodoEntry from './TodoEntry'
 
@@ -10,19 +10,36 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
     var entries = []
 
     todos.forEach(todo => {
-            var btnOpenUrl
-            if (todo.url)
+            var btnOpenUrl, btnOpenUrlMenu
+            if (todo.url) {
                 btnOpenUrl = <NavItem onClick={ () => onOpenURL(todo) }><Glyphicon glyph='link' /></NavItem>
+                btnOpenUrlMenu = <MenuItem onClick={ () => onOpenURL(todo) }><Glyphicon glyph='link' /></MenuItem>
+            }
 
             entries.push(
-                <TodoEntry key={ todo.id } todo={ todo } active={ active && active.id == todo.id }
-                    onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
-                    <Nav bsStyle="pills" pullRight>
-                        {btnOpenUrl}
-                        <NavItem onClick={ () => onToggleTodoActiveClick( todo ) }><Glyphicon glyph='wrench' /></NavItem>
-                        <NavItem onClick={ () => onDestroyClick(todo) }><Glyphicon glyph='trash' /></NavItem>
-                    </Nav>
-                </TodoEntry>
+                <Row>
+                    <Col xs={ 9 } sm={ 9 }>
+                        <TodoEntry key={ todo.id } todo={ todo } active={ active && active.id == todo.id }
+                            onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
+                        </TodoEntry>
+                    </Col>
+                    <Col xsHidden smPush={ 3 }>
+                        <Nav bsStyle="pills" pullRight>
+                            {btnOpenUrl}
+                            <NavItem onClick={ () => onToggleTodoActiveClick( todo ) }><Glyphicon glyph='wrench' /></NavItem>
+                            <NavItem onClick={ () => onDestroyClick(todo) }><Glyphicon glyph='trash' /></NavItem>
+                        </Nav>
+                    </Col>
+                    <Col xsPush={ 3 } smHidden mdHidden lgHidden>
+                        <Grid  style={{float: 'right'}}>
+                            <DropdownButton bsStyle='default'>
+                                {btnOpenUrlMenu}
+                                <MenuItem onClick={ () => onToggleTodoActiveClick( todo ) }><Glyphicon glyph='wrench' /></MenuItem>
+                                <MenuItem onClick={ () => onDestroyClick(todo) }><Glyphicon glyph='trash' /></MenuItem>
+                            </DropdownButton>
+                        </Grid>
+                    </Col>
+                </Row>
             )
         }
     )
