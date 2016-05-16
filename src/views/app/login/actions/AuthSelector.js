@@ -1,3 +1,4 @@
 import { createSelector } from 'reselect'
 
-export const userSelector = state => state.auth.user || {}
+const defaultUser = {}
+export const userSelector = state => state.auth ? state.auth.user || defaultUser : defaultUser
