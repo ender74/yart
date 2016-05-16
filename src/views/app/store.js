@@ -1,4 +1,4 @@
-import { combineReducers, applyMiddleware, createStore } from 'redux'
+import { combineReducers, applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { reducer as formReducer } from 'redux-form'
 import { intlReducer } from 'react-intl-redux'
@@ -27,6 +27,8 @@ function simpleLogger({ getState }) {
   }
 }
 
-const store = applyMiddleware(thunk, simpleLogger)(createStore)(rootReducer)
+const devTools = window.devToolsExtension ? window.devToolsExtension() : f => f
+
+const store = compose(applyMiddleware(thunk), devTools)(createStore)(rootReducer)
 
 export default store
