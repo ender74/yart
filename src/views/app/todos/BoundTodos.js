@@ -2,16 +2,15 @@ import {connect} from 'react-redux'
 
 import Todos from './components/Todos'
 import TodosActions from './actions/TodosActions'
+import { visibleTodosSelector, activeTodoSelector } from './actions/TodosSelector'
 
 function mapStateToProps(state) {
-    const todoState = state.todos
-    const allTodos = todoState.todos || []
-    const todos = state.todos.showAll ?
-        allTodos : allTodos.filter(t => !t.complete)
+    const allTodos = visibleTodosSelector(state)
+    const activeTodo = activeTodoSelector(state)
 
     return {
-        allTodos: todos,
-        activeTodo: state.todos.activeTodo
+        allTodos,
+        activeTodo
     }
 }
 

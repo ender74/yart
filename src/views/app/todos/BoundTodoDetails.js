@@ -2,11 +2,14 @@ import {connect} from 'react-redux'
 
 import TodoDetails, { valuesToState } from './components/TodoDetails'
 import TodosActions from './actions/TodosActions'
+import { activeTodoSelector } from './actions/TodosSelector'
 
 function mapStateToProps(state) {
+    const activeTodo = activeTodoSelector(state)
+
     return {
-        todo: state.todos.activeTodo ? state.todos.activeTodo : {},
-        tags: state.todos.activeTodo ? state.todos.activeTodo.tags : []
+        todo: activeTodo,
+        tags: activeTodo.tags || []
     }
 }
 

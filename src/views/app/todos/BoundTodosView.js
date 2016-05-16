@@ -3,11 +3,29 @@ import {connect} from 'react-redux'
 import { Grid, Row, Col } from 'react-bootstrap'
 
 import TodosActions from './actions/TodosActions'
+import { activeTodoSelector, showAllSelector } from './actions/TodosSelector'
 
 import TodoToggleShowAll from './components/TodoToggleShowAll'
 
 import BoundTodos from './BoundTodos'
 import BoundTodoDetails from './BoundTodoDetails'
+
+function mapStateToProps(state) {
+    const activeTodo = activeTodoSelector(state)
+    const defaultChecked = showAllSelector(state)
+
+    return {
+        activeTodo,
+        defaultChecked
+    }
+}
+
+var mapDispatchToProps = function(dispatch) {
+    return {
+        toggleActive: (todo) => dispatch(TodosActions.toggleActive(todo)),
+        toggleShowAll: () => dispatch(TodosActions.toggleShowAll())
+    }
+}
 
 class TodosView extends Component {
     render() {
@@ -29,20 +47,6 @@ class TodosView extends Component {
                 </Row>
             </Grid>
         )
-    }
-}
-
-function mapStateToProps(state) {
-    return {
-        activeTodo: state.todos.activeTodo ? state.todos.activeTodo.toObject() : {},
-        defaultChecked: state.todos.showAll
-    }
-}
-
-var mapDispatchToProps = function(dispatch) { 
-    return {
-        toggleActive: (todo) => dispatch(TodosActions.toggleActive(todo)),
-        toggleShowAll: () => dispatch(TodosActions.toggleShowAll())
     }
 }
 
