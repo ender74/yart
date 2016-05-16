@@ -12,7 +12,7 @@ describe('todosReducer', () => {
     it('should return initialstate when given no state', () => {
         const stateExpected = TodoState()
         let stateBefore
-        expect(todosReducer(stateBefore, {type: 'INIT'})).to.equal(stateExpected)
+        expect(todosReducer(stateBefore, {type: 'INIT'})).to.deep.equal(stateExpected)
     })
     it('should add todo', () => {
         const stateBefore = TodoState()
@@ -32,7 +32,7 @@ describe('todosReducer', () => {
                 text: 'Hallo',
                 complete: false
             }
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should remove todo', () => {
         const stateBefore = TodoState({
@@ -63,7 +63,7 @@ describe('todosReducer', () => {
             todo: {
                 id: '0815'
             }
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should deactive removed todo', () => {
         const stateBefore = TodoState({
@@ -88,7 +88,7 @@ describe('todosReducer', () => {
             todo: {
                 id: '0815'
             }
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should load todos', () => {
         const stateBefore = TodoState()
@@ -120,7 +120,7 @@ describe('todosReducer', () => {
                     complete: false
                 }
             ]
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should load todos with tags', () => {
         const stateBefore = TodoState()
@@ -164,7 +164,7 @@ describe('todosReducer', () => {
                     ]
                 }
             ]
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should activate todo', () => {
         const stateBefore = TodoState({
@@ -204,7 +204,7 @@ describe('todosReducer', () => {
             todo: {
                 id: '0815'
             }
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should deactivate todo', () => {
         const stateBefore = TodoState({
@@ -235,7 +235,7 @@ describe('todosReducer', () => {
             todo: {
                 id: '0815'
             }
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should toggle todo completion when false', () => {
         const stateBefore = TodoState({
@@ -271,7 +271,7 @@ describe('todosReducer', () => {
             todo: {
                 id: '0816'
             }
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should toggle todo completion when true', () => {
         const stateBefore = TodoState({
@@ -307,7 +307,7 @@ describe('todosReducer', () => {
             todo: {
                 id: '0816'
             }
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should add tag to active todo', () => {
         const stateBefore = TodoState({
@@ -356,7 +356,7 @@ describe('todosReducer', () => {
                 id: '0815',
                 text: 'Tag 1'
             }
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should ignore extra attributes when adding tag', () => {
         const stateBefore = TodoState({
@@ -406,7 +406,7 @@ describe('todosReducer', () => {
                 text: 'Tag 1',
                 refCount: 1
             }
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should remove tag from active todo', () => {
         const stateBefore = TodoState({
@@ -474,7 +474,7 @@ describe('todosReducer', () => {
             tag: {
                 text: 'Tag 2'
             }
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should not add tag twice', () => {
         const stateBefore = TodoState({
@@ -510,7 +510,7 @@ describe('todosReducer', () => {
                 id: '0815',
                 text: 'Tag 1'
             }
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
     it('should add tag to active todo when tag is already used', () => {
         const stateBefore = TodoState({
@@ -581,6 +581,6 @@ describe('todosReducer', () => {
                 id: '0815',
                 text: 'Tag 1'
             }
-        })).to.equal(stateExpected)
+        })).to.deep.equal(stateExpected)
     })
 })

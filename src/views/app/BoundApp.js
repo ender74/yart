@@ -2,11 +2,14 @@ import {connect} from 'react-redux'
 
 import LocaleActions from './actions/LocaleActions'
 import AuthActions from './login/actions/AuthActions'
+import { userSelector } from './login/actions/AuthSelector'
 import App from './components/App'
 
 function mapStateToProps(state) {
+    const user = userSelector(state)
+
     return {
-        user: state.auth.user
+        user
     }
 }
 

@@ -3,10 +3,13 @@ import {connect} from 'react-redux'
 
 import TodoToggleShowAll from './components/TodoToggleShowAll'
 import TodosActions from './actions/TodosActions'
+import { showAllSelector } from './actions/TodosSelector'
 
 function mapStateToPropsTodos(state) {
+    const defaultChecked = showAllSelector(state)
+
     return {
-        defaultChecked: state.todos.showAll
+        defaultChecked
     }
 }
 
