@@ -23,13 +23,13 @@ const Todos = ( { allTodos, activeTodo, children, addNewTodo, toggleActive, togg
             </Row>
             <Row>
                 <Col>
-                    <TodoList active={ activeTodo } todos={ allTodos } onToggleTodoCompleteClick={ toggleComplete }
-                        onToggleTodoActiveClick={ toggleActive } onDestroyClick={ destroyTodo } onOpenURL={ openURL } />
+                    { children }
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    { children }
+                    <TodoList active={ activeTodo } todos={ allTodos } onToggleTodoCompleteClick={ toggleComplete }
+                        onToggleTodoActiveClick={ toggleActive } onDestroyClick={ destroyTodo } onOpenURL={ openURL } />
                 </Col>
             </Row>
         </Grid>
