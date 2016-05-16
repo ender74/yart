@@ -22,9 +22,9 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
             )
 
             entries.push(
-                <Row>
+                <Row key={ todo.id } >
                     <Col xs={ 9 } sm={ 9 }>
-                        <TodoEntry key={ todo.id } todo={ todo } active={ active && active.id == todo.id }
+                        <TodoEntry todo={ todo } active={ active && active.id == todo.id }
                             onToggleCompleteClick={ () => onToggleTodoCompleteClick( todo ) }>
                         </TodoEntry>
                     </Col>
@@ -33,7 +33,7 @@ const TodoList = ( { todos, active, onToggleTodoActiveClick, onToggleTodoComplet
                     </Col>
                     <Col xsPush={ 3 } smHidden mdHidden lgHidden>
                         <Grid  style={{float: 'right'}}>
-                            <DropdownButton title='' bsStyle='default' pullRight>
+                            <DropdownButton id={ todo.id } title='' bsStyle='default' pullRight>
                                 {menu}
                             </DropdownButton>
                         </Grid>
