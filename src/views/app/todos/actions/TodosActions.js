@@ -1,6 +1,7 @@
 import C from './TodosConstants'
 
 import TagsActions from './TagsActions'
+import { activeTodoSelector } from './TodosSelector'
 import { loadTodosBackend, createTodoBackend, destroyTodoBackend, updateTodoBackend } from './TodosBackend'
 
 function _toggleComplete(todo) {
@@ -102,8 +103,8 @@ const TodosActions = {
 
     addTag(text) {
         return (dispatch, getState) => {
-            const { todos: { activeTodo } } = getState()
-            if (typeof activeTodo == 'undefined')
+            const activeTodo = activeTodoSelector(getState())
+            if (typeof activeTodo.id == 'undefined')
                 return
             const tags = text.split(' ')
             for (const key in tags) {
@@ -115,6 +116,11 @@ const TodosActions = {
                             type: C.TODO_ADD_TAG,
                             tag
                         })
+                        const newTodo = activeTodoSelector(getState())
+                        updateTodoBackend(newTodo,
+                            (todo) => {},
+                            (error) => alert(JSON.stringify(error))
+                        )
                     }))
                 }
             }
@@ -127,8 +133,8 @@ const TodosActions = {
             const oldTagIdx = tags.tags.findIndex(t => { return t.text == text })
             if (oldTagIdx >= 0) {
                 const oldTag = tags.tags.get(oldTagIdx)
-                const { todos: { activeTodo } } = getState()
-                if (typeof activeTodo == 'undefined')
+                const activeTodo = activeTodoSelector(getState())
+                if (typeof activeTodo.id == 'undefined')
                     return
                 const tagInTodo = activeTodo.tags.findIndex(t => { return t.text == oldTag.text })
                 if (tagInTodo >= 0) {
@@ -137,6 +143,11 @@ const TodosActions = {
                             type: C.TODO_REMOVE_TAG,
                             tag
                         })
+                        const newTodo = activeTodoSelector(getState())
+                        updateTodoBackend(newTodo,
+                            (todo) => {},
+                            (error) => alert(JSON.stringify(error))
+                        )
                     }))
                 }
             }
