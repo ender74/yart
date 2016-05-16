@@ -61,7 +61,8 @@ describe('activeTodoSelector', () => {
         const result = activeTodoSelector(state)
         expect(result).to.equal(expected)
     }),
-    it('should return undefined when activeTodo is not set', () => {
+    it('should return empty object when activeTodo is not set', () => {
+        const expected = {}
         const state = {
             todos: TodoState({
                 todos: TodoList([
@@ -74,7 +75,7 @@ describe('activeTodoSelector', () => {
             })
         }
         const result = activeTodoSelector(state)
-        expect(result).to.be.undefined
+        expect(result).to.deep.equal(expected)
     })
 })
 
