@@ -24,7 +24,10 @@ function convertToModel(todoFromParse) {
     if (tagsBackend) {
         for (var i = 0; i < tagsBackend.length; i++) {
             var object = tagsBackend[i]
-            ret.tags.push(convertTagToModel(object))
+            if (object)
+                ret.tags.push(convertTagToModel(object))
+            else
+                alert('data integrity check failed - orphaned tag for todo: ' + todoFromParse.id)
         }
     }
     return ret
