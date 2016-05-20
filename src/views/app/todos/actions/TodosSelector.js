@@ -1,15 +1,29 @@
 import { createSelector } from 'reselect'
+import { Filters } from './Types'
 
 const todosSelector = state => state.todos.todos || []
 
-const defaultShowAll = false
-export const showAllSelector = state => state.todos ? state.todos.showAll || defaultShowAll : defaultShowAll
+const defaultFilter = Filters.DEFAULT
+export const filterSelector = state => state.todosDisplay ? state.todosDisplay.activeFilter || defaultFilter : defaultFilter
 
-const defaultTodo = {}
-export const activeTodoSelector = state => state.todos ? state.todos.activeTodo || defaultTodo : defaultTodo
+const defaultTodoRef = undefined
+const activeTodoRefSelector = state => state.todosDisplay ? state.todosDisplay.activeTodo || defaultTodoRef : defaultTodoRef
 
 export const visibleTodosSelector = createSelector(
   todosSelector,
-  showAllSelector,
-  (todos, showAll) => showAll ? todos : todos.filter(t => !t.complete)
+  filterSelector,
+  (todos, filter) => {
+        switch (filter) {
+            case Filters.DEFAULT:
+                return todos.filter(t => !t.complete)
+            case Filters.ALL:
+                return todos
+        }
+    }
+)
+
+export const activeTodoSelector = createSelector(
+  todosSelector,
+  activeTodoRefSelector,
+  (todos, activeTodo) => activeTodo ? todos.find(t => t.id === activeTodo.id) : {}
 )

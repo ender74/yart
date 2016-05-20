@@ -4,6 +4,7 @@ import { Form, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap'
 import { AutoAffix } from 'react-overlays'
 import { FormField, DateField } from 'redux-form-fields'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { activeTodoSelector } from '../actions/TodosSelector'
 
 import Tags from './Tags'
 
@@ -39,7 +40,7 @@ const glyphiconBack = <Glyphicon glyph='backward' />
 class TodoDetails extends Component {
     render() {
         const onSubmit = (values) => this.props.onUpdate(this.props.todo, values)
-        const {parent, fields: {text, url, due, location}, tags, onAddTag, onRemoveTag, handleSubmit, intl} = this.props
+        const {parent, fields: {text, url, due, location}, todo, tags, onAddTag, onRemoveTag, handleSubmit, intl} = this.props
         const placeholder = intl.formatMessage({
             id: 'todo.add_tag',
             defaultMessage: '+ add new tag here'
@@ -58,12 +59,12 @@ class TodoDetails extends Component {
                     <FormField
                         placeholder='Panoramastraße 1A, 10178 Berlin'
                         {...location} />
-                    <Tags tags = { tags } onRemoveTag = { onRemoveTag }/>
+                    <Tags tags = { tags } onRemoveTag = { (text) => onRemoveTag(todo, text) }/>
                     <FormField
                         placeholder={ placeholder }
                         onKeyDown = { ( event ) => {
                                 if (event.keyCode === ENTER_KEY_CODE) {
-                                    onAddTag(event.target.value)
+                                    onAddTag(todo, event.target.value)
                                 }
                             }
                         }
@@ -90,7 +91,7 @@ class TodoDetails extends Component {
 }
 
 function stateToValues(todo) {
-    if (!todo)
+    if (!todo.id)
         return todo
     var ret = Object.assign({}, todo.toObject())
     if (ret.due)
@@ -108,7 +109,7 @@ export function valuesToState(todo) {
 }
 const TodoDetailsForm = reduxForm(todoDetailsForm,
 state => ({ 
-  initialValues: stateToValues(state.todos.activeTodo)
+  initialValues: stateToValues(activeTodoSelector(state))
 }),
 {})(injectIntl(TodoDetails))
 

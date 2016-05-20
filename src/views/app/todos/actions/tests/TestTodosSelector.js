@@ -2,36 +2,36 @@ import { describe, it } from 'mocha'
 import chai, { expect } from 'chai'
 import chaiImmutable from 'chai-immutable'
 
-import { TodoState, Todo, TodoList, Tag, TagList } from '../Types'
-import { showAllSelector, activeTodoSelector, visibleTodosSelector } from '../TodosSelector'
+import { Filters, TodoState, TodoDisplayState, Todo, TodoRef, TodoList, Tag, TagList } from '../Types'
+import { filterSelector, activeTodoSelector, visibleTodosSelector } from '../TodosSelector'
 
 chai.use(chaiImmutable)
 
-describe('showAllSelector', () => {
-    it('should return false when state is empty', () => {
+describe('filterSelector', () => {
+    it('should return DEFAULT when state is empty', () => {
         const state = {
-            todos: TodoState()
+            todosDisplay: TodoDisplayState(),
         }
-        const result = showAllSelector(state)
-        expect(result).to.be.false
+        const result = filterSelector(state)
+        expect(result).to.equals(Filters.DEFAULT)
     }),
-    it('should return showAll when false', () => {
+    it('should return DEFAULT', () => {
        const state = {
-            todos: TodoState({
-                showAll: false
+            todosDisplay: TodoDisplayState({
+                activeFilter: Filters.DEFAULT
             })
         }
-        const result = showAllSelector(state)
-        expect(result).to.be.false
+        const result = filterSelector(state)
+        expect(result).to.equal(Filters.DEFAULT)
     }),
-    it('should return showAll when true', () => {
+    it('should return ALL', () => {
         const state = {
-            todos: TodoState({
-                showAll: true
+            todosDisplay: TodoDisplayState({
+                activeFilter: Filters.ALL
             })
         }
-        const result = showAllSelector(state)
-        expect(result).to.be.true
+        const result = filterSelector(state)
+        expect(result).to.equal(Filters.ALL)
     })
 })
 
@@ -50,11 +50,11 @@ describe('activeTodoSelector', () => {
                         text: 'Hallo',
                         complete: false
                     })
-                ]),
-                activeTodo: Todo({
-                    id: '0815',
-                    text: 'Hallo',
-                    complete: false
+                ])
+            }),
+            todosDisplay: TodoDisplayState({
+                activeTodo: TodoRef({
+                    id: '0815'
                 })
             })
         }
@@ -80,7 +80,7 @@ describe('activeTodoSelector', () => {
 })
 
 describe('visibleTodosSelector', () => {
-    it('should return only uncompleted todos when showAll is false', () => {
+    it('should return only uncompleted todos when activeFilter is DEFAULT', () => {
         const expected = TodoList([
             Todo({
                 id: '0815',
@@ -101,14 +101,16 @@ describe('visibleTodosSelector', () => {
                         text: 'Welt',
                         complete: true
                     })
-                ]),
-                showAll: false
+                ])
+            }),
+            todosDisplay: TodoDisplayState({
+                activeFilter: Filters.DEFAULT
             })
         }
         const result = visibleTodosSelector(state)
         expect(result).to.deep.equal(expected)
     }),
-    it('should return all todos when showAll is true', () => {
+    it('should return all todos when activeFilter is ALL', () => {
         const expected = TodoList([
             Todo({
                 id: '0815',
@@ -134,8 +136,10 @@ describe('visibleTodosSelector', () => {
                         text: 'Welt',
                         complete: true
                     })
-                ]),
-                showAll: true
+                ])
+            }),
+            todosDisplay: TodoDisplayState({
+                activeFilter: Filters.ALL
             })
         }
         const result = visibleTodosSelector(state)
