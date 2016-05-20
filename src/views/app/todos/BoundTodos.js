@@ -7,10 +7,13 @@ import { visibleTodosSelector, activeTodoSelector } from './actions/TodosSelecto
 function mapStateToProps(state) {
     const allTodos = visibleTodosSelector(state)
     const activeTodo = activeTodoSelector(state)
+    const locale = state.intl ? state.intl.locale : "de"
+
 
     return {
         allTodos,
-        activeTodo
+        activeTodo,
+        locale
     }
 }
 

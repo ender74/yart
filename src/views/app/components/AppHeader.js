@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { PageHeader, Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
+import { Filters } from '../todos/actions/Types'
+
 class AppHeader extends Component {
     constructor() {
         super()
@@ -12,7 +14,17 @@ class AppHeader extends Component {
 
 
     render() {
-        const { user, logout, setLocale, intl } = this.props
+        const { user, locale, activeFilter, logout, setActiveFilter, setLocale, intl } = this.props
+
+        const language = intl.formatMessage({
+            id: 'app.language',
+            defaultMessage: 'Language'
+        })
+        const filter = intl.formatMessage({
+            id: 'todo.filter',
+            defaultMessage: 'Filter'
+        })
+
 
         const collapseNav = () => {
             this.setState({
@@ -28,8 +40,8 @@ class AppHeader extends Component {
             setLocale(locale)
         }
 
-        var logoutItem
-        if (user)
+        var logoutItem, options
+        if (user) {
             logoutItem = (
                 <Nav pullRight>
                     <NavItem onClick={ myLogout }><Glyphicon glyph='log-out' />
@@ -40,10 +52,37 @@ class AppHeader extends Component {
                     </NavItem>
                 </Nav>
             )
-        const language = intl.formatMessage({
-            id: 'app.language',
-            defaultMessage: 'Language'
-        })
+            options = (
+                <Nav>
+                    <NavDropdown eventKey={2} title={ filter } id='select-filter'>
+                        <NavItem
+                            active={ activeFilter === Filters.DEFAULT }
+                            onClick={ () => {
+                                collapseNav()
+                                setActiveFilter(Filters.DEFAULT)
+                            }
+                        }>
+                            <FormattedMessage
+                                id='todo.showOpen'
+                                defaultMessage='show open todos'
+                            />
+                        </NavItem>
+                        <NavItem
+                            active={ activeFilter === Filters.ALL }
+                            onClick={ () => {
+                                collapseNav()
+                                setActiveFilter(Filters.ALL)
+                            }
+                        }>
+                            <FormattedMessage
+                                id='todo.showAll'
+                                defaultMessage='show all todos'
+                            />
+                        </NavItem>
+                    </NavDropdown>
+                </Nav>
+            )
+        }
         return (
             <Navbar fixedTop fluid expanded={this.state.expanded} onToggle={(expanded) => this.setState({expanded: expanded})}>
                 <Navbar.Header>
@@ -55,20 +94,21 @@ class AppHeader extends Component {
                 <Navbar.Collapse>
                     <Nav>
                         <NavDropdown eventKey={1} title={ language } id='select-language'>
-                            <MenuItem eventKey={1.1} onClick={ () => mySetLocale('en') }>
+                            <NavItem eventKey={1.1} onClick={ () => mySetLocale('en')} active={ locale === 'en' }>
                                 <FormattedMessage
                                     id='app.language_en'
                                     defaultMessage='English'
                                 />
-                            </MenuItem>
-                            <MenuItem eventKey={1.2} onClick={ () => mySetLocale('de') }>
+                            </NavItem>
+                            <NavItem eventKey={1.2} onClick={ () => mySetLocale('de')} active={ locale === 'de' }>
                                 <FormattedMessage
                                     id='app.language_de'
                                     defaultMessage='German'
                                 />
-                            </MenuItem>
+                            </NavItem>
                         </NavDropdown>
                     </Nav>
+                    {options}
                     {logoutItem}
                 </Navbar.Collapse>
             </Navbar>

@@ -62,16 +62,17 @@ const TodosActions = {
         }
     },
     
-    toggleShowAll() {
+    setActiveFilter(filter) {
         return {
-            type: C.TODO_TOGGLE_SHOWALL  
+            type: C.TODO_SET_FILTER,
+            filter
         }    
     },
     
     toggleActive(todo) {
         return {
             type: C.TODO_TOGGLE_ACTIVE,
-            todo: todo
+            todo
         }
     },
 
@@ -101,9 +102,8 @@ const TodosActions = {
         }
     },
 
-    addTag(text) {
+    addTag(activeTodo, text) {
         return (dispatch, getState) => {
-            const activeTodo = activeTodoSelector(getState())
             if (typeof activeTodo.id == 'undefined')
                 return
             const tags = text.split(' ')
@@ -114,7 +114,8 @@ const TodosActions = {
                     dispatch(TagsActions.addTag(tag, (tag) => {
                         dispatch({
                             type: C.TODO_ADD_TAG,
-                            tag
+                            tag,
+                            todo: activeTodo
                         })
                         const newTodo = activeTodoSelector(getState())
                         updateTodoBackend(newTodo,
@@ -127,21 +128,21 @@ const TodosActions = {
         }
     },
 
-    removeTag(text) {
+    removeTag(activeTodo, text) {
         return (dispatch, getState) => {
+            if (typeof activeTodo.id == 'undefined')
+                return
             const { tags } = getState()
             const oldTagIdx = tags.tags.findIndex(t => { return t.text == text })
             if (oldTagIdx >= 0) {
                 const oldTag = tags.tags.get(oldTagIdx)
-                const activeTodo = activeTodoSelector(getState())
-                if (typeof activeTodo.id == 'undefined')
-                    return
                 const tagInTodo = activeTodo.tags.findIndex(t => { return t.text == oldTag.text })
                 if (tagInTodo >= 0) {
                     dispatch(TagsActions.destroyTag(oldTag, (tag) => {
                         dispatch({
                             type: C.TODO_REMOVE_TAG,
-                            tag
+                            tag,
+                            todo: activeTodo
                         })
                         const newTodo = activeTodoSelector(getState())
                         updateTodoBackend(newTodo,

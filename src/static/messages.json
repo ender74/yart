@@ -16,5 +16,8 @@
   "todo.close": "Back",
   "todo.save": "Save",
   "todo.toggle_show_all": "show all",
-  "todo.add_tag": "+ add new tag here"
+  "todo.add_tag": "+ add new tag here",
+  "todo.filter": "Filter",
+  "todo.showOpen": "show open todos",
+  "todo.showAll": "show all todos"
 }

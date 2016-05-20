@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 
 import C from './TodosConstants'
-import { Todo, TodoList, TodoState, TagRef } from './Types'
+import { Todo, TodoRef, TodoList, TodoState, TodoDisplayState, TagRef } from './Types'
 
 const addTodo = (state, newTodo) => {
     return state.set('todos', state.todos.push(newTodo))
@@ -24,8 +24,6 @@ const todoDestroy = (state, todo) => {
     const indexFromState = state.todos.findIndex(t => t.id === todo.id)
     if (indexFromState >= 0) {
         state = state.set('todos', state.todos.delete(indexFromState))
-        if (state.activeTodo && state.activeTodo.id === todo.id)
-            state = state.remove('activeTodo')
     }
     return state
 }
@@ -48,20 +46,7 @@ const toggleComplete = (state, todo) => {
     return state
 }
 
-const toggleActive = (state, todo) => {
-    if (state.activeTodo && state.activeTodo.id === todo.id)
-        state = state.remove('activeTodo')
-    else {
-        const indexFromState = state.todos.findIndex(t => t.id === todo.id)
-        if (indexFromState >= 0)
-            state = state.set('activeTodo', state.todos.get(indexFromState))
-        else
-            state = state.remove('activeTodo')
-    }
-    return state
-}
-
-function todoListReducer(state, action) {
+function todoListReducer(state = TodoState(), action) {
     switch (action.type) {
         case C.TODO_ADD_NEW:
             return todoAddNew(state, action.todo)
@@ -73,17 +58,15 @@ function todoListReducer(state, action) {
             return toggleComplete(state, action.todo)
         case C.TODO_UPDATE:
             return todoUpdate(state, action.todo)
-        case C.TODO_TOGGLE_ACTIVE:
-            return toggleActive(state, action.todo)
         default:
             return state
     }
 }
 
-const todoAddTag = (state, tag) => {
-    if (!state.activeTodo)
+const todoAddTag = (state, activeTodo, tag) => {
+    if (!activeTodo)
         return state
-    const indexFromState = state.todos.findIndex(t => t.id === state.activeTodo.id)
+    const indexFromState = state.todos.findIndex(t => t.id === activeTodo.id)
     if (indexFromState >= 0) {
         const todo = state.todos.get(indexFromState)
         const tags = todo.tags
@@ -94,16 +77,15 @@ const todoAddTag = (state, tag) => {
                 text: tag.text
             }))
             state = state.set('todos', state.todos.set(indexFromState, todo.set('tags', newTags)))
-            state = state.set('activeTodo', state.todos.get(indexFromState))
         }
     }
     return state
 }
 
-const todoRemoveTag = (state, tag) => {
-    if (!state.activeTodo)
+const todoRemoveTag = (state, activeTodo, tag) => {
+    if (!activeTodo)
         return state
-    const indexFromState = state.todos.findIndex(t => t.id === state.activeTodo.id)
+    const indexFromState = state.todos.findIndex(t => t.id === activeTodo.id)
     if (indexFromState >= 0) {
         const todo = state.todos.get(indexFromState)
         const tags = todo.tags
@@ -111,33 +93,50 @@ const todoRemoveTag = (state, tag) => {
         if (tagIdx >= 0) {
             const newTags = tags.delete(tagIdx)
             state = state.set('todos', state.todos.set(indexFromState, todo.set('tags', newTags)))
-            state = state.set('activeTodo', state.todos.get(indexFromState))
         }
     }
     return state
 }
 
-function todoTagReducer(state, action) {
+function todoTagReducer(state = TodoState(), action) {
     switch (action.type) {
         case C.TODO_ADD_TAG:
-            return todoAddTag(state, action.tag)
+            return todoAddTag(state, action.todo, action.tag)
         case C.TODO_REMOVE_TAG:
-            return todoRemoveTag(state, action.tag)
+            return todoRemoveTag(state, action.todo, action.tag)
         default:
             return state
     }
 }
 
-const todoToggleShowAll = (state) => {
-    state = state.set('showAll', !state.showAll)
+const todoSetActiveFilter = (state, filter) => {
+    state = state.set('activeFilter', filter)
     return state
 }
 
-function todoVisibilityReducer(state, action) {
+const toggleActive = (state, todo) => {
+    if (state.activeTodo && state.activeTodo.id === todo.id)
+        state = state.remove('activeTodo')
+    else
+        state = state.set('activeTodo', new TodoRef({id: todo.id}))
+    return state
+}
+
+const todoDestroyActive = (state, todo) => {
+    if (state.activeTodo && state.activeTodo.id === todo.id)
+        state = state.remove('activeTodo')
+    return state
+}
+
+export function todosDisplayReducer(state = TodoDisplayState(), action) {
     switch (action.type) {
-        case C.TODO_TOGGLE_SHOWALL:
-            return todoToggleShowAll(state)
-        default:
+        case C.TODO_SET_FILTER:
+            return todoSetActiveFilter(state, action.filter)
+        case C.TODO_TOGGLE_ACTIVE:
+            return toggleActive(state, action.todo)
+         case C.TODO_DESTROY:
+             return todoDestroyActive(state, action.todo)
+       default:
             return state
     }
 }
@@ -155,6 +154,5 @@ const chainReducers = function(...reducers) {
 
 export default chainReducers(
    todoListReducer,
-   todoTagReducer,
-   todoVisibilityReducer
+   todoTagReducer
 )

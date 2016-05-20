@@ -5,18 +5,13 @@ import { Grid, Row, Col} from 'react-bootstrap'
 import TodoTextInput from './TodoTextInput'
 import TodoList from './TodoList'
 
-const Todos = ( { allTodos, activeTodo, children, addNewTodo, toggleActive, toggleComplete, destroyTodo, openURL, intl } ) => {
-    const placeholder = intl.formatMessage({
-        id: 'todo.add_entry',
-        defaultMessage: '+ add a new entry here'
-    })
-
+const Todos = ( { locale, allTodos, activeTodo, children, addNewTodo, toggleActive, toggleComplete, destroyTodo, openURL } ) => {
     return (
         <Grid fluid>
             <Row>
                 <Col>
                     <TodoTextInput
-                        placeholder={ placeholder }
+                        locale={ locale }
                         onSubmitEditing={ addNewTodo }
                         style={{marginBottom: '10px'}} />
                 </Col>
@@ -36,4 +31,4 @@ const Todos = ( { allTodos, activeTodo, children, addNewTodo, toggleActive, togg
     )
 }
 
-export default injectIntl(Todos)
+export default Todos

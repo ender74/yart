@@ -16,5 +16,8 @@
   "todo.close": "Zurück",
   "todo.save": "Speichern",
   "todo.toggle_show_all": "Alle anzeigen",
-  "todo.add_tag": "+ Fügen Sie hier einen neuen Tag hinzu."
+  "todo.add_tag": "+ Fügen Sie hier einen neuen Tag hinzu.",
+  "todo.filter": "Filter",
+  "todo.showOpen": "Offene Einträge anzeigen",
+  "todo.showAll": "Alle Einträge anzeigen"
 }

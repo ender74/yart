@@ -29,7 +29,18 @@ export const Todo = Record({
 export const TodoList = List(Todo)
 
 export const TodoState = Record({
-    todos: TodoList([]),
-    activeTodo: Maybe(Todo),
-    showAll: Boolean(false)
+    todos: TodoList([])
+})
+
+export const Filters = {
+    DEFAULT: "DEFAULT",
+    ALL: "ALL"
+}
+
+export const TodoRef = Record({
+    id: String
+})
+export const TodoDisplayState = Record({
+    activeTodo: Maybe(TodoRef),
+    activeFilter: String(Filters.DEFAULT)
 })

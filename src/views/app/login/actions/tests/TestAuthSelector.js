@@ -21,9 +21,8 @@ describe('userSelector', () => {
         expect(result).to.deep.equal(expected)
     }),
     it('should return no user when not logged in', () => {
-        const expected = {}
         const state = {}
         const result = userSelector(state)
-        expect(result).to.deep.equal(expected)
+        expect(result).to.be.undefined
     })
 })

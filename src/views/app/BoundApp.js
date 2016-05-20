@@ -1,22 +1,29 @@
 import {connect} from 'react-redux'
 
 import LocaleActions from './actions/LocaleActions'
+import TodoActions from './todos/actions/TodosActions'
 import AuthActions from './login/actions/AuthActions'
 import { userSelector } from './login/actions/AuthSelector'
+import { filterSelector } from './todos/actions/TodosSelector'
 import App from './components/App'
 
 function mapStateToProps(state) {
     const user = userSelector(state)
+    const locale = state.intl.locale
+    const activeFilter = filterSelector(state)
 
     return {
-        user
+        user,
+        locale,
+        activeFilter
     }
 }
 
 var mapDispatchToProps = function(dispatch) { 
     return {
         logout: () => dispatch(AuthActions.logout()),
-        setLocale: (locale) => dispatch(LocaleActions.setLocale(locale))
+        setLocale: (locale) => dispatch(LocaleActions.setLocale(locale)),
+        setActiveFilter: (filter) => dispatch(TodoActions.setActiveFilter(filter))
     }
 }
 
