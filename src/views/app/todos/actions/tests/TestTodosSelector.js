@@ -1,6 +1,7 @@
 import { describe, it } from 'mocha'
 import chai, { expect } from 'chai'
 import chaiImmutable from 'chai-immutable'
+import moment from 'moment'
 
 import { Filters, TodoState, TodoDisplayState, Todo, TodoRef, TodoList, Tag, TagList } from '../Types'
 import { filterSelector, activeTodoSelector, visibleTodosSelector } from '../TodosSelector'
@@ -140,6 +141,185 @@ describe('visibleTodosSelector', () => {
             }),
             todosDisplay: TodoDisplayState({
                 activeFilter: Filters.ALL
+            })
+        }
+        const result = visibleTodosSelector(state)
+        expect(result).to.deep.equal(expected)
+    })
+    it('should return overdue todos', () => {
+        const dayBefore = moment().subtract(1, 'days').toISOString()
+        const dayAfter = moment().add(1, 'days').toISOString()
+        const expected = TodoList([
+            Todo({
+                id: '0815',
+                text: 'Hallo',
+                complete: false,
+                due: dayBefore
+            })
+        ])
+        const state = {
+            todos: TodoState({
+                todos: TodoList([
+                    Todo({
+                        id: '0815',
+                        text: 'Hallo',
+                        complete: false,
+                        due: dayBefore
+                    }),
+                    Todo({
+                        id: '0816',
+                        text: 'Welt',
+                        complete: false,
+                        due: dayAfter
+                    })
+                ])
+            }),
+            todosDisplay: TodoDisplayState({
+                activeFilter: Filters.OVERDUE
+            })
+        }
+        const result = visibleTodosSelector(state)
+        expect(result).to.deep.equal(expected)
+    })
+    it('should return todos which are due today', () => {
+        const before = moment().subtract(1, 'days').toISOString()
+        const in1 = moment().startOf('days').toISOString()
+        const in2 = moment().endOf('days').toISOString()
+        const expected = TodoList([
+            Todo({
+                id: '0815',
+                text: 'Hallo',
+                complete: false,
+                due: in1
+            }),
+            Todo({
+                id: '0817',
+                text: 'Hello World',
+                complete: false,
+                due: in2
+            })
+        ])
+        const state = {
+            todos: TodoState({
+                todos: TodoList([
+                    Todo({
+                        id: '0815',
+                        text: 'Hallo',
+                        complete: false,
+                        due: in1
+                    }),
+                    Todo({
+                        id: '0816',
+                        text: 'Welt',
+                        complete: false,
+                        due: before
+                    }),
+                    Todo({
+                      id: '0817',
+                      text: 'Hello World',
+                      complete: false,
+                      due: in2
+                    })
+                ])
+            }),
+            todosDisplay: TodoDisplayState({
+                activeFilter: Filters.DUE_TODAY
+            })
+        }
+        const result = visibleTodosSelector(state)
+        expect(result).to.deep.equal(expected)
+    })
+    it('should return todos which are due this week', () => {
+        const before = moment().subtract(1, 'week').toISOString()
+        const in1 = moment().startOf('week').toISOString()
+        const in2 = moment().endOf('week').toISOString()
+        const expected = TodoList([
+            Todo({
+                id: '0815',
+                text: 'Hallo',
+                complete: false,
+                due: in1
+            }),
+            Todo({
+                id: '0817',
+                text: 'Hello World',
+                complete: false,
+                due: in2
+            })
+        ])
+        const state = {
+            todos: TodoState({
+                todos: TodoList([
+                    Todo({
+                        id: '0815',
+                        text: 'Hallo',
+                        complete: false,
+                        due: in1
+                    }),
+                    Todo({
+                        id: '0816',
+                        text: 'Welt',
+                        complete: false,
+                        due: before
+                    }),
+                    Todo({
+                      id: '0817',
+                      text: 'Hello World',
+                      complete: false,
+                      due: in2
+                    })
+                ])
+            }),
+            todosDisplay: TodoDisplayState({
+                activeFilter: Filters.DUE_THISWEEK
+            })
+        }
+        const result = visibleTodosSelector(state)
+        expect(result).to.deep.equal(expected)
+    })
+    it('should return todos which are due next week', () => {
+        const before = moment().subtract(1, 'week').toISOString()
+        const in1 = moment().add(1, 'week').startOf('week').toISOString()
+        const in2 = moment().add(1, 'week').endOf('week').toISOString()
+        const expected = TodoList([
+            Todo({
+                id: '0815',
+                text: 'Hallo',
+                complete: false,
+                due: in1
+            }),
+            Todo({
+                id: '0817',
+                text: 'Hello World',
+                complete: false,
+                due: in2
+            })
+        ])
+        const state = {
+            todos: TodoState({
+                todos: TodoList([
+                    Todo({
+                        id: '0815',
+                        text: 'Hallo',
+                        complete: false,
+                        due: in1
+                    }),
+                    Todo({
+                        id: '0816',
+                        text: 'Welt',
+                        complete: false,
+                        due: before
+                    }),
+                    Todo({
+                      id: '0817',
+                      text: 'Hello World',
+                      complete: false,
+                      due: in2
+                    })
+                ])
+            }),
+            todosDisplay: TodoDisplayState({
+                activeFilter: Filters.DUE_NEXTWEEK
             })
         }
         const result = visibleTodosSelector(state)

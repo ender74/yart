@@ -19,5 +19,10 @@
   "todo.add_tag": "+ add new tag here",
   "todo.filter": "Filter",
   "todo.showOpen": "show open todos",
-  "todo.showAll": "show all todos"
+  "todo.showAll": "show all todos",
+  "todo.filterDue": "due",
+  "todo.overdue": "overdue",
+  "todo.dueToday": "today",
+  "todo.dueThisWeek": "this week",
+  "todo.dueNextWeek": "next week"
 }

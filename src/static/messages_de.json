@@ -19,5 +19,10 @@
   "todo.add_tag": "+ Fügen Sie hier einen neuen Tag hinzu.",
   "todo.filter": "Filter",
   "todo.showOpen": "Offene Einträge anzeigen",
-  "todo.showAll": "Alle Einträge anzeigen"
+  "todo.showAll": "Alle Einträge anzeigen",
+  "todo.filterDue": "Fälligkeit",
+  "todo.overdue": "Überfällig",
+  "todo.dueToday": "Heute",
+  "todo.dueThisWeek": "Diese Woche",
+  "todo.dueNextWeek": "Nächste Woche"
 }
