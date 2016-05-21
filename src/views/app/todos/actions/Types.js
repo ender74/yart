@@ -34,7 +34,11 @@ export const TodoState = Record({
 
 export const Filters = {
     DEFAULT: "DEFAULT",
-    ALL: "ALL"
+    ALL: "ALL",
+    OVERDUE: "OVERDUE",
+    DUE_TODAY: "DUE_TODAY",
+    DUE_THISWEEK: "DUE_THISWEEK",
+    DUE_NEXTWEEK: "DUE_NEXTWEEK"
 }
 
 export const TodoRef = Record({
