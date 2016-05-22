@@ -114,6 +114,7 @@ const todoAddFilter = (state, filter) => {
         state = state.set('activeFilters', new FilterList([]))
     const index = state.activeFilters.findIndex(t => t.name === filter)
     if (index < 0) {
+        state = state.set('activeFilters', new FilterList([]))
         state = state.set('activeFilters', state.activeFilters.push(Filter({
             name: filter
         })))

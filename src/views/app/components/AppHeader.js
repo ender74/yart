@@ -33,14 +33,14 @@ class AppHeader extends Component {
                 expanded: false
             })
         }
-        const wrapCollapse = f => {
+        const wrapCollapse = f => () => {
             collapseNav()
             f()
         }
         const myLogout = wrapCollapse(logout)
         const mySetLocale = (locale) => wrapCollapse(() => setLocale(locale))
 
-        const isActiveFilter = f => activeFilters.included(f)
+        const isActiveFilter = f => activeFilters.includes(f)
 
         var logoutItem, options
         if (user) {
@@ -59,7 +59,7 @@ class AppHeader extends Component {
                     <NavDropdown eventKey={2} title={ filter } id='select-filter'>
                         <NavItem
                             active={ isActiveFilter(Filters.DEFAULT) }
-                            onClick={ () => wrapCollapse(() => setActiveFilter(Filters.DEFAULT))}
+                            onClick={ wrapCollapse(() => setActiveFilter(Filters.DEFAULT))}
                         >
                             <FormattedMessage
                                 id='todo.showOpen'
@@ -68,7 +68,7 @@ class AppHeader extends Component {
                         </NavItem>
                         <NavItem
                             active={ isActiveFilter(Filters.ALL) }
-                            onClick={ () => wrapCollapse(() => setActiveFilter(Filters.ALL))}
+                            onClick={ wrapCollapse(() => setActiveFilter(Filters.ALL))}
                         >
                             <FormattedMessage
                                 id='todo.showAll'
@@ -78,7 +78,7 @@ class AppHeader extends Component {
                         <NavDropdown eventKey={2} title={ filterDue } id='select-due-filter'>
                             <NavItem
                                 active={ isActiveFilter(Filters.OVERDUE) }
-                                onClick={ () => wrapCollapse(() => setActiveFilter(Filters.OVERDUE))}
+                                onClick={ wrapCollapse(() => setActiveFilter(Filters.OVERDUE))}
                             >
                                 <FormattedMessage
                                     id='todo.overdue'
@@ -87,7 +87,7 @@ class AppHeader extends Component {
                             </NavItem>
                             <NavItem
                                 active={ isActiveFilter(Filters.DUE_TODAY) }
-                                onClick={ () => wrapCollapse(() => setActiveFilter(Filters.DUE_TODAY))}
+                                onClick={ wrapCollapse(() => setActiveFilter(Filters.DUE_TODAY))}
                             >
                                 <FormattedMessage
                                     id='todo.dueToday'
@@ -96,7 +96,7 @@ class AppHeader extends Component {
                             </NavItem>
                             <NavItem
                                 active={ isActiveFilter(Filters.DUE_THISWEEK) }
-                                onClick={ () => wrapCollapse(() => setActiveFilter(Filters.DUE_THISWEEK))}
+                                onClick={ wrapCollapse(() => setActiveFilter(Filters.DUE_THISWEEK))}
                             >
                                 <FormattedMessage
                                     id='todo.dueThisWeek'
@@ -105,7 +105,7 @@ class AppHeader extends Component {
                             </NavItem>
                             <NavItem
                                 active={ isActiveFilter(Filters.DUENEXTWEEK) }
-                                onClick={ () => wrapCollapse(() => setActiveFilter(Filters.DUE_NEXTWEEK))}
+                                onClick={ wrapCollapse(() => setActiveFilter(Filters.DUE_NEXTWEEK))}
                             >
                                 <FormattedMessage
                                     id='todo.dueNextWeek'

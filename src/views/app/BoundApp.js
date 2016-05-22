@@ -15,7 +15,7 @@ function mapStateToProps(state) {
     return {
         user,
         locale,
-        activeFilter
+        activeFilters
     }
 }
 
@@ -23,7 +23,7 @@ var mapDispatchToProps = function(dispatch) {
     return {
         logout: () => dispatch(AuthActions.logout()),
         setLocale: (locale) => dispatch(LocaleActions.setLocale(locale)),
-        setActiveFilter: (filter) => dispatch(TodoActions.setActiveFilter(filter))
+        setActiveFilter: (filter) => dispatch(TodoActions.addFilter(filter))
     }
 }
 
