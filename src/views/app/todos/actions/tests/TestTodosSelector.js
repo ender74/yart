@@ -3,36 +3,32 @@ import chai, { expect } from 'chai'
 import chaiImmutable from 'chai-immutable'
 import moment from 'moment'
 
-import { Filters, TodoState, TodoDisplayState, Todo, TodoRef, TodoList, Tag, TagList } from '../Types'
-import { filterSelector, activeTodoSelector, visibleTodosSelector } from '../TodosSelector'
+import { Filters, Filter, FilterList, TodoState, TodoDisplayState, DefaultTodoDisplayState, Todo, TodoRef, TodoList, Tag, TagList } from '../Types'
+import { filtersSelector, activeTodoSelector, visibleTodosSelector } from '../TodosSelector'
 
 chai.use(chaiImmutable)
 
-describe('filterSelector', () => {
+describe('filtersSelector', () => {
     it('should return DEFAULT when state is empty', () => {
         const state = {
-            todosDisplay: TodoDisplayState(),
+            todosDisplay: DefaultTodoDisplayState,
         }
-        const result = filterSelector(state)
-        expect(result).to.equals(Filters.DEFAULT)
+        const expected = [Filters.DEFAULT]
+        const result = filtersSelector(state)
+        expect(result).to.deep.equals(expected)
     }),
-    it('should return DEFAULT', () => {
+    it('should return all filters', () => {
        const state = {
             todosDisplay: TodoDisplayState({
-                activeFilter: Filters.DEFAULT
+                activeFilters: [
+                    Filter({name: Filters.DEFAULT}),
+                    Filter({name: Filters.OVERDUE})
+                ]
             })
         }
-        const result = filterSelector(state)
-        expect(result).to.equal(Filters.DEFAULT)
-    }),
-    it('should return ALL', () => {
-        const state = {
-            todosDisplay: TodoDisplayState({
-                activeFilter: Filters.ALL
-            })
-        }
-        const result = filterSelector(state)
-        expect(result).to.equal(Filters.ALL)
+        const expected = [Filters.DEFAULT, Filters.OVERDUE]
+        const result = filtersSelector(state)
+        expect(result).to.deep.equal(expected)
     })
 })
 
@@ -105,7 +101,9 @@ describe('visibleTodosSelector', () => {
                 ])
             }),
             todosDisplay: TodoDisplayState({
-                activeFilter: Filters.DEFAULT
+                activeFilters: FilterList([
+                    Filter({name: Filters.DEFAULT})
+                ])
             })
         }
         const result = visibleTodosSelector(state)
@@ -140,7 +138,9 @@ describe('visibleTodosSelector', () => {
                 ])
             }),
             todosDisplay: TodoDisplayState({
-                activeFilter: Filters.ALL
+                activeFilters: FilterList([
+                    Filter({name: Filters.ALL})
+                ])
             })
         }
         const result = visibleTodosSelector(state)
@@ -175,7 +175,9 @@ describe('visibleTodosSelector', () => {
                 ])
             }),
             todosDisplay: TodoDisplayState({
-                activeFilter: Filters.OVERDUE
+                activeFilters: FilterList([
+                    Filter({name: Filters.OVERDUE})
+                ])
             })
         }
         const result = visibleTodosSelector(state)
@@ -223,7 +225,9 @@ describe('visibleTodosSelector', () => {
                 ])
             }),
             todosDisplay: TodoDisplayState({
-                activeFilter: Filters.DUE_TODAY
+                activeFilters: FilterList([
+                    Filter({name: Filters.DUE_TODAY})
+                ])
             })
         }
         const result = visibleTodosSelector(state)
@@ -271,7 +275,9 @@ describe('visibleTodosSelector', () => {
                 ])
             }),
             todosDisplay: TodoDisplayState({
-                activeFilter: Filters.DUE_THISWEEK
+                activeFilters: FilterList([
+                    Filter({name: Filters.DUE_THISWEEK})
+                ])
             })
         }
         const result = visibleTodosSelector(state)
@@ -319,7 +325,9 @@ describe('visibleTodosSelector', () => {
                 ])
             }),
             todosDisplay: TodoDisplayState({
-                activeFilter: Filters.DUE_NEXTWEEK
+                activeFilters: FilterList([
+                    Filter({name: Filters.DUE_NEXTWEEK})
+                ])
             })
         }
         const result = visibleTodosSelector(state)

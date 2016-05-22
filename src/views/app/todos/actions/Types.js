@@ -33,18 +33,29 @@ export const TodoState = Record({
 })
 
 export const Filters = {
-    DEFAULT: "DEFAULT",
     ALL: "ALL",
+    DEFAULT: "DEFAULT",
     OVERDUE: "OVERDUE",
     DUE_TODAY: "DUE_TODAY",
     DUE_THISWEEK: "DUE_THISWEEK",
     DUE_NEXTWEEK: "DUE_NEXTWEEK"
 }
 
+export const Filter = Record({
+    name: String(Filters.DEFAULT)
+})
+export const FilterList = List(Filter)
+
 export const TodoRef = Record({
     id: String
 })
 export const TodoDisplayState = Record({
     activeTodo: Maybe(TodoRef),
-    activeFilter: String(Filters.DEFAULT)
+    activeFilters: FilterList
+})
+
+export const DefaultTodoDisplayState = TodoDisplayState({
+    activeFilters: FilterList([
+        Filter({name: Filters.DEFAULT})
+    ])
 })

@@ -2,7 +2,7 @@ import { describe, it } from 'mocha'
 import chai, { expect } from 'chai'
 import chaiImmutable from 'chai-immutable'
 
-import { TodoState, TodoDisplayState, Todo, TodoRef, TodoList, Tag, TagList } from '../Types'
+import { Filters, FilterList, Filter, TodoState, TodoDisplayState, DefaultTodoDisplayState, Todo, TodoRef, TodoList, Tag, TagList } from '../Types'
 import C from '../TodosConstants'
 import todosReducer, { todosDisplayReducer } from '../TodosReducer'
 
@@ -10,7 +10,7 @@ chai.use(chaiImmutable)
 
 describe('todosDisplayReducer', () => {
     it('should return initialstate when given no state', () => {
-        const stateExpected = TodoDisplayState()
+        const stateExpected = DefaultTodoDisplayState
         let stateBefore
         expect(todosDisplayReducer(stateBefore, {type: 'INIT'})).to.deep.equal(stateExpected)
     })
@@ -57,6 +57,44 @@ describe('todosDisplayReducer', () => {
             todo: {
                 id: '0815'
             }
+        })).to.deep.equal(stateExpected)
+    })
+    it('should add filter', () => {
+        const stateBefore = TodoDisplayState({
+        })
+        const stateExpected = TodoDisplayState({
+            activeFilters: FilterList([
+                Filter({
+                    name: Filters.OVERDUE
+                })
+            ])
+        })
+        expect(todosDisplayReducer(stateBefore, {
+            type: C.TODO_ADD_FILTER,
+            filter: Filters.OVERDUE
+        })).to.deep.equal(stateExpected)
+    })
+    it('should remove filter', () => {
+        const stateBefore = TodoDisplayState({
+            activeFilters: FilterList([
+                Filter({
+                    name: Filters.DEFAULT
+                }),
+                Filter({
+                    name: Filters.OVERDUE
+                })
+            ])
+        })
+        const stateExpected = TodoDisplayState({
+            activeFilters: FilterList([
+                Filter({
+                    name: Filters.DEFAULT
+                })
+            ])
+        })
+        expect(todosDisplayReducer(stateBefore, {
+            type: C.TODO_REMOVE_FILTER,
+            filter: Filters.OVERDUE
         })).to.deep.equal(stateExpected)
     })
 })

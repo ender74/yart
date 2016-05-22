@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 
 import C from './TodosConstants'
-import { Todo, TodoRef, TodoList, TodoState, TodoDisplayState, TagRef } from './Types'
+import { Todo, TodoRef, TodoList, TodoState, TodoDisplayState, DefaultTodoDisplayState, TagRef, Filter, FilterList } from './Types'
 
 const addTodo = (state, newTodo) => {
     return state.set('todos', state.todos.push(newTodo))
@@ -109,8 +109,26 @@ function todoTagReducer(state = TodoState(), action) {
     }
 }
 
-const todoSetActiveFilter = (state, filter) => {
-    state = state.set('activeFilter', filter)
+const todoAddFilter = (state, filter) => {
+    if (!state.activeFilters)
+        state = state.set('activeFilters', new FilterList([]))
+    const index = state.activeFilters.findIndex(t => t.name === filter)
+    if (index < 0) {
+        state = state.set('activeFilters', new FilterList([]))
+        state = state.set('activeFilters', state.activeFilters.push(Filter({
+            name: filter
+        })))
+    }
+    return state
+}
+
+const todoRemoveFilter = (state, filter) => {
+    if (!state.activeFilters)
+        state = state.set('activeFilters', new FilterList([]))
+    const index = state.activeFilters.findIndex(t => t.name === filter)
+    if (index >= 0) {
+        state = state.set('activeFilters', state.activeFilters.delete(index))
+    }
     return state
 }
 
@@ -128,10 +146,12 @@ const todoDestroyActive = (state, todo) => {
     return state
 }
 
-export function todosDisplayReducer(state = TodoDisplayState(), action) {
+export function todosDisplayReducer(state = DefaultTodoDisplayState, action) {
     switch (action.type) {
-        case C.TODO_SET_FILTER:
-            return todoSetActiveFilter(state, action.filter)
+        case C.TODO_ADD_FILTER:
+            return todoAddFilter(state, action.filter)
+        case C.TODO_REMOVE_FILTER:
+            return todoRemoveFilter(state, action.filter)
         case C.TODO_TOGGLE_ACTIVE:
             return toggleActive(state, action.todo)
          case C.TODO_DESTROY:

@@ -62,13 +62,20 @@ const TodosActions = {
         }
     },
     
-    setActiveFilter(filter) {
+    addFilter(filter) {
         return {
-            type: C.TODO_SET_FILTER,
+            type: C.TODO_ADD_FILTER,
             filter
         }    
     },
     
+    removeFilter(filter) {
+        return {
+            type: C.TODO_REMOVE_FILTER,
+            filter
+        }
+    },
+
     toggleActive(todo) {
         return {
             type: C.TODO_TOGGLE_ACTIVE,
