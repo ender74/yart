@@ -64,7 +64,7 @@ const TodosActions = {
     
     setActiveFilter(filter) {
         return {
-            type: C.TODO_SET_FILTER,
+            type: C.TODO_ADD_FILTER,
             filter
         }    
     },

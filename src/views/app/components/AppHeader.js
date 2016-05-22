@@ -12,9 +12,8 @@ class AppHeader extends Component {
         }
     }
 
-
     render() {
-        const { user, locale, activeFilter, logout, setActiveFilter, setLocale, intl } = this.props
+        const { user, locale, activeFilters, logout, setActiveFilter, setLocale, intl } = this.props
 
         const language = intl.formatMessage({
             id: 'app.language',
@@ -34,14 +33,14 @@ class AppHeader extends Component {
                 expanded: false
             })
         }
-        const myLogout = () => {
+        const wrapCollapse = f => {
             collapseNav()
-            logout()
+            f()
         }
-        const mySetLocale = (locale) => {
-            collapseNav()
-            setLocale(locale)
-        }
+        const myLogout = wrapCollapse(logout)
+        const mySetLocale = (locale) => wrapCollapse(() => setLocale(locale))
+
+        const isActiveFilter = f => activeFilters.included(f)
 
         var logoutItem, options
         if (user) {
@@ -59,24 +58,18 @@ class AppHeader extends Component {
                 <Nav>
                     <NavDropdown eventKey={2} title={ filter } id='select-filter'>
                         <NavItem
-                            active={ activeFilter === Filters.DEFAULT }
-                            onClick={ () => {
-                                collapseNav()
-                                setActiveFilter(Filters.DEFAULT)
-                            }
-                        }>
+                            active={ isActiveFilter(Filters.DEFAULT) }
+                            onClick={ () => wrapCollapse(() => setActiveFilter(Filters.DEFAULT))}
+                        >
                             <FormattedMessage
                                 id='todo.showOpen'
                                 defaultMessage='show open todos'
                             />
                         </NavItem>
                         <NavItem
-                            active={ activeFilter === Filters.ALL }
-                            onClick={ () => {
-                                collapseNav()
-                                setActiveFilter(Filters.ALL)
-                            }
-                        }>
+                            active={ isActiveFilter(Filters.ALL) }
+                            onClick={ () => wrapCollapse(() => setActiveFilter(Filters.ALL))}
+                        >
                             <FormattedMessage
                                 id='todo.showAll'
                                 defaultMessage='show all todos'
@@ -84,48 +77,36 @@ class AppHeader extends Component {
                         </NavItem>
                         <NavDropdown eventKey={2} title={ filterDue } id='select-due-filter'>
                             <NavItem
-                                active={ activeFilter === Filters.OVERDUE }
-                                onClick={ () => {
-                                    collapseNav()
-                                    setActiveFilter(Filters.OVERDUE)
-                                }
-                            }>
+                                active={ isActiveFilter(Filters.OVERDUE) }
+                                onClick={ () => wrapCollapse(() => setActiveFilter(Filters.OVERDUE))}
+                            >
                                 <FormattedMessage
                                     id='todo.overdue'
                                     defaultMessage='overdue'
                                 />
                             </NavItem>
                             <NavItem
-                                active={ activeFilter === Filters.DUE_TODAY }
-                                onClick={ () => {
-                                    collapseNav()
-                                    setActiveFilter(Filters.DUE_TODAY)
-                                }
-                            }>
+                                active={ isActiveFilter(Filters.DUE_TODAY) }
+                                onClick={ () => wrapCollapse(() => setActiveFilter(Filters.DUE_TODAY))}
+                            >
                                 <FormattedMessage
                                     id='todo.dueToday'
                                     defaultMessage='today'
                                 />
                             </NavItem>
                             <NavItem
-                                active={ activeFilter === Filters.DUE_THISWEEK }
-                                onClick={ () => {
-                                    collapseNav()
-                                    setActiveFilter(Filters.DUE_THISWEEK)
-                                }
-                            }>
+                                active={ isActiveFilter(Filters.DUE_THISWEEK) }
+                                onClick={ () => wrapCollapse(() => setActiveFilter(Filters.DUE_THISWEEK))}
+                            >
                                 <FormattedMessage
                                     id='todo.dueThisWeek'
                                     defaultMessage='this week'
                                 />
                             </NavItem>
                             <NavItem
-                                active={ activeFilter === Filters.DUE_NEXTWEEK }
-                                onClick={ () => {
-                                    collapseNav()
-                                    setActiveFilter(Filters.DUE_NEXTWEEK)
-                                }
-                            }>
+                                active={ isActiveFilter(Filters.DUENEXTWEEK) }
+                                onClick={ () => wrapCollapse(() => setActiveFilter(Filters.DUE_NEXTWEEK))}
+                            >
                                 <FormattedMessage
                                     id='todo.dueNextWeek'
                                     defaultMessage='next week'

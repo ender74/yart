@@ -4,13 +4,13 @@ import LocaleActions from './actions/LocaleActions'
 import TodoActions from './todos/actions/TodosActions'
 import AuthActions from './login/actions/AuthActions'
 import { userSelector } from './login/actions/AuthSelector'
-import { filterSelector } from './todos/actions/TodosSelector'
+import { filtersSelector } from './todos/actions/TodosSelector'
 import App from './components/App'
 
 function mapStateToProps(state) {
     const user = userSelector(state)
     const locale = state.intl.locale
-    const activeFilter = filterSelector(state)
+    const activeFilters = filtersSelector(state)
 
     return {
         user,

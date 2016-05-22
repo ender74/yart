@@ -7,7 +7,8 @@ const C = keyMirror({
     TODO_UPDATE: null,
     TODO_TOGGLE_COMPLETE: null,
     TODO_TOGGLE_ACTIVE: null,
-    TODO_SET_FILTER: null,
+    TODO_ADD_FILTER: null,
+    TODO_REMOVE_FILTER: null,
     TODO_ADD_TAG: null,
     TODO_REMOVE_TAG: null
 })
