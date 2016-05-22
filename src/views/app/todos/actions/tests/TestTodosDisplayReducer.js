@@ -74,4 +74,27 @@ describe('todosDisplayReducer', () => {
             filter: Filters.OVERDUE
         })).to.deep.equal(stateExpected)
     })
+    it('should remove filter', () => {
+        const stateBefore = TodoDisplayState({
+            activeFilters: FilterList([
+                Filter({
+                    name: Filters.DEFAULT
+                }),
+                Filter({
+                    name: Filters.OVERDUE
+                })
+            ])
+        })
+        const stateExpected = TodoDisplayState({
+            activeFilters: FilterList([
+                Filter({
+                    name: Filters.DEFAULT
+                })
+            ])
+        })
+        expect(todosDisplayReducer(stateBefore, {
+            type: C.TODO_REMOVE_FILTER,
+            filter: Filters.OVERDUE
+        })).to.deep.equal(stateExpected)
+    })
 })

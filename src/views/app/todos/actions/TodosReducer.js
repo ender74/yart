@@ -121,6 +121,16 @@ const todoAddFilter = (state, filter) => {
     return state
 }
 
+const todoRemoveFilter = (state, filter) => {
+    if (!state.activeFilters)
+        state = state.set('activeFilters', new FilterList([]))
+    const index = state.activeFilters.findIndex(t => t.name === filter)
+    if (index >= 0) {
+        state = state.set('activeFilters', state.activeFilters.delete(index))
+    }
+    return state
+}
+
 const toggleActive = (state, todo) => {
     if (state.activeTodo && state.activeTodo.id === todo.id)
         state = state.remove('activeTodo')
@@ -139,6 +149,8 @@ export function todosDisplayReducer(state = DefaultTodoDisplayState, action) {
     switch (action.type) {
         case C.TODO_ADD_FILTER:
             return todoAddFilter(state, action.filter)
+        case C.TODO_REMOVE_FILTER:
+            return todoRemoveFilter(state, action.filter)
         case C.TODO_TOGGLE_ACTIVE:
             return toggleActive(state, action.todo)
          case C.TODO_DESTROY:
