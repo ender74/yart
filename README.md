@@ -6,7 +6,7 @@
 - [TODO List](#todo-list)
 
 #### Summary
-Yet another react TODO list. To try it goto the [example page](https://www.log84.de).
+Yet another react TODO list. To try it goto [Log84.org - organize your life](https://www.log84.org).
 
 #### Building
 Follow these steps to get the project running (assuming you have node and npm already installed):
@@ -26,8 +26,8 @@ by the build container for you.
 
 #### TODO List
 - [ ] better README
-- [ ] tags
-- [ ] automated testing
+- [X] tags
+- [X]] automated testing
 - [X] internationalization
 - [X] basic implementation
 - [X] add some styling

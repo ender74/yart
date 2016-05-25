@@ -18,11 +18,13 @@
   "todo.toggle_show_all": "show all",
   "todo.add_tag": "+ add new tag here",
   "todo.filter": "Filter",
-  "todo.showOpen": "show open todos",
+  "todo.filterRemoveAll": "remove all filters",
+  "todo.filterBasic": "basic",
   "todo.showAll": "show all todos",
+  "todo.showOpen": "show open todos",
   "todo.filterDue": "due",
   "todo.overdue": "overdue",
-  "todo.dueToday": "today",
-  "todo.dueThisWeek": "this week",
-  "todo.dueNextWeek": "next week"
+  "todo.dueToday": "due today",
+  "todo.dueThisWeek": "due this week",
+  "todo.dueNextWeek": "due next week"
 }
