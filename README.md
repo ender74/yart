@@ -26,8 +26,8 @@ by the build container for you.
 
 #### TODO List
 - [ ] better README
-- [ ] tags
-- [ ] automated testing
+- [X] tags
+- [X]] automated testing
 - [X] internationalization
 - [X] basic implementation
 - [X] add some styling
