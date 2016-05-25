@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 
 import C from './TodosConstants'
-import { Todo, TodoRef, TodoList, TodoState, TodoDisplayState, DefaultTodoDisplayState, TagRef, Filter, FilterList } from './Types'
+import { Todo, TodoRef, TodoList, TodoState, TodoDisplayState, DefaultTodoDisplayState, TagRef, Filter, FilterProps, FilterList } from './Types'
 
 const addTodo = (state, newTodo) => {
     return state.set('todos', state.todos.push(newTodo))
@@ -114,10 +114,14 @@ const todoAddFilter = (state, filter) => {
         state = state.set('activeFilters', new FilterList([]))
     const index = state.activeFilters.findIndex(t => t.name === filter)
     if (index < 0) {
-        state = state.set('activeFilters', new FilterList([]))
-        state = state.set('activeFilters', state.activeFilters.push(Filter({
-            name: filter
-        })))
+        const groupMask = FilterProps.getByName(filter).groupMask
+        let activeFilters = state.activeFilters
+        activeFilters = activeFilters.filter(t => {
+            const g = FilterProps.getByName(t.name).groupMask
+            return (groupMask & g) == 0
+        })
+        activeFilters = activeFilters.push(Filter({ name: filter }))
+        state = state.set('activeFilters', activeFilters)
     }
     return state
 }

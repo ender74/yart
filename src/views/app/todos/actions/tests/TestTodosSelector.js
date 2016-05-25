@@ -191,7 +191,7 @@ describe('visibleTodosSelector', () => {
             Todo({
                 id: '0815',
                 text: 'Hallo',
-                complete: false,
+                complete: true,
                 due: in1
             }),
             Todo({
@@ -207,7 +207,7 @@ describe('visibleTodosSelector', () => {
                     Todo({
                         id: '0815',
                         text: 'Hallo',
-                        complete: false,
+                        complete: true,
                         due: in1
                     }),
                     Todo({
@@ -327,6 +327,51 @@ describe('visibleTodosSelector', () => {
             todosDisplay: TodoDisplayState({
                 activeFilters: FilterList([
                     Filter({name: Filters.DUE_NEXTWEEK})
+                ])
+            })
+        }
+        const result = visibleTodosSelector(state)
+        expect(result).to.deep.equal(expected)
+    })
+    it('should return todos with combined filters', () => {
+        const before = moment().subtract(1, 'days').toISOString()
+        const in1 = moment().startOf('days').toISOString()
+        const in2 = moment().endOf('days').toISOString()
+        const expected = TodoList([
+            Todo({
+                id: '0817',
+                text: 'Hello World',
+                complete: false,
+                due: in2
+            })
+        ])
+        const state = {
+            todos: TodoState({
+                todos: TodoList([
+                    Todo({
+                        id: '0815',
+                        text: 'Hallo',
+                        complete: true,
+                        due: in1
+                    }),
+                    Todo({
+                        id: '0816',
+                        text: 'Welt',
+                        complete: false,
+                        due: before
+                    }),
+                    Todo({
+                      id: '0817',
+                      text: 'Hello World',
+                      complete: false,
+                      due: in2
+                    })
+                ])
+            }),
+            todosDisplay: TodoDisplayState({
+                activeFilters: FilterList([
+                    Filter({name: Filters.DEFAULT}),
+                    Filter({name: Filters.DUE_TODAY})
                 ])
             })
         }

@@ -19,14 +19,6 @@ class AppHeader extends Component {
             id: 'app.language',
             defaultMessage: 'Language'
         })
-        const filter = intl.formatMessage({
-            id: 'todo.filter',
-            defaultMessage: 'Filter'
-        })
-        const filterDue = intl.formatMessage({
-            id: 'todo.filterDue',
-            defaultMessage: 'Due'
-        })
 
         const collapseNav = () => {
             this.setState({
@@ -38,12 +30,24 @@ class AppHeader extends Component {
             f()
         }
         const myLogout = wrapCollapse(logout)
-        const mySetLocale = (locale) => wrapCollapse(() => setLocale(locale))
 
         const isActiveFilter = f => activeFilters.includes(f)
 
         var logoutItem, options
         if (user) {
+            const filter = intl.formatMessage({
+                id: 'todo.filter',
+                defaultMessage: 'Filter'
+            })
+            const filterDue = intl.formatMessage({
+                id: 'todo.filterDue',
+                defaultMessage: 'Due'
+            })
+            const filterBasic = intl.formatMessage({
+                id: 'todo.filterBasic',
+                defaultMessage: 'Basic'
+            })
+
             logoutItem = (
                 <Nav pullRight>
                     <NavItem onClick={ myLogout }><Glyphicon glyph='log-out' />
@@ -58,61 +62,70 @@ class AppHeader extends Component {
                 <Nav>
                     <NavDropdown eventKey={2} title={ filter } id='select-filter'>
                         <NavItem
-                            active={ isActiveFilter(Filters.DEFAULT) }
-                            onClick={ wrapCollapse(() => setActiveFilter(Filters.DEFAULT))}
+                            active={ isActiveFilter(Filters.ALL) }
+                            onClick={ wrapCollapse(() => setActiveFilter(Filters.NONE)) }
                         >
                             <FormattedMessage
-                                id='todo.showOpen'
-                                defaultMessage='show open todos'
+                                id='todo.filterRemoveAll'
+                                defaultMessage='remove all todos'
                             />
                         </NavItem>
+                        <MenuItem divider />
                         <NavItem
                             active={ isActiveFilter(Filters.ALL) }
-                            onClick={ wrapCollapse(() => setActiveFilter(Filters.ALL))}
+                            onClick={ wrapCollapse(() => setActiveFilter(Filters.ALL)) }
                         >
                             <FormattedMessage
                                 id='todo.showAll'
                                 defaultMessage='show all todos'
                             />
                         </NavItem>
-                        <NavDropdown eventKey={2} title={ filterDue } id='select-due-filter'>
-                            <NavItem
-                                active={ isActiveFilter(Filters.OVERDUE) }
-                                onClick={ wrapCollapse(() => setActiveFilter(Filters.OVERDUE))}
-                            >
-                                <FormattedMessage
-                                    id='todo.overdue'
-                                    defaultMessage='overdue'
-                                />
-                            </NavItem>
-                            <NavItem
-                                active={ isActiveFilter(Filters.DUE_TODAY) }
-                                onClick={ wrapCollapse(() => setActiveFilter(Filters.DUE_TODAY))}
-                            >
-                                <FormattedMessage
-                                    id='todo.dueToday'
-                                    defaultMessage='today'
-                                />
-                            </NavItem>
-                            <NavItem
-                                active={ isActiveFilter(Filters.DUE_THISWEEK) }
-                                onClick={ wrapCollapse(() => setActiveFilter(Filters.DUE_THISWEEK))}
-                            >
-                                <FormattedMessage
-                                    id='todo.dueThisWeek'
-                                    defaultMessage='this week'
-                                />
-                            </NavItem>
-                            <NavItem
-                                active={ isActiveFilter(Filters.DUENEXTWEEK) }
-                                onClick={ wrapCollapse(() => setActiveFilter(Filters.DUE_NEXTWEEK))}
-                            >
-                                <FormattedMessage
-                                    id='todo.dueNextWeek'
-                                    defaultMessage='next week'
-                                />
-                            </NavItem>
-                        </NavDropdown>
+                        <NavItem
+                            active={ isActiveFilter(Filters.DEFAULT) }
+                            onClick={ wrapCollapse(() => setActiveFilter(Filters.DEFAULT)) }
+                        >
+                            <FormattedMessage
+                                id='todo.showOpen'
+                                defaultMessage='show open todos'
+                            />
+                        </NavItem>
+                        <MenuItem divider />
+                        <NavItem
+                            active={ isActiveFilter(Filters.OVERDUE) }
+                            onClick={ wrapCollapse(() => setActiveFilter(Filters.OVERDUE)) }
+                        >
+                            <FormattedMessage
+                                id='todo.overdue'
+                                defaultMessage='overdue'
+                            />
+                        </NavItem>
+                        <NavItem
+                            active={ isActiveFilter(Filters.DUE_TODAY) }
+                            onClick={ wrapCollapse(() => setActiveFilter(Filters.DUE_TODAY)) }
+                        >
+                            <FormattedMessage
+                                id='todo.dueToday'
+                                defaultMessage='today'
+                            />
+                        </NavItem>
+                        <NavItem
+                            active={ isActiveFilter(Filters.DUE_THISWEEK) }
+                            onClick={ wrapCollapse(() => setActiveFilter(Filters.DUE_THISWEEK)) }
+                        >
+                            <FormattedMessage
+                                id='todo.dueThisWeek'
+                                defaultMessage='this week'
+                            />
+                        </NavItem>
+                        <NavItem
+                            active={ isActiveFilter(Filters.DUENEXTWEEK) }
+                            onClick={ wrapCollapse(() => setActiveFilter(Filters.DUE_NEXTWEEK)) }
+                        >
+                            <FormattedMessage
+                                id='todo.dueNextWeek'
+                                defaultMessage='next week'
+                            />
+                        </NavItem>
                     </NavDropdown>
                 </Nav>
             )
@@ -128,13 +141,13 @@ class AppHeader extends Component {
                 <Navbar.Collapse>
                     <Nav>
                         <NavDropdown eventKey={1} title={ language } id='select-language'>
-                            <NavItem eventKey={1.1} onClick={ () => mySetLocale('en')} active={ locale === 'en' }>
+                            <NavItem eventKey={1.1} onClick={ wrapCollapse(() => setLocale('en')) } active={ locale === 'en' }>
                                 <FormattedMessage
                                     id='app.language_en'
                                     defaultMessage='English'
                                 />
                             </NavItem>
-                            <NavItem eventKey={1.2} onClick={ () => mySetLocale('de')} active={ locale === 'de' }>
+                            <NavItem eventKey={1.2} onClick={ wrapCollapse(() => setLocale('de')) } active={ locale === 'de' }>
                                 <FormattedMessage
                                     id='app.language_de'
                                     defaultMessage='German'

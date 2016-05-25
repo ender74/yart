@@ -1,3 +1,5 @@
+import defineEnum from './Enum'
+
 import { Record, Maybe, List } from 'typed-immutable'
 
 export const Tag = Record({
@@ -33,6 +35,7 @@ export const TodoState = Record({
 })
 
 export const Filters = {
+    NONE: "NONE",
     ALL: "ALL",
     DEFAULT: "DEFAULT",
     OVERDUE: "OVERDUE",
@@ -40,6 +43,30 @@ export const Filters = {
     DUE_THISWEEK: "DUE_THISWEEK",
     DUE_NEXTWEEK: "DUE_NEXTWEEK"
 }
+
+export const FilterProps = defineEnum({
+    NONE: {
+        groupMask: 0xffff
+    },
+    ALL: {
+        groupMask: 0x0001
+    },
+    DEFAULT: {
+        groupMask: 0x0001
+    },
+    OVERDUE: {
+        groupMask: 0x0002
+    },
+    DUE_TODAY: {
+        groupMask: 0x0002
+    },
+    DUE_THISWEEK: {
+        groupMask: 0x0002
+    },
+    DUE_NEXTWEEK: {
+        groupMask: 0x0002
+    }
+})
 
 export const Filter = Record({
     name: String(Filters.DEFAULT)
