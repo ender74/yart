@@ -4,7 +4,7 @@ import chaiImmutable from 'chai-immutable'
 
 import { TodoState, TodoDisplayState, Todo, TodoList, Tag, TagList } from '../Types'
 import C from '../TodosConstants'
-import todosReducer, { todosDisplayReducer } from '../TodosReducer'
+import { todosReducer, todosDisplayReducer } from '../TodosReducer'
 
 chai.use(chaiImmutable)
 

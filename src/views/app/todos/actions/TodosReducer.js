@@ -15,8 +15,9 @@ const todoAddNew = (state, todo)  => {
 
 const todoLoad = (state, todos) => {
     state = state.set('todos', new TodoList())
-    for (var key in todos)
-        state = addTodo(state, new Todo(todos[key]))
+    todos.forEach(todo => {
+        state = addTodo(state, new Todo(todo))
+    })
     return state
 }
 
@@ -44,23 +45,6 @@ const toggleComplete = (state, todo) => {
         state = state.set('todos', state.todos.set(indexFromState, todo.set('complete', !todo.complete)))
     }
     return state
-}
-
-function todoListReducer(state = TodoState(), action) {
-    switch (action.type) {
-        case C.TODO_ADD_NEW:
-            return todoAddNew(state, action.todo)
-        case C.TODO_DESTROY:
-            return todoDestroy(state, action.todo)
-        case C.TODO_LOAD:
-            return todoLoad(state, action.todos)
-        case C.TODO_TOGGLE_COMPLETE:
-            return toggleComplete(state, action.todo)
-        case C.TODO_UPDATE:
-            return todoUpdate(state, action.todo)
-        default:
-            return state
-    }
 }
 
 const todoAddTag = (state, activeTodo, tag) => {
@@ -98,8 +82,20 @@ const todoRemoveTag = (state, activeTodo, tag) => {
     return state
 }
 
-function todoTagReducer(state = TodoState(), action) {
+export function todosReducer(state, action) {
+    if (typeof state === 'undefined')
+        state = TodoState()
     switch (action.type) {
+        case C.TODO_ADD_NEW:
+            return todoAddNew(state, action.todo)
+        case C.TODO_DESTROY:
+            return todoDestroy(state, action.todo)
+        case C.TODO_LOAD:
+            return todoLoad(state, action.todos)
+        case C.TODO_TOGGLE_COMPLETE:
+            return toggleComplete(state, action.todo)
+        case C.TODO_UPDATE:
+            return todoUpdate(state, action.todo)
         case C.TODO_ADD_TAG:
             return todoAddTag(state, action.todo, action.tag)
         case C.TODO_REMOVE_TAG:
@@ -150,7 +146,9 @@ const todoDestroyActive = (state, todo) => {
     return state
 }
 
-export function todosDisplayReducer(state = DefaultTodoDisplayState, action) {
+export function todosDisplayReducer(state, action) {
+    if (typeof state === 'undefined')
+        state = DefaultTodoDisplayState
     switch (action.type) {
         case C.TODO_ADD_FILTER:
             return todoAddFilter(state, action.filter)
@@ -164,19 +162,3 @@ export function todosDisplayReducer(state = DefaultTodoDisplayState, action) {
             return state
     }
 }
-
-const chainReducers = function(...reducers) {
-    return (state = TodoState(), action) => {
-        let newState = state
-        for (var key in reducers) {
-            let r = reducers[key]
-            newState = r(newState, action)
-        }
-        return newState
-    }
-}
-
-export default chainReducers(
-   todoListReducer,
-   todoTagReducer
-)

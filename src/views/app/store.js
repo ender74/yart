@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import { reducer as formReducer } from 'redux-form'
 import { intlReducer } from 'react-intl-redux'
 
-import todosReducer, { todosDisplayReducer } from './todos/actions/TodosReducer'
+import { todosDisplayReducer, todosReducer } from './todos/actions/TodosReducer'
 import tagsReducer from './todos/actions/TagsReducer'
 import authReducer from './login/actions/AuthReducer'
 
