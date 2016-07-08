@@ -5,7 +5,26 @@ services:
         build: ./node
         image: log84.de/node
         command: /bin/true
-        
+    redis:
+        container_name: log84-redis
+        build: ./redis
+        image: log84.de/redis
+        command: /bin/true
+    redis-data:
+        container_name: log84-redis-data
+        image: log84.de/redis
+        volumes:
+            - /var/redis
+        command: /bin/true
+    redis-server:
+        container_name: log84-redis-server
+        build: ./redis-server
+        volumes_from:
+            - redis-data
+        expose:
+            - "6379"
+        depends_on:
+            - redis-data
     server:
         container_name: log84-server
         build: ./server
@@ -17,6 +36,7 @@ services:
             - mongodb
         depends_on:
             - node
+            - mongodb
     dbdata:
         container_name: log84-dbdata
         image: mongo
@@ -24,7 +44,6 @@ services:
             - /data/db
             - /data/configdb
         command: /bin/true      
-            
     mongodb:
         container_name: log84-db
         image: mongo
@@ -42,8 +61,7 @@ services:
             - server
         volumes:
             - ../:/var/lib/project/:rw
-
-    www: 
+    www:
         container_name: log84-www
         image: nginx
         volumes: 
